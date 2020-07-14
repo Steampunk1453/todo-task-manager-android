@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">MyToDoTaskManager</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_new_password">New password</string>
+    <string name="prompt_new_password_confirmation">Confirm the new password</string>
+    <string name="prompt_bio">Bio</string>
+    <string name="action_sign_in">Login</string>
+    <string name="action_register">Register</string>
+    <string name="prompt_remember">Remember Me</string>
+    <string name="action_view_profile">View Profile</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome! "</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_button_text">Login</string>
+    <string name="logout_button_text">Logout</string>
+    <string name="login_unsuccessful_msg">Login unsuccessful</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login_prompt">Login to set customizations!</string>
+    <string name="login_btn">Login</string>
+    <string name="settings_btn">Settings</string>
+    <string name="settings_fact_type_title">Fun Fact Type</string>
+    <string name="action_next">Next</string>
 </resources>
