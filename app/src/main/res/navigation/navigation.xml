@@ -7,46 +7,29 @@
     <fragment
         android:id="@+id/main_fragment"
         android:name="org.task.manager.presentation.MainFragment"
-        android:label="fragment_main"
+        android:label="main_fragment"
         tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_main_fragment_to_profile_fragment"
-            app:destination="@id/profile_fragment" />
+            android:id="@+id/action_main_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_registration_fragment2"
+            app:destination="@id/registration_fragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/profile_fragment"
-        android:name="org.task.manager.presentation.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/login_fragment"
         android:name="org.task.manager.presentation.login.LoginFragment"
         android:label="login_fragment"
-        tools:layout="@layout/fragment_login">
+        tools:layout="@layout/fragment_login"/>
+    <fragment
+        android:id="@+id/registration_fragment"
+        android:name="org.task.manager.presentation.registration.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
         <action
-            android:id="@+id/action_login_fragment_to_register_fragment"
-            app:destination="@id/registration_graph" />
+            android:id="@+id/action_registration_fragment_to_login_fragment4"
+            app:destination="@id/login_fragment" />
     </fragment>
-
-    <navigation android:id="@+id/registration_graph"
-        app:startDestination="@id/enter_user_profile_fragment">
-
-        <fragment android:id="@+id/enter_user_profile_fragment"
-            android:name="org.task.manager.presentation.registration.EnterProfileDataFragment"
-            android:label="Enter Profile Data"
-            tools:layout="@layout/fragment_enter_profile_info">
-
-            <action android:id="@+id/move_to_choose_user_password"
-                app:destination="@id/choose_user_password_fragment" />
-
-        </fragment>
-
-        <fragment android:id="@+id/choose_user_password_fragment"
-            android:name="org.task.manager.presentation.registration.ChooseUserPasswordFragment"
-            android:label="Choose User + Password"
-            tools:layout="@layout/fragment_choose_user_password" />
-    </navigation>
 
 </navigation>

@@ -4,9 +4,12 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_new_password">New password</string>
+    <string name="prompt_new_password_confirmation">Confirm the new password</string>
     <string name="prompt_bio">Bio</string>
-    <string name="action_sign_in">Log in</string>
+    <string name="action_sign_in">Login</string>
     <string name="action_register">Register</string>
+    <string name="prompt_remember">Remember Me</string>
     <string name="action_view_profile">View Profile</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome! "</string>

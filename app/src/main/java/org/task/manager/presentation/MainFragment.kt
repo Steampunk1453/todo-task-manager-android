@@ -30,7 +30,6 @@ import org.task.manager.databinding.FragmentMainBinding
 import org.task.manager.presentation.login.LoginViewModel
 
 class MainFragment : Fragment() {
-
     // Get a reference to the ViewModel scoped to this Fragment
     private val viewModel by viewModels<LoginViewModel>()
     private lateinit var binding: FragmentMainBinding
@@ -47,8 +46,13 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeAuthenticationState()
 
-        binding.profileButton.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToProfileFragment()
+        binding.loginButton.setOnClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToLoginFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.registerButton.setOnClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToRegistrationFragment2()
             findNavController().navigate(action)
         }
     }
@@ -64,14 +68,12 @@ class MainFragment : Fragment() {
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
 //                    binding.welcomeText.text = ""
-//
 //                    binding.authButton.text = getString(R.string.logout_button_text)
 //                    binding.authButton.setOnClickListener {
 //
 //                    }
                 }
                 else -> {
-
 //                    binding.authButton.text = getString(R.string.login_button_text)
 //                    binding.authButton.setOnClickListener {
 //                        findNavController().navigate(R.id.login_fragment)

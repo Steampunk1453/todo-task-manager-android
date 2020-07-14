@@ -4,30 +4,34 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import androidx.activity.addCallback
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import org.task.manager.R
-import org.task.manager.presentation.login.LoginViewModel
 import androidx.navigation.fragment.findNavController
+import org.task.manager.R
+import org.task.manager.databinding.FragmentRegistrationBinding
+import org.task.manager.presentation.login.LoginViewModel
 
-class ChooseUserPasswordFragment : Fragment() {
+class RegistrationFragment : Fragment() {
 
     private val loginViewModel: LoginViewModel by activityViewModels()
     private val registrationViewModel: RegistrationViewModel by activityViewModels()
+    private lateinit var binding: FragmentRegistrationBinding
 
     private lateinit var usernameEditText: EditText
-    private lateinit var passwordEditText: EditText
+    private lateinit var newPasswordEditText: EditText
+    private lateinit var newPasswordConfirmationEditText: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_choose_user_password, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,14 +39,15 @@ class ChooseUserPasswordFragment : Fragment() {
         val navController = findNavController()
 
         usernameEditText = view.findViewById(R.id.username)
-        passwordEditText = view.findViewById(R.id.password)
+        newPasswordEditText = view.findViewById(R.id.new_password)
+        newPasswordConfirmationEditText = view.findViewById(R.id.new_password_confirmation)
 
         // When the register button is clicked, collect the current values from
         // the two edit texts and pass to the ViewModel to complete registration.
-        view.findViewById<Button>(R.id.register_button).setOnClickListener {
+       binding.registerButton.setOnClickListener {
             registrationViewModel.createAccountAndLogin(
                 usernameEditText.text.toString(),
-                passwordEditText.text.toString()
+                newPasswordEditText.text.toString()
             )
         }
 
@@ -59,7 +64,7 @@ class ChooseUserPasswordFragment : Fragment() {
                     // status will be tested and should be authenticated.
                     val authToken = registrationViewModel.authToken
                     loginViewModel.authenticate(authToken, "")
-                    navController.popBackStack(R.id.profile_fragment, false)
+                    navController.popBackStack(R.id.main_fragment, false)
                 }
             }
         )
@@ -70,7 +75,7 @@ class ChooseUserPasswordFragment : Fragment() {
         // the user comes back to register later.
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             registrationViewModel.userCancelledRegistration()
-            navController.popBackStack(R.id.login_fragment, false)
+            navController.popBackStack(R.id.main_fragment, false)
         }
 
     }

@@ -20,7 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.addCallback
@@ -31,23 +31,15 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.task.manager.R
 import org.task.manager.databinding.FragmentLoginBinding
-import org.task.manager.databinding.FragmentMainBinding
-import org.task.manager.presentation.MainFragmentDirections
 
 class LoginFragment : Fragment() {
-
-    companion object {
-        const val TAG = "LoginFragment"
-        const val SIGN_IN_RESULT_CODE = 1001
-    }
-
     // Get a reference to the ViewModel scoped to this Fragment
     private val viewModel: LoginViewModel by activityViewModels()
     private lateinit var binding: FragmentLoginBinding
 
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
-    private lateinit var loginButton: Button
+    private lateinit var rememberMe: CheckBox
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,17 +56,12 @@ class LoginFragment : Fragment() {
         val navController = findNavController()
 
         usernameEditText = view.findViewById(R.id.username)
-        passwordEditText = view.findViewById(R.id.password)
+        passwordEditText = view.findViewById(R.id.new_password)
+        rememberMe = view.findViewById(R.id.rememberMe)
 
-        loginButton = view.findViewById(R.id.login_button)
-        loginButton.setOnClickListener {
+        binding.loginButton.setOnClickListener {
             viewModel.authenticate(usernameEditText.text.toString(),
                 passwordEditText.text.toString())
-        }
-
-        binding.registerButton.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
-            findNavController().navigate(action)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -95,6 +82,5 @@ class LoginFragment : Fragment() {
         val duration = Toast.LENGTH_SHORT
         Toast.makeText(context, text, duration).show()
     }
-
 
 }
