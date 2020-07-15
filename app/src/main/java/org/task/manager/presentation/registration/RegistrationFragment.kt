@@ -11,14 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentRegistrationBinding
 import org.task.manager.presentation.login.LoginViewModel
 
 class RegistrationFragment : Fragment() {
 
-    private val loginViewModel: LoginViewModel by activityViewModels()
-    private val registrationViewModel: RegistrationViewModel by activityViewModels()
+    private val loginViewModel: LoginViewModel by viewModel()
+    private val registrationViewModel: RegistrationViewModel by viewModel()
     private lateinit var binding: FragmentRegistrationBinding
 
     private lateinit var usernameEditText: EditText
@@ -63,7 +64,7 @@ class RegistrationFragment : Fragment() {
                     // then pop back to the profie_fragment, where the user authentication
                     // status will be tested and should be authenticated.
                     val authToken = registrationViewModel.authToken
-                    loginViewModel.authenticate(authToken, "")
+                    loginViewModel.authenticate(authToken, "", true)
                     navController.popBackStack(R.id.main_fragment, false)
                 }
             }

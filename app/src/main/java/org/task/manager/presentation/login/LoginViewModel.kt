@@ -2,12 +2,19 @@ package org.task.manager.presentation.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.task.manager.data.network.model.request.LoginRequest
+import org.task.manager.domain.interactor.LoginUseCase
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(private val loginUseCase: LoginUseCase) : ViewModel() {
 
     enum class AuthenticationState {
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
     }
+
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     val authenticationState = MutableLiveData<AuthenticationState>()
     var username: String
@@ -22,16 +29,17 @@ class LoginViewModel : ViewModel() {
         authenticationState.value = AuthenticationState.UNAUTHENTICATED
     }
 
-    fun authenticate(username: String, password: String) {
-        if (passwordIsValidForUsername(username, password)) {
-            this.username = username
-            authenticationState.value = AuthenticationState.AUTHENTICATED
-        } else {
-            authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
+    fun authenticate(username: String, password: String, isRemember: Boolean) {
+        val loginRequest = LoginRequest(username, password, isRemember)
+        coroutineScope.launch {
+          val result = loginUseCase.execute(loginRequest)
+            if (result) {
+//                this.username = username
+                authenticationState.postValue(AuthenticationState.AUTHENTICATED)
+            } else {
+                authenticationState.postValue(AuthenticationState.INVALID_AUTHENTICATION)
+            }
         }
     }
 
-    private fun passwordIsValidForUsername(username: String, password: String): Boolean {
-        return username == password
-    }
 }

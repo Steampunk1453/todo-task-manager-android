@@ -1,19 +1,3 @@
-/*
- * Copyright 2019, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.task.manager.presentation.login
 
 import android.os.Bundle
@@ -26,20 +10,20 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
     // Get a reference to the ViewModel scoped to this Fragment
-    private val viewModel: LoginViewModel by activityViewModels()
+    private val viewModel: LoginViewModel by viewModel()
     private lateinit var binding: FragmentLoginBinding
 
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
-    private lateinit var rememberMe: CheckBox
+    private lateinit var rememberMeCheckBox: CheckBox
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,11 +41,11 @@ class LoginFragment : Fragment() {
 
         usernameEditText = view.findViewById(R.id.username)
         passwordEditText = view.findViewById(R.id.new_password)
-        rememberMe = view.findViewById(R.id.rememberMe)
+        rememberMeCheckBox = view.findViewById(R.id.rememberMe)
 
         binding.loginButton.setOnClickListener {
             viewModel.authenticate(usernameEditText.text.toString(),
-                passwordEditText.text.toString())
+                passwordEditText.text.toString(), rememberMeCheckBox.isActivated)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
