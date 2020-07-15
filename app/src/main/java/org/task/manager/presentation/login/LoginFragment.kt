@@ -12,11 +12,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
+import org.task.manager.data.network.model.response.AuthenticationState
 import org.task.manager.databinding.FragmentLoginBinding
+import org.task.manager.hide
+import org.task.manager.presentation.view.ViewElements
+import org.task.manager.show
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), ViewElements {
     // Get a reference to the ViewModel scoped to this Fragment
     private val viewModel: LoginViewModel by viewModel()
     private lateinit var binding: FragmentLoginBinding
@@ -25,10 +30,8 @@ class LoginFragment : Fragment() {
     private lateinit var passwordEditText: EditText
     private lateinit var rememberMeCheckBox: CheckBox
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         return binding.root
@@ -44,6 +47,7 @@ class LoginFragment : Fragment() {
         rememberMeCheckBox = view.findViewById(R.id.rememberMe)
 
         binding.loginButton.setOnClickListener {
+            showProgress()
             viewModel.authenticate(usernameEditText.text.toString(),
                 passwordEditText.text.toString(), rememberMeCheckBox.isActivated)
         }
@@ -53,18 +57,26 @@ class LoginFragment : Fragment() {
             navController.popBackStack(R.id.main_fragment, false)
         }
 
-        viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
-            when (authenticationState) {
-                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.popBackStack()
-                LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION -> showErrorMessage()
+        viewModel.authenticationResult.observe(viewLifecycleOwner, Observer { authenticationResult ->
+            when (authenticationResult.state) {
+                AuthenticationState.AUTHENTICATED -> navController.popBackStack()
+                AuthenticationState.UNAUTHENTICATED -> navController.popBackStack()
+                AuthenticationState.INVALID_AUTHENTICATION -> navController.popBackStack()
             }
+            hideProgress()
         })
     }
 
-    private fun showErrorMessage() {
-        val text = "Invalid User"
-        val duration = Toast.LENGTH_SHORT
-        Toast.makeText(context, text, duration).show()
+    override fun showMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showProgress() {
+        progressBar.show()
+    }
+
+    override fun hideProgress() {
+        progressBar.hide()
     }
 
 }
