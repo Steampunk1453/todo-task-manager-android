@@ -26,10 +26,8 @@ class RegistrationFragment : Fragment() {
     private lateinit var newPasswordEditText: EditText
     private lateinit var newPasswordConfirmationEditText: EditText
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false)
         return binding.root
