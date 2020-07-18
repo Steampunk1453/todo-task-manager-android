@@ -14,7 +14,7 @@ class LoginDataSource(private val dataSourceProvider: DataSourceProvider) {
         val loginDataSource = dataSourceProvider.getLoginDataSource()
         val response = loginDataSource.login(request)
 
-        if (!response.isSuccessful) throw IOException("Unsuccessful response")
+        if (!response.isSuccessful) throw IOException(response.message())
 
         return response.body() ?: throw IllegalStateException("Empty response body")
     }
