@@ -6,10 +6,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import org.task.manager.data.network.model.AuthenticationResult
+import org.task.manager.domain.model.AuthenticationResult
 import org.task.manager.data.network.model.request.LoginRequest
-import org.task.manager.data.network.model.response.AuthenticationState
-import org.task.manager.domain.Result
+import org.task.manager.domain.model.AuthenticationState
 import org.task.manager.domain.interactor.LoginUseCase
 
 class LoginViewModel(private val loginUseCase: LoginUseCase) : ViewModel() {
@@ -33,19 +32,13 @@ class LoginViewModel(private val loginUseCase: LoginUseCase) : ViewModel() {
 
         val loginRequest = LoginRequest(username, password, isRemember)
         coroutineScope.launch {
-            when (val result = loginUseCase(loginRequest)) {
-                is Result.Success -> authenticationResult.postValue(AuthenticationResult(AuthenticationState.AUTHENTICATED, "Ok"))
-                is Result.Error ->
-                    result.throwable.message?.let {
-                        authenticationResult.postValue(AuthenticationResult(AuthenticationState.INVALID_AUTHENTICATION, it))
-                    }
-            }
+            val authenticationResponse = loginUseCase.execute(loginRequest)
+            authenticationResult.postValue(authenticationResponse)
         }
     }
 
     public override fun onCleared() {
         coroutineScope.cancel()
     }
-
 
 }
