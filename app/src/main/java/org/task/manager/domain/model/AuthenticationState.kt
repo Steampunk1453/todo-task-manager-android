@@ -1,4 +1,4 @@
-package org.task.manager.data.network.model.response
+package org.task.manager.domain.model
 
 enum class AuthenticationState {
     AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
