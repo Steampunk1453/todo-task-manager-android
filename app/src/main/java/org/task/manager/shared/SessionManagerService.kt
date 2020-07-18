@@ -2,7 +2,7 @@ package org.task.manager.shared
 
 import android.content.SharedPreferences
 
-class SessionManager(private val sharedPreferences: SharedPreferences) {
+class SessionManagerService(private val sharedPreferences: SharedPreferences) {
 
     companion object {
         const val USER_TOKEN = "user_token"

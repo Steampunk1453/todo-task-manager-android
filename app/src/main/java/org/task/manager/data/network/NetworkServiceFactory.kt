@@ -2,15 +2,15 @@ package org.task.manager.data.network
 
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
-import org.task.manager.shared.SessionManager
+import org.task.manager.shared.SessionManagerService
 
 class NetworkServiceFactory(
     logLevel: HttpLoggingInterceptor.Level,
-    sessionManager: SessionManager
-) : ServiceFactory(logLevel, sessionManager) {
+    sessionManagerService: SessionManagerService
+) : ServiceFactory(logLevel, sessionManagerService) {
 
-    override fun interceptors(sessionManager: SessionManager): List<Interceptor> {
-        val token = sessionManager.fetchAuthToken()
+    override fun interceptors(sessionManagerService: SessionManagerService): List<Interceptor> {
+        val token = sessionManagerService.fetchAuthToken()
         if(token != null) {
             val networkRequestHeader = NetworkRequestHeader("Authorization", "Bearer $token")
            return arrayListOf(NetworkRequestInterceptor(listOf(networkRequestHeader)))

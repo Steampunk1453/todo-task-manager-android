@@ -5,7 +5,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.task.manager.BuildConfig
-import org.task.manager.shared.SessionManager
+import org.task.manager.shared.SessionManagerService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 
 abstract class ServiceFactory(
     private val logLevel: HttpLoggingInterceptor.Level,
-    private val sessionManager: SessionManager
+    private val sessionManagerService: SessionManagerService
 ) {
 
     fun <T> create(serviceType: Class<T>): T {
@@ -43,7 +43,7 @@ abstract class ServiceFactory(
 
     private fun getHttpClient(): OkHttpClient {
         val builder = OkHttpClient.Builder()
-        interceptors(sessionManager).forEach { interceptor -> builder.addInterceptor(interceptor) }
+        interceptors(sessionManagerService).forEach { interceptor -> builder.addInterceptor(interceptor) }
         builder.addInterceptor(HttpLoggingInterceptor().apply { level = logLevel })
             .connectTimeout(120, TimeUnit.SECONDS)
             .writeTimeout(120, TimeUnit.SECONDS)
@@ -51,5 +51,5 @@ abstract class ServiceFactory(
         return builder.build()
     }
 
-    abstract fun interceptors(sessionManager: SessionManager): List<Interceptor>
+    abstract fun interceptors(sessionManagerService: SessionManagerService): List<Interceptor>
 }
