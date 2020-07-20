@@ -21,9 +21,9 @@ import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
 class LoginFragment : Fragment(), ViewElements {
-    private val viewModel: LoginViewModel by viewModel()
+    private val loginViewModel: LoginViewModel by viewModel()
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var navController: NavController
+    private lateinit var  navController: NavController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,15 +37,15 @@ class LoginFragment : Fragment(), ViewElements {
 
         binding.loginButton.setOnClickListener {
             showProgress()
-            viewModel.authenticate(username.text.toString(), password.text.toString(), rememberMe.isActivated)
+            loginViewModel.authenticate(username.text.toString(), password.text.toString(), rememberMe.isActivated)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            viewModel.refuseAuthentication()
+            loginViewModel.refuseAuthentication()
             navController.popBackStack(R.id.main_fragment, false)
         }
 
-        viewModel.authenticationResult.observe(viewLifecycleOwner, Observer { authenticationResult ->
+        loginViewModel.authenticationResult.observe(viewLifecycleOwner, Observer { authenticationResult ->
             when (authenticationResult.state) {
                 AuthenticationState.AUTHENTICATED -> authenticatedUser(authenticationResult.message)
                 AuthenticationState.INVALID_AUTHENTICATION -> showMessage(authenticationResult.message)

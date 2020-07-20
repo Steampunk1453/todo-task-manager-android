@@ -9,8 +9,8 @@ import org.task.manager.presentation.registration.RegistrationViewModel
 
 val module: Module = module {
 
-    viewModel { LoginViewModel(get()) }
-    viewModel { RegistrationViewModel() }
+    viewModel { LoginViewModel(get(), get()) }
+    viewModel { RegistrationViewModel(get()) }
 
 }
 
