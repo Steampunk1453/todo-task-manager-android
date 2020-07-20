@@ -1,4 +1,4 @@
-package org.task.manager.domain.interactor
+package org.task.manager.domain.usecase
 
 import org.task.manager.domain.model.AuthenticationResult
 import org.task.manager.data.network.model.request.LoginRequest
@@ -6,11 +6,11 @@ import org.task.manager.domain.model.AuthenticationState
 import org.task.manager.data.network.model.response.LoginResponse
 import org.task.manager.domain.Result
 import org.task.manager.domain.repository.LoginRepository
-import org.task.manager.shared.SessionManagerService
+import org.task.manager.shared.service.SessionManagerService
 import timber.log.Timber
 
-class LoginUseCase(private val loginRepository: LoginRepository,
-                   private val sessionManagerService: SessionManagerService) {
+class LoginUser(private val loginRepository: LoginRepository,
+                private val sessionManagerService: SessionManagerService) {
 
 
     suspend fun execute(request: LoginRequest): AuthenticationResult? =
@@ -26,7 +26,7 @@ class LoginUseCase(private val loginRepository: LoginRepository,
         Timber.d("Successful authentication")
         return AuthenticationResult(
             AuthenticationState.AUTHENTICATED,
-            "Authenticated user"
+            "Successful authentication"
         )
     }
 
