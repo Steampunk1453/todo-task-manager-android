@@ -2,7 +2,7 @@ package org.task.manager.data.network
 
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
-import org.task.manager.shared.SessionManagerService
+import org.task.manager.shared.service.SessionManagerService
 
 class NetworkServiceFactory(
     logLevel: HttpLoggingInterceptor.Level,

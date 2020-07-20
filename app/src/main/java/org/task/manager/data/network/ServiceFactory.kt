@@ -1,11 +1,10 @@
 package org.task.manager.data.network
 
-import android.content.SharedPreferences
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.task.manager.BuildConfig
-import org.task.manager.shared.SessionManagerService
+import org.task.manager.shared.service.SessionManagerService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
