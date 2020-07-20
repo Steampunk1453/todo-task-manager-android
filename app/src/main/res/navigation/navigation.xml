@@ -26,10 +26,6 @@
         android:id="@+id/registration_fragment"
         android:name="org.task.manager.presentation.registration.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" >
-        <action
-            android:id="@+id/action_registration_fragment_to_login_fragment4"
-            app:destination="@id/login_fragment" />
-    </fragment>
+        tools:layout="@layout/fragment_registration" />
 
 </navigation>
