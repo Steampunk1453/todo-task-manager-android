@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.task.manager.data.network.model.request.RegisterRequest
 import org.task.manager.domain.usecase.RegisterUser
+import java.util.Locale
 
 class RegistrationViewModel(private val registerUser: RegisterUser) : ViewModel() {
 
@@ -20,7 +21,8 @@ class RegistrationViewModel(private val registerUser: RegisterUser) : ViewModel(
     val registrationState = MutableLiveData<RegistrationState>(RegistrationState.COLLECT_PROFILE_DATA)
 
     fun createAccount(username: String, email: String, password: String) {
-        val registerRequest = RegisterRequest(username, email, password)
+        val langKey = Locale.getDefault().language
+        val registerRequest = RegisterRequest(username, email, password, langKey)
         coroutineScope.launch {
             registerUser.execute(registerRequest)
             registrationState.postValue(RegistrationState.REGISTRATION_COMPLETED)
