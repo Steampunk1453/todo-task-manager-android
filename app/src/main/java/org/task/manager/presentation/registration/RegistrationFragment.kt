@@ -11,14 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_registration.*
-import kotlinx.android.synthetic.main.fragment_registration.username
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentRegistrationBinding
 import org.task.manager.hide
-import org.task.manager.presentation.login.LoginViewModel
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
@@ -54,7 +51,7 @@ class RegistrationFragment : Fragment(), ViewElements {
             viewLifecycleOwner, Observer { state ->
                 if (state == RegistrationViewModel.RegistrationState.REGISTRATION_COMPLETED) {
                     showMessage("Successful register")
-                    navController.popBackStack(R.id.login_fragment, false)
+                    navController.navigate(R.id.login_fragment)
                 }
                 hideProgress()
             }

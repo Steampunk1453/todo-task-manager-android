@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
-import org.task.manager.domain.model.AuthenticationState
 import org.task.manager.databinding.FragmentLoginBinding
+import org.task.manager.domain.model.AuthenticationState
 import org.task.manager.hide
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
@@ -35,7 +35,7 @@ class LoginFragment : Fragment(), ViewElements {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loginButton.setOnClickListener {
+        binding.login.setOnClickListener {
             showProgress()
             loginViewModel.authenticate(username.text.toString(), password.text.toString(), rememberMe.isActivated)
         }
@@ -69,7 +69,7 @@ class LoginFragment : Fragment(), ViewElements {
 
     private fun authenticatedUser(message: String) {
         showMessage(message)
-        navController.popBackStack()
+        navController.navigate(R.id.main_fragment)
     }
 
 }
