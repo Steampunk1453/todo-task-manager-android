@@ -7,7 +7,6 @@ import org.task.manager.R
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

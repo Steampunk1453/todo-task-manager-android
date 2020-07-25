@@ -26,7 +26,7 @@ class LoginViewModel(private val loginUser: LoginUser,
     var username: String
 
     init {
-        // In this example, the user is always unauthenticated when MainActivity is launched
+        // In this case, the user is always unauthenticated when MainActivity is launched
         authenticationResult.value?.state = AuthenticationState.UNAUTHENTICATED
         username = ""
     }

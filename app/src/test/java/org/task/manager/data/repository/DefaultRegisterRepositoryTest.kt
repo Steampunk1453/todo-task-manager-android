@@ -9,18 +9,11 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.task.manager.data.network.model.request.RegisterRequest
 import org.task.manager.data.network.source.RegisterDataSource
-
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.assertThrows
-import org.task.manager.domain.Result
-import java.io.IOException
-import kotlin.test.assertFailsWith
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi

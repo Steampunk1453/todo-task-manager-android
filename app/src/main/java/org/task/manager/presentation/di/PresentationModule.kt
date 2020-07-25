@@ -1,6 +1,5 @@
 package org.task.manager.presentation.di
 
-
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.task.manager.presentation.login.LoginViewModel

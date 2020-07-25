@@ -11,7 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_registration.*
+import kotlinx.android.synthetic.main.fragment_registration.email
+import kotlinx.android.synthetic.main.fragment_registration.newPassword
+import kotlinx.android.synthetic.main.fragment_registration.newPasswordConfirmation
+import kotlinx.android.synthetic.main.fragment_registration.progressBarReg
+import kotlinx.android.synthetic.main.fragment_registration.username
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentRegistrationBinding

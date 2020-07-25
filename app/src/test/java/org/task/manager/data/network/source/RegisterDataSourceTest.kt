@@ -9,17 +9,10 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.extension.ExtendWith
-import org.task.manager.data.network.api.LoginApi
 import org.task.manager.data.network.api.RegisterApi
-import org.task.manager.data.network.model.request.LoginRequest
 import org.task.manager.data.network.model.request.RegisterRequest
-import org.task.manager.data.network.model.response.LoginResponse
-import retrofit2.Response
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi
