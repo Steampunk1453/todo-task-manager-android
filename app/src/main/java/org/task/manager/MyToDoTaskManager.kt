@@ -1,6 +1,7 @@
 package org.task.manager
 
 import android.app.Application
+import android.view.View
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.task.manager.data.di.dataModules
@@ -19,4 +20,12 @@ class MyToDoTaskManager : Application() {
         }
 
     }
+}
+
+fun View.hide() {
+    this.visibility = View.GONE
+}
+
+fun View.show() {
+    this.visibility = View.VISIBLE
 }

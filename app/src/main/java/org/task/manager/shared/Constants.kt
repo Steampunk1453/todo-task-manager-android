@@ -4,6 +4,6 @@ object Constants {
 
     // Endpoints
     const val LOGIN_URL = "authenticate"
-    const val AUDIOVISUAL_URL = "audiovisuals"
+    const val REGISTER_URL = "register"
 
 }

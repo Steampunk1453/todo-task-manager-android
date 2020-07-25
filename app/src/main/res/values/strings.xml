@@ -8,6 +8,7 @@
     <string name="prompt_new_password_confirmation">Confirm the new password</string>
     <string name="prompt_bio">Bio</string>
     <string name="action_sign_in">Login</string>
+    <string name="action_sign_out">Logout</string>
     <string name="action_register">Register</string>
     <string name="prompt_remember">Remember Me</string>
     <string name="action_view_profile">View Profile</string>
