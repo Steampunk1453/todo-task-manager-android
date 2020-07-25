@@ -39,7 +39,7 @@ class MainFragment : Fragment(), ViewElements {
         }
 
         binding.logoutButton.setOnClickListener {
-            loginViewModel.logout()
+            loginViewModel.singOut()
         }
 
         loginViewModel.logoutState.observe(

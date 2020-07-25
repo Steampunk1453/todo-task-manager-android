@@ -21,7 +21,6 @@ class RegisterUser(private val registerRepository: RegisterRepository) {
         Timber.d("Successful register: %s", response)
     }
 
-
     private fun manageFailedResponse(error: String) {
         Timber.e("Invalid Register: %s", error)
     }

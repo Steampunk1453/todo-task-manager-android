@@ -2,15 +2,14 @@ package org.task.manager.data.network.source
 
 import org.task.manager.data.network.model.request.LoginRequest
 import org.task.manager.data.network.model.response.LoginResponse
-import org.task.manager.data.network.source.DataSourceProvider
 import java.io.IOException
 
 
 class LoginDataSource(private val dataSourceProvider: DataSourceProvider) {
 
     suspend fun login(request: LoginRequest): LoginResponse {
-        val loginDataSource = dataSourceProvider.getLoginDataSource()
-        val response = loginDataSource.login(request)
+        val loginApi = dataSourceProvider.getLoginDataSource()
+        val response = loginApi.login(request)
 
         if (!response.isSuccessful) throw IOException(response.message())
 
