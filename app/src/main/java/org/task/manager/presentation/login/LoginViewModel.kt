@@ -40,10 +40,11 @@ class LoginViewModel(private val loginUser: LoginUser,
         coroutineScope.launch {
             val authenticationResponse = loginUser.execute(loginRequest)
             authenticationResult.postValue(authenticationResponse)
+            logoutState.postValue(null)
         }
     }
 
-    fun logout() {
+    fun singOut() {
         coroutineScope.launch {
             logoutUser.execute()
             logoutState.postValue(LogoutState.LOGOUT_COMPLETE)
