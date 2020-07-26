@@ -53,7 +53,7 @@ class RegistrationFragment : Fragment(), ViewElements {
 
         registrationViewModel.registrationState.observe(
             viewLifecycleOwner, Observer { state ->
-                if (state == RegistrationViewModel.RegistrationState.REGISTRATION_COMPLETED) {
+                if (state == RegistrationState.REGISTRATION_COMPLETED) {
                     showMessage("Successful register")
                     navController.navigate(R.id.login_fragment)
                 }
@@ -63,7 +63,7 @@ class RegistrationFragment : Fragment(), ViewElements {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             registrationViewModel.userCancelledRegistration()
-            navController.popBackStack(R.id.main_fragment, false)
+            navController.navigate(R.id.main_fragment)
         }
 
     }

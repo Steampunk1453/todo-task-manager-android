@@ -12,14 +12,12 @@ import org.task.manager.domain.model.AuthenticationState
 import org.task.manager.domain.usecase.LoginUser
 import org.task.manager.domain.usecase.LogoutUser
 
-class LoginViewModel(private val loginUser: LoginUser,
-                     private val logoutUser: LogoutUser) : ViewModel() {
+class LoginViewModel(
+    private val loginUser: LoginUser,
+    private val logoutUser: LogoutUser
+) : ViewModel() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-
-    enum class LogoutState {
-        LOGOUT_COMPLETE
-    }
 
     val authenticationResult = MutableLiveData<AuthenticationResult>()
     val logoutState = MutableLiveData<LogoutState>()
@@ -40,15 +38,12 @@ class LoginViewModel(private val loginUser: LoginUser,
         coroutineScope.launch {
             val authenticationResponse = loginUser.execute(loginRequest)
             authenticationResult.postValue(authenticationResponse)
-            logoutState.postValue(null)
         }
     }
 
     fun singOut() {
-        coroutineScope.launch {
-            logoutUser.execute()
-            logoutState.postValue(LogoutState.LOGOUT_COMPLETE)
-        }
+        logoutUser.execute()
+        logoutState.value = LogoutState.LOGOUT_COMPLETE
     }
 
     public override fun onCleared() {

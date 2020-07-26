@@ -13,11 +13,6 @@ class RegistrationViewModel(private val registerUser: RegisterUser) : ViewModel(
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-    enum class RegistrationState {
-        COLLECT_PROFILE_DATA,
-        REGISTRATION_COMPLETED
-    }
-
     val registrationState = MutableLiveData<RegistrationState>(RegistrationState.COLLECT_PROFILE_DATA)
 
     fun createAccount(username: String, email: String, password: String) {
@@ -32,7 +27,6 @@ class RegistrationViewModel(private val registerUser: RegisterUser) : ViewModel(
     fun userCancelledRegistration(): Boolean {
         // Clear existing registration data
         registrationState.value = RegistrationState.COLLECT_PROFILE_DATA
-//        authToken = ""
         return true
     }
 

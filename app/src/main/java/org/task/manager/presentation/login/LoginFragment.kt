@@ -45,7 +45,7 @@ class LoginFragment : Fragment(), ViewElements {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             loginViewModel.refuseAuthentication()
-            navController.popBackStack(R.id.main_fragment, false)
+            navController.navigate(R.id.main_fragment)
         }
 
         loginViewModel.authenticationResult.observe(viewLifecycleOwner, Observer { authenticationResult ->
