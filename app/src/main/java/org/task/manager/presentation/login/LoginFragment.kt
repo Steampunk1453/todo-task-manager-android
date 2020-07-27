@@ -72,7 +72,7 @@ class LoginFragment : Fragment(), ViewElements {
 
     private fun authenticatedUser(message: String) {
         showMessage(message)
-        navController.navigate(R.id.main_fragment)
+        navController.navigate(R.id.home_fragment)
     }
 
 }

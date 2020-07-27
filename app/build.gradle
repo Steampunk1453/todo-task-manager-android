@@ -53,8 +53,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+
+    // Logs
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Kotlin Coroutines

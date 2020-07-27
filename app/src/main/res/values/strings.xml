@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">MyToDoTaskManager</string>
-    <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
@@ -23,6 +22,10 @@
     <string name="login_prompt">Login to set customizations!</string>
     <string name="login_btn">Login</string>
     <string name="settings_btn">Settings</string>
-    <string name="settings_fact_type_title">Fun Fact Type</string>
     <string name="action_next">Next</string>
+    <string name="menu_audiovisual">Audiovisual</string>
+    <string name="menu_book">Book</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 </resources>
