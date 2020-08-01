@@ -12,7 +12,9 @@
     <string name="prompt_remember">Remember Me</string>
     <string name="action_view_profile">View Profile</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome! "</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="home">"This is your homepage"</string>
+    <string name="user">"You are logged in as user "</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_button_text">Login</string>
@@ -28,4 +30,8 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="title_home">Home</string>
+    <string name="title_audiovisual">Series &amp; Films</string>
+    <string name="title_book">Books</string>
+    <string name="title_account">Account</string>
 </resources>
