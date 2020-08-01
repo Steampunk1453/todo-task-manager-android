@@ -1,4 +1,4 @@
-package org.task.manager.presentation.login
+package org.task.manager.presentation.auth.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,11 +20,13 @@ import org.task.manager.R
 import org.task.manager.databinding.FragmentLoginBinding
 import org.task.manager.domain.model.AuthenticationState
 import org.task.manager.hide
+import org.task.manager.presentation.shared.SharedViewModel
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
 class LoginFragment : Fragment(), ViewElements {
     private val loginViewModel: LoginViewModel by viewModel()
+    private val sharedViewModel: SharedViewModel by viewModel()
     private lateinit var binding: FragmentLoginBinding
     private lateinit var  navController: NavController
 
@@ -45,7 +47,7 @@ class LoginFragment : Fragment(), ViewElements {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             loginViewModel.refuseAuthentication()
-            navController.navigate(R.id.main_fragment)
+            navController.navigate(R.id.fragment_main)
         }
 
         loginViewModel.authenticationResult.observe(viewLifecycleOwner, Observer { authenticationResult ->
@@ -72,7 +74,8 @@ class LoginFragment : Fragment(), ViewElements {
 
     private fun authenticatedUser(message: String) {
         showMessage(message)
-        navController.navigate(R.id.home_fragment)
+        sharedViewModel.setUserName(username.text.toString())
+        navController.navigate(R.id.fragment_home)
     }
 
 }

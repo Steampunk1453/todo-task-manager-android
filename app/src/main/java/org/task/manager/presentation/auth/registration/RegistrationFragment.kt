@@ -1,4 +1,4 @@
-package org.task.manager.presentation.registration
+package org.task.manager.presentation.auth.registration
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -38,7 +38,6 @@ class RegistrationFragment : Fragment(), ViewElements {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-
        binding.registerButton.setOnClickListener {
            if(validations(email.text.toString(), newPassword.text.toString(),
                    newPasswordConfirmation.text.toString())) {
@@ -55,7 +54,7 @@ class RegistrationFragment : Fragment(), ViewElements {
             viewLifecycleOwner, Observer { state ->
                 if (state == RegistrationState.REGISTRATION_COMPLETED) {
                     showMessage("Successful register")
-                    navController.navigate(R.id.login_fragment)
+                    navController.navigate(R.id.fragment_login)
                 }
                 hideProgress()
             }
@@ -63,7 +62,7 @@ class RegistrationFragment : Fragment(), ViewElements {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             registrationViewModel.userCancelledRegistration()
-            navController.navigate(R.id.main_fragment)
+            navController.navigate(R.id.fragment_main)
         }
 
     }

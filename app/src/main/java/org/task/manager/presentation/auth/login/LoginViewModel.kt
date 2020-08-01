@@ -1,4 +1,4 @@
-package org.task.manager.presentation.login
+package org.task.manager.presentation.auth.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
