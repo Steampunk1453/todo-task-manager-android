@@ -14,8 +14,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentMainBinding
 import org.task.manager.hide
-import org.task.manager.presentation.login.LoginViewModel
-import org.task.manager.presentation.login.LogoutState
+import org.task.manager.presentation.auth.login.LoginViewModel
+import org.task.manager.presentation.auth.login.LogoutState
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
@@ -33,12 +33,14 @@ class MainFragment : Fragment(), ViewElements {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginButton.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToLoginFragment()
+            val action =
+                MainFragmentDirections.actionMainFragmentToLoginFragment()
             findNavController().navigate(action)
         }
 
         binding.registerButton.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToRegistrationFragment2()
+            val action =
+                MainFragmentDirections.actionMainFragmentToRegistrationFragment2()
             findNavController().navigate(action)
         }
 
