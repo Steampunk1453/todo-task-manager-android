@@ -34,4 +34,9 @@
     <string name="title_audiovisual">Series &amp; Films</string>
     <string name="title_book">Books</string>
     <string name="title_account">Account</string>
+    <string name="title">Title</string>
+    <string name="genre">Genre</string>
+    <string name="platform">Platform</string>
+    <string name="start_date">Start date</string>
+    <string name="deadline">Deadline</string>
 </resources>

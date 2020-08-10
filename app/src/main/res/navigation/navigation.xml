@@ -38,6 +38,6 @@
     <fragment
         android:id="@+id/fragment_audiovisual"
         android:name="org.task.manager.presentation.audiovisual.AudiovisualFragment"
-        android:label="Series"
+        android:label="Series &amp; Films"
         tools:layout="@layout/fragment_audiovisual" />
 </navigation>
