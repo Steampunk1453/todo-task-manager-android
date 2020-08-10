@@ -14,12 +14,14 @@ import kotlinx.android.synthetic.main.fragment_home.user
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentHomeBinding
+import org.task.manager.presentation.auth.login.LoginViewModel
 import org.task.manager.presentation.shared.SharedViewModel
 
 class HomeFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by viewModel()
+    private val loginViewModel: LoginViewModel by viewModel()
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var  navController: NavController
+    private lateinit var navController: NavController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -35,11 +37,11 @@ class HomeFragment : Fragment() {
             navController.navigate(R.id.fragment_main)
         }
 
-        sharedViewModel.userData.observe(
-            viewLifecycleOwner, Observer { username ->
-                user.text = getString(user.id, username)
+        sharedViewModel.userData.observe(viewLifecycleOwner, Observer {
+            if(it != null) {
+                user.text = getString(user.id, it)
             }
-        )
+        })
     }
 
 

@@ -1,6 +1,7 @@
 package org.task.manager.domain.di
 
 import org.koin.dsl.module
+import org.task.manager.domain.usecase.GetAudiovisuals
 import org.task.manager.domain.usecase.LoginUser
 import org.task.manager.domain.usecase.LogoutUser
 import org.task.manager.domain.usecase.RegisterUser
@@ -11,6 +12,7 @@ val modules = module {
     single { LogoutUser(get()) }
     single { RegisterUser(get()) }
     single { SessionManagerService(get()) }
+    single { GetAudiovisuals(get()) }
 }
 
 val domainModules = listOf(modules)
