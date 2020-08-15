@@ -27,6 +27,13 @@ class AudiovisualFragment : Fragment() {
 
         viewModel.getAudiovisuals()
 
+        binding.addAudiovisual.setOnClickListener {
+            fragmentManager?.let {
+                CreateAudiovisualFragment.newInstance()
+                    .show(it, CreateAudiovisualFragment.TAG)
+            }
+        }
+
         return binding.root
     }
 

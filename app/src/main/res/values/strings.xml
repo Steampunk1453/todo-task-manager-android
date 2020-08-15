@@ -39,4 +39,5 @@
     <string name="platform">Platform</string>
     <string name="start_date">Start date</string>
     <string name="deadline">Deadline</string>
+    <string name="done">Done</string>
 </resources>
