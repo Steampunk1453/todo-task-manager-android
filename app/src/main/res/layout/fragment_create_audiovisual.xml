@@ -14,8 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:enabled="false"
-        android:text="Cancel"
+        android:text="@string/cancel"
         app:layout_constraintBottom_toBottomOf="@+id/save"
         app:layout_constraintEnd_toStartOf="@+id/save"
         app:layout_constraintTop_toTopOf="@+id/save"
@@ -26,9 +25,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Save"
+        android:enabled="false"
+        android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startDate" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxLayout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/title"
@@ -41,7 +41,7 @@
             android:id="@+id/titleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title" />
+            android:hint="@string/title" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -57,7 +57,7 @@
             android:id="@+id/suggestedTitlesText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Suggested Titles" />
+            android:hint="@string/suggested_titles" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -72,7 +72,7 @@
             android:id="@+id/genreText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Genre" />
+            android:hint="@string/genre" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -87,7 +87,7 @@
             android:id="@+id/platformText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Platform" />
+            android:hint="@string/platform" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -97,46 +97,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/platform"
         android:inputType="date"
-
         tools:layout_editor_absoluteX="32dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/startDateText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Start Date" />
+            android:hint="@string/start_date" />
     </com.google.android.material.textfield.TextInputLayout>
 
-<!--    <com.google.android.material.textfield.TextInputEditText-->
-<!--        android:id="@+id/deadline"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="parent"-->
-<!--        android:inputType="date"-->
-<!--        tools:layout_editor_absoluteX="32dp">-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/deadline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startDate"
+        android:inputType="date"
+        tools:layout_editor_absoluteX="32dp">
 
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/deadlineText"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="Deadline" />-->
-<!--    </com.google.android.material.textfield.TextInputEditText>-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/deadlineText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/deadline" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/title"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        tools:layout_editor_absoluteX="32dp">-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/checkBoxLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deadline"
+        android:inputType="date"
+        tools:layout_editor_absoluteX="32dp">
 
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/taskText"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="Title" />-->
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
-
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/done" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
