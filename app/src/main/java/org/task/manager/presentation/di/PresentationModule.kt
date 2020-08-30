@@ -13,7 +13,7 @@ val module: Module = module {
     viewModel { LoginViewModel(get(), get()) }
     viewModel { RegistrationViewModel(get()) }
     viewModel { SharedViewModel() }
-    viewModel { AudiovisualViewModel(get()) }
+    viewModel { AudiovisualViewModel(get(), get(), get()) }
 
 }
 
