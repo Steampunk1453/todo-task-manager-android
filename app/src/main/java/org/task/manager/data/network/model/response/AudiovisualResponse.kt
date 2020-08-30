@@ -16,7 +16,7 @@ data class AudiovisualResponse(
     val platform: String,
 
     @SerializedName("platformUrl")
-    val platformUrl: String,
+    val platformUrl: String?,
 
     @SerializedName("startDate")
     val startDate: String,
