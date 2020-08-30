@@ -10,4 +10,6 @@
     <color name="darkPurple">#565C98</color>
     <color name="palePurple">#A6A2DC</color>
     <color name="lightGrey">#EFEFEF</color>
+
+    <color name="dividerColor">#e5e5e5</color>
 </resources>
