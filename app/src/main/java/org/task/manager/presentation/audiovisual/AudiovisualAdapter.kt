@@ -1,12 +1,11 @@
 package org.task.manager.presentation.audiovisual
 
-//import kotlinx.android.synthetic.main.item_audiovisual.view.deadline
-//import kotlinx.android.synthetic.main.item_audiovisual.view.startDate
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_audiovisual.view.checkBox
 import kotlinx.android.synthetic.main.item_audiovisual.view.deadline
@@ -24,13 +23,6 @@ class AudiovisualAdapter(private val audiovisuals: List<Audiovisual>) :
     RecyclerView.Adapter<AudiovisualAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        init {
-            // Define click listener for the ViewHolder's View.
-            view.checkBox.setOnCheckedChangeListener { checkbox, _ ->
-                checkbox.text
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,11 +37,7 @@ class AudiovisualAdapter(private val audiovisuals: List<Audiovisual>) :
         holder.itemView.genre.text = audiovisuals[position].genre
         holder.itemView.platform.text = audiovisuals[position].platform
 
-        val inputFormatter =
-            DateTimeFormatter.ofPattern(
-                "yyyy-MM-dd'T'HH:mm:ss'Z'",
-                Locale.ENGLISH
-            )
+        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)
         val outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yy", Locale.ENGLISH)
 
         val startDate = LocalDate.parse(audiovisuals[position].startDate, inputFormatter)
@@ -61,6 +49,17 @@ class AudiovisualAdapter(private val audiovisuals: List<Audiovisual>) :
         holder.itemView.deadline.text = formattedDeadline
 
         holder.itemView.checkBox.isChecked = audiovisuals[position].check == 1
+
+        holder.itemView.setOnClickListener {
+            val builder = AlertDialog.Builder(holder.itemView.context)
+            builder.setMessage("Are you sure?")
+            builder.setPositiveButton("Yes") {dialog, which ->
+            }
+            builder.setNegativeButton("No") {dialog, which ->
+                dialog.cancel()
+            }
+            builder.show()
+        }
     }
 
     override fun getItemCount() = audiovisuals.size
