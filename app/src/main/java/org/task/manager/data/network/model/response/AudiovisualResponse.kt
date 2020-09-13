@@ -1,6 +1,7 @@
 package org.task.manager.data.network.model.response
 
 import com.google.gson.annotations.SerializedName
+import org.task.manager.domain.model.Audiovisual
 
 data class AudiovisualResponse(
     @SerializedName("id")
@@ -25,6 +26,13 @@ data class AudiovisualResponse(
     val deadline: String,
 
     @SerializedName("check")
-    val check: Int
+    val check: Int,
+
+    @SerializedName("user")
+    val userResponse: UserResponse
+)
+
+fun AudiovisualResponse.toDomain(): Audiovisual = Audiovisual(id, title, genre, platform, platformUrl,
+    startDate, deadline, check, userResponse.toDomain()
 )
 

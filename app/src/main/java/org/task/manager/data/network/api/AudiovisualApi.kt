@@ -8,15 +8,22 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface AudiovisualApi {
 
+    @POST(Constants.AUDIOVISUAL_URL)
+    suspend fun createAudiovisual(@Body request: AudiovisualRequest): Response<AudiovisualResponse>
+
+    @PUT(Constants.AUDIOVISUAL_URL)
+    suspend fun updateAudiovisual(@Body request: AudiovisualRequest): Response<AudiovisualResponse>
+
     @GET(Constants.AUDIOVISUAL_URL)
     suspend fun getAudiovisuals(): Response<List<AudiovisualResponse>>
 
-    @POST(Constants.AUDIOVISUAL_URL)
-    suspend fun createAudiovisual(@Body request: AudiovisualRequest): Response<AudiovisualResponse>
+    @GET(Constants.AUDIOVISUAL_URL + Constants.AUDIOVISUAL_ID)
+    suspend fun getAudiovisual(@Path("id") id: Long): Response<AudiovisualResponse>
 
     @DELETE(Constants.AUDIOVISUAL_URL + Constants.AUDIOVISUAL_ID)
     suspend fun deleteAudiovisual(@Path("id") id: Long): Response<Void>

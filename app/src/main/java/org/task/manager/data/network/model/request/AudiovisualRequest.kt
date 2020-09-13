@@ -3,6 +3,10 @@ package org.task.manager.data.network.model.request
 import com.google.gson.annotations.SerializedName
 
 data class AudiovisualRequest(
+
+    @SerializedName("id")
+    val id: Long?,
+
     @SerializedName("title")
     val title: String,
 
@@ -19,6 +23,9 @@ data class AudiovisualRequest(
     val deadline: String,
 
     @SerializedName("check")
-    val check: Int
+    val check: Int,
+
+    @SerializedName("user")
+    val UserRequest: UserRequest?
 )
 
