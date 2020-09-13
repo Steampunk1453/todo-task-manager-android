@@ -39,5 +39,13 @@
         android:id="@+id/fragment_audiovisual"
         android:name="org.task.manager.presentation.audiovisual.AudiovisualFragment"
         android:label="Series &amp; Films"
-        tools:layout="@layout/fragment_audiovisual" />
+        tools:layout="@layout/fragment_audiovisual" >
+        <action
+            android:id="@+id/action_fragment_audiovisual_to_createAudiovisualFragment"
+            app:destination="@id/fragment_create_audiovisual" />
+    </fragment>
+    <dialog
+        android:id="@+id/fragment_create_audiovisual"
+        android:name="org.task.manager.presentation.audiovisual.CreateAudiovisualFragment"
+        android:label="Create Audiovisual" />
 </navigation>

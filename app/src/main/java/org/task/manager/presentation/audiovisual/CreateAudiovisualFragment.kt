@@ -11,6 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -19,13 +20,17 @@ import kotlinx.android.synthetic.main.fragment_create_audiovisual.genreText
 import kotlinx.android.synthetic.main.fragment_create_audiovisual.platformText
 import kotlinx.android.synthetic.main.fragment_create_audiovisual.save
 import kotlinx.android.synthetic.main.fragment_create_audiovisual.titleText
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentCreateAudiovisualBinding
+import org.task.manager.presentation.shared.DateService
+import org.task.manager.presentation.shared.SharedViewModel
 
 class CreateAudiovisualFragment : DialogFragment() {
-
-    private val viewModel: AudiovisualViewModel by viewModel()
+    private val audiovisualViewModel: AudiovisualViewModel by viewModel()
+    private lateinit var sharedViewModel: SharedViewModel
+    private val dateService: DateService by inject()
     private lateinit var binding: FragmentCreateAudiovisualBinding
     private lateinit var navController: NavController
 
@@ -34,7 +39,12 @@ class CreateAudiovisualFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_audiovisual, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_create_audiovisual,
+            container,
+            false
+        )
         navController = findNavController()
 
         return binding.root
@@ -48,7 +58,10 @@ class CreateAudiovisualFragment : DialogFragment() {
         var startDateMilliseconds = 1L
         var deadlineMilliseconds = 1L
 
-        binding.titleText.addTextChangedListener { isTitleFilled = it?.toString()?.isNotBlank() ?: false
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        binding.titleText.addTextChangedListener {
+            isTitleFilled = it?.toString()?.isNotBlank() ?: false
             isSaveEnabled(isTitleFilled, isStartDateFilled, isDeadlineFilled)
         }
 
@@ -69,7 +82,9 @@ class CreateAudiovisualFragment : DialogFragment() {
 
         val startDatePicker = builder.build()
         binding.startDateText.setOnClickListener {
-            if(!startDatePicker.isAdded) startDatePicker.show(parentFragmentManager, "start_date_picker_tag")
+            if (!startDatePicker.isAdded) startDatePicker.show(
+                parentFragmentManager, "start_date_picker_tag"
+            )
         }
 
         startDatePicker.addOnPositiveButtonClickListener {
@@ -79,7 +94,10 @@ class CreateAudiovisualFragment : DialogFragment() {
 
         val deadlinePicker = builder.build()
         binding.deadlineText.setOnClickListener {
-            if(!deadlinePicker.isAdded) deadlinePicker.show(parentFragmentManager, "deadline_picker_tag")
+            if (!deadlinePicker.isAdded) deadlinePicker.show(
+                parentFragmentManager,
+                "deadline_picker_tag"
+            )
         }
 
         deadlinePicker.addOnPositiveButtonClickListener {
@@ -88,19 +106,50 @@ class CreateAudiovisualFragment : DialogFragment() {
         }
 
         binding.save.setOnClickListener {
-            viewModel.createAudiovisual(titleText.text.toString(), genreText.text.toString(),
-                platformText.text.toString(), startDateMilliseconds,
-                deadlineMilliseconds, if (checkBox.isChecked) 1 else 0)
+            if (binding.audiovisualId.tag != null) {
+                audiovisualViewModel.updateAudiovisual(
+                    binding.audiovisualId.tag.toString().toLong(),
+                    titleText.text.toString(),
+                    genreText.text.toString(),
+                    platformText.text.toString(),
+                    startDateMilliseconds,
+                    deadlineMilliseconds,
+                    if (checkBox.isChecked) 1 else 0,
+                    binding.userId.tag.toString().toLong()
+                )
+            } else {
+                audiovisualViewModel.createAudiovisual(
+                    titleText.text.toString(), genreText.text.toString(),
+                    platformText.text.toString(), startDateMilliseconds,
+                    deadlineMilliseconds, if (checkBox.isChecked) 1 else 0
+                )
+            }
         }
 
         binding.cancel.setOnClickListener {
             dismiss()
         }
 
-        viewModel.audiovisual.observe(viewLifecycleOwner, Observer {
+        audiovisualViewModel.audiovisual.observe(viewLifecycleOwner, Observer {
             dismiss()
             navController.navigate(R.id.fragment_audiovisual)
         })
+
+        val action = arguments?.getString("action")
+        if (action == "update") {
+            sharedViewModel.audiovisual.observe(viewLifecycleOwner, Observer {
+                binding.audiovisualId.tag = it.id
+                binding.userId.tag = it.user?.id
+                binding.titleText.setText(it.title)
+                binding.genreText.setText(it.genre)
+                binding.platformText.setText(it.platform)
+                binding.startDateText.setText(dateService.getFormattedDate(it.startDate))
+                startDateMilliseconds = dateService.convertDateToMilliseconds(binding.startDateText.text.toString())
+                binding.deadlineText.setText(dateService.getFormattedDate(it.deadline))
+                deadlineMilliseconds =  dateService.convertDateToMilliseconds(binding.deadlineText.text.toString())
+                binding.checkBox.isChecked = it.check == 1
+            })
+        }
     }
 
     override fun onResume() {
@@ -112,8 +161,10 @@ class CreateAudiovisualFragment : DialogFragment() {
         )
     }
 
-    private fun isSaveEnabled(isTitleFilled: Boolean, isStartDateFilled: Boolean,
-                              isDeadlineFilled: Boolean) {
+    private fun isSaveEnabled(
+        isTitleFilled: Boolean, isStartDateFilled: Boolean,
+        isDeadlineFilled: Boolean
+    ) {
         save.isEnabled = isTitleFilled && isStartDateFilled && isDeadlineFilled
     }
 

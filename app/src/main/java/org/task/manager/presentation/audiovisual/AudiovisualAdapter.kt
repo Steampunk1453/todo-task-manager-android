@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_audiovisual.view.checkBox
 import kotlinx.android.synthetic.main.item_audiovisual.view.deadline
@@ -15,12 +18,14 @@ import kotlinx.android.synthetic.main.item_audiovisual.view.startDate
 import kotlinx.android.synthetic.main.item_audiovisual.view.title
 import org.task.manager.R
 import org.task.manager.domain.model.Audiovisual
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Locale
+import org.task.manager.presentation.shared.DateService
+import org.task.manager.presentation.shared.SharedViewModel
 
-class AudiovisualAdapter(private val audiovisuals: List<Audiovisual>) :
-    RecyclerView.Adapter<AudiovisualAdapter.ViewHolder>() {
+class AudiovisualAdapter(private val audiovisuals: List<Audiovisual>,
+                         private val audiovisualViewModel: AudiovisualViewModel,
+                         private val sharedViewModel: SharedViewModel,
+                         private val dateService : DateService
+) : RecyclerView.Adapter<AudiovisualAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
@@ -28,41 +33,38 @@ class AudiovisualAdapter(private val audiovisuals: List<Audiovisual>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_audiovisual, parent, false)
+
         return ViewHolder(view)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.title.text = audiovisuals[position].title
-        holder.itemView.genre.text = audiovisuals[position].genre
-        holder.itemView.platform.text = audiovisuals[position].platform
+        populateItemView(holder, position)
 
-        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)
-        val outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yy", Locale.ENGLISH)
+        holder.itemView.setOnLongClickListener {
+            audiovisualViewModel.getAudiovisual(audiovisuals[position].id)
 
-        val startDate = LocalDate.parse(audiovisuals[position].startDate, inputFormatter)
-        val formattedStartDate = outputFormatter.format(startDate)
-        holder.itemView.startDate.text = formattedStartDate
+            audiovisualViewModel.audiovisual.observe(holder.itemView.context as LifecycleOwner, Observer {
+                sharedViewModel.sendAudiovisual(it)
 
-        val deadline = LocalDate.parse(audiovisuals[position].deadline, inputFormatter)
-        val formattedDeadline = outputFormatter.format(deadline)
-        holder.itemView.deadline.text = formattedDeadline
-
-        holder.itemView.checkBox.isChecked = audiovisuals[position].check == 1
-
-        holder.itemView.setOnClickListener {
-            val builder = AlertDialog.Builder(holder.itemView.context)
-            builder.setMessage("Are you sure?")
-            builder.setPositiveButton("Yes") {dialog, which ->
-            }
-            builder.setNegativeButton("No") {dialog, which ->
-                dialog.cancel()
-            }
-            builder.show()
+                val bundle = bundleOf("action" to "update")
+                Navigation.findNavController(holder.itemView).navigate(R.id.fragment_create_audiovisual, bundle)
+            })
+            return@setOnLongClickListener true
         }
     }
 
     override fun getItemCount() = audiovisuals.size
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun populateItemView(holder: ViewHolder, position: Int) {
+        holder.itemView.title.text = audiovisuals[position].title
+        holder.itemView.genre.text = audiovisuals[position].genre
+        holder.itemView.platform.text = audiovisuals[position].platform
+        holder.itemView.startDate.text = dateService.getFormattedDate(audiovisuals[position].startDate)
+        holder.itemView.deadline.text = dateService.getFormattedDate(audiovisuals[position].deadline)
+        holder.itemView.checkBox.isChecked = audiovisuals[position].check == 1
+    }
 
 }
 
