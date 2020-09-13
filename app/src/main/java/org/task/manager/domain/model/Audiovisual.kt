@@ -8,5 +8,6 @@ data class Audiovisual(
     val platformUrl: String?,
     val startDate: String,
     val deadline: String,
-    val check: Int
+    val check: Int,
+    val user: User?
 )
