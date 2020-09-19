@@ -2,6 +2,7 @@ package org.task.manager.presentation.shared
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.sql.Timestamp
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
@@ -27,6 +28,11 @@ class DateService {
         val localDate = LocalDate.parse(date, formatter)
         val instant = localDate.atTime(LocalTime.NOON).atZone(ZoneId.systemDefault()).toInstant()
         return instant.toEpochMilli()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun convertToInstant(dateMilliseconds: Long): String {
+        return Timestamp(dateMilliseconds).toInstant().toString()
     }
 
 }
