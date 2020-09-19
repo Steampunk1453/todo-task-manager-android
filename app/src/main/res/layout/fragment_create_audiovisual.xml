@@ -42,52 +42,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/suggestedTitles"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        android:visibility="gone"
-        tools:layout_editor_absoluteX="32dp">
+        android:hint="@string/suggested_titles">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/suggestedTitlesText"
+        <AutoCompleteTextView
+            android:id="@+id/suggested_titles_dropdown"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/suggested_titles" />
+            android:layout_height="wrap_content"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/genre"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/suggestedTitles"
-        tools:layout_editor_absoluteX="32dp">
+        android:hint="@string/genre">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/genreText"
+        <AutoCompleteTextView
+            android:id="@+id/genre_dropdown"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/genre" />
+            android:layout_height="wrap_content"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/platform"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/genre"
-        tools:layout_editor_absoluteX="32dp">
+        android:hint="@string/platform">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/platformText"
+        <AutoCompleteTextView
+            android:id="@+id/platform_dropdown"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/platform" />
+            android:layout_height="wrap_content"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -104,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:focusable="false"
+            android:focusable="true"
             android:inputType="none"
             android:hint="@string/start_date" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -123,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:focusable="false"
+            android:focusable="true"
             android:inputType="none"
             android:hint="@string/deadline" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -161,6 +164,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="invisible"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

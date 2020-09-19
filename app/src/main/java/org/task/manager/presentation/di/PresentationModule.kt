@@ -12,7 +12,7 @@ val module: Module = module {
 
     viewModel { LoginViewModel(get(), get()) }
     viewModel { RegistrationViewModel(get()) }
-    viewModel { AudiovisualViewModel(get(), get(), get(), get(), get()) }
+    viewModel { AudiovisualViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { DateService() }
 
 }

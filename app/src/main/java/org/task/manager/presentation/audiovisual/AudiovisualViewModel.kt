@@ -11,12 +11,18 @@ import kotlinx.coroutines.launch
 import org.task.manager.data.network.model.request.AudiovisualRequest
 import org.task.manager.data.network.model.request.UserRequest
 import org.task.manager.domain.model.Audiovisual
+import org.task.manager.domain.model.Genre
+import org.task.manager.domain.model.Platform
+import org.task.manager.domain.model.Title
 import org.task.manager.domain.usecase.CreateAudiovisual
 import org.task.manager.domain.usecase.DeleteAudiovisual
 import org.task.manager.domain.usecase.GetAudiovisual
 import org.task.manager.domain.usecase.GetAudiovisuals
+import org.task.manager.domain.usecase.GetGenres
+import org.task.manager.domain.usecase.GetPlatforms
+import org.task.manager.domain.usecase.GetTitles
 import org.task.manager.domain.usecase.UpdateAudiovisual
-import java.sql.Timestamp
+import org.task.manager.presentation.shared.DateService
 
 
 class AudiovisualViewModel(
@@ -24,17 +30,31 @@ class AudiovisualViewModel(
     private val createAudiovisual: CreateAudiovisual,
     private val updateAudiovisual: UpdateAudiovisual,
     private val deleteAudiovisual: DeleteAudiovisual,
-    private val getAudiovisual: GetAudiovisual
+    private val getAudiovisual: GetAudiovisual,
+    private val getTitles: GetTitles,
+    private val getGenres: GetGenres,
+    private val getPlatforms: GetPlatforms,
+    private val dateService: DateService
 ) : ViewModel() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     val audiovisuals = MutableLiveData<List<Audiovisual>>()
     val audiovisual = MutableLiveData<Audiovisual>()
+    val titles = MutableLiveData<List<Title>>()
+    val genres = MutableLiveData<List<Genre>>()
+    val platforms = MutableLiveData<List<Platform>>()
 
     init {
         coroutineScope.launch {
-            audiovisuals.postValue(getAudiovisuals.execute())
+            val audiovisualsResult = getAudiovisuals.execute()
+            audiovisuals.postValue(audiovisualsResult)
+            val titlesResult = getTitles.execute()
+            titles.postValue(titlesResult)
+            val genresResult = getGenres.execute()
+            genres.postValue(genresResult)
+            val platformsResult = getPlatforms.execute()
+            platforms.postValue(platformsResult)
         }
     }
 
@@ -46,13 +66,14 @@ class AudiovisualViewModel(
             title,
             genre,
             platform,
-            convertToInstantString(startDate),
-            convertToInstantString(deadline),
+            dateService.convertToInstant(startDate),
+            dateService.convertToInstant(deadline),
             check,
             null
         )
         coroutineScope.launch {
-            audiovisual.postValue(createAudiovisual.execute(audiovisualRequest))
+            val audiovisualCreateResult = createAudiovisual.execute(audiovisualRequest)
+            audiovisual.postValue(audiovisualCreateResult)
         }
     }
 
@@ -64,19 +85,21 @@ class AudiovisualViewModel(
             title,
             genre,
             platform,
-            convertToInstantString(startDate),
-            convertToInstantString(deadline),
+            dateService.convertToInstant(startDate),
+            dateService.convertToInstant(deadline),
             check,
             UserRequest(userId)
         )
         coroutineScope.launch {
-            audiovisual.postValue(updateAudiovisual.execute(audiovisualRequest))
+            val audiovisualUpdateResult = updateAudiovisual.execute(audiovisualRequest)
+            audiovisual.postValue(audiovisualUpdateResult)
         }
     }
 
     fun getAudiovisual(id: Long) {
         coroutineScope.launch {
-            audiovisual.postValue(getAudiovisual.execute(id))
+            val audiovisualResult = getAudiovisual.execute(id)
+            audiovisual.postValue(audiovisualResult)
         }
     }
 
@@ -88,11 +111,6 @@ class AudiovisualViewModel(
 
     public override fun onCleared() {
         coroutineScope.cancel()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun convertToInstantString(dateMilliseconds: Long): String {
-        return Timestamp(dateMilliseconds).toInstant().toString()
     }
 
 }

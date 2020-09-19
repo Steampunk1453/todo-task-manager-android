@@ -2,6 +2,8 @@ package org.task.manager.data.network.api
 
 import org.task.manager.data.network.model.request.AudiovisualRequest
 import org.task.manager.data.network.model.response.AudiovisualResponse
+import org.task.manager.data.network.model.response.PlatformResponse
+import org.task.manager.data.network.model.response.TitleResponse
 import org.task.manager.shared.Constants
 import retrofit2.Response
 import retrofit2.http.Body
@@ -27,5 +29,11 @@ interface AudiovisualApi {
 
     @DELETE(Constants.AUDIOVISUAL_URL + Constants.AUDIOVISUAL_ID)
     suspend fun deleteAudiovisual(@Path("id") id: Long): Response<Void>
+
+    @GET(Constants.TITLE_URL)
+    suspend fun getTitles(): Response<List<TitleResponse>>
+
+    @GET(Constants.PLATFORM_URL)
+    suspend fun getPlatforms(): Response<List<PlatformResponse>>
 
 }

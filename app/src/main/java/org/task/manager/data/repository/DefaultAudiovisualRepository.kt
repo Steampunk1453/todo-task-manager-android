@@ -4,6 +4,8 @@ import org.task.manager.data.network.model.request.AudiovisualRequest
 import org.task.manager.data.network.model.response.toDomain
 import org.task.manager.data.network.source.AudiovisualDataSource
 import org.task.manager.domain.model.Audiovisual
+import org.task.manager.domain.model.Platform
+import org.task.manager.domain.model.Title
 import org.task.manager.domain.repository.AudiovisualRepository
 
 class DefaultAudiovisualRepository(private val dataSource: AudiovisualDataSource) : AudiovisualRepository {
@@ -31,6 +33,18 @@ class DefaultAudiovisualRepository(private val dataSource: AudiovisualDataSource
 
     override suspend fun remove(id: Long) {
         dataSource.delete(id)
+    }
+
+    override suspend fun getAllTitles(): List<Title> {
+        return dataSource.getAllTitles().map {
+            it.toDomain()
+        }
+    }
+
+    override suspend fun getAllPlatforms(): List<Platform> {
+        return dataSource.getAllPlatforms().map {
+            it.toDomain()
+        }
     }
 
 }

@@ -5,6 +5,9 @@ import org.task.manager.domain.usecase.CreateAudiovisual
 import org.task.manager.domain.usecase.DeleteAudiovisual
 import org.task.manager.domain.usecase.GetAudiovisual
 import org.task.manager.domain.usecase.GetAudiovisuals
+import org.task.manager.domain.usecase.GetGenres
+import org.task.manager.domain.usecase.GetPlatforms
+import org.task.manager.domain.usecase.GetTitles
 import org.task.manager.domain.usecase.LoginUser
 import org.task.manager.domain.usecase.LogoutUser
 import org.task.manager.domain.usecase.RegisterUser
@@ -22,6 +25,9 @@ val modules = module {
     single { CreateAudiovisual(get()) }
     single { UpdateAudiovisual(get()) }
     single { DeleteAudiovisual(get()) }
+    single { GetTitles(get()) }
+    single { GetGenres(get()) }
+    single { GetPlatforms(get()) }
 
 }
 
