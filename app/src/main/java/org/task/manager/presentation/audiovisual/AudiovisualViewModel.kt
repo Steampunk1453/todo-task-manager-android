@@ -59,13 +59,14 @@ class AudiovisualViewModel(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun createAudiovisual(
-        title: String, genre: String, platform: String, startDate: Long, deadline: Long, check: Int) {
+    fun createAudiovisual(title: String, genre: String, platform: String, platformUrl: String, startDate: Long,
+                          deadline: Long, check: Int) {
         val audiovisualRequest = AudiovisualRequest(
             null,
             title,
             genre,
             platform,
+            platformUrl,
             dateService.convertToInstant(startDate),
             dateService.convertToInstant(deadline),
             check,
@@ -78,13 +79,14 @@ class AudiovisualViewModel(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun updateAudiovisual(id: Long, title: String, genre: String, platform: String, startDate: Long,
-                          deadline: Long, check: Int, userId: Long) {
+    fun updateAudiovisual(id: Long, title: String, genre: String, platform: String, platformUrl: String,
+                          startDate: Long, deadline: Long, check: Int, userId: Long) {
         val audiovisualRequest = AudiovisualRequest(
             id,
             title,
             genre,
             platform,
+            platformUrl,
             dateService.convertToInstant(startDate),
             dateService.convertToInstant(deadline),
             check,

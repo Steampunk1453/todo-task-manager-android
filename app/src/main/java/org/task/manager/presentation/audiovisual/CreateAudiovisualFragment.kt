@@ -63,6 +63,7 @@ class CreateAudiovisualFragment : DialogFragment() {
         var deadlineMilliseconds = 1L
         var genre = ""
         var platform = ""
+        var platformUrl = ""
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
@@ -135,7 +136,7 @@ class CreateAudiovisualFragment : DialogFragment() {
             }
         })
 
-        audiovisualViewModel.genres.observe(viewLifecycleOwner, Observer { list ->
+        audiovisualViewModel.genres.observe(viewLifecycleOwner, { list ->
             val genres = list as MutableList<Genre>
             val genresNames = genres
                 .filter { it.literary != 1 }
@@ -155,7 +156,7 @@ class CreateAudiovisualFragment : DialogFragment() {
             }
         })
 
-        audiovisualViewModel.platforms.observe(viewLifecycleOwner, Observer { list ->
+        audiovisualViewModel.platforms.observe(viewLifecycleOwner, { list ->
             val platforms = list as MutableList<Platform>
             val platformNames = platforms
                 .map { it.name }
@@ -171,6 +172,7 @@ class CreateAudiovisualFragment : DialogFragment() {
 
             platformsDropdown.setOnItemClickListener { adapterView, view, pos, id ->
                 platform = adapterView.getItemAtPosition(pos).toString()
+                platformUrl = platforms[pos].url
             }
         })
 
@@ -181,6 +183,7 @@ class CreateAudiovisualFragment : DialogFragment() {
                     titleText.text.toString(),
                     genre,
                     platform,
+                    platformUrl,
                     startDateMilliseconds,
                     deadlineMilliseconds,
                     if (checkBox.isChecked) 1 else 0,
@@ -191,6 +194,7 @@ class CreateAudiovisualFragment : DialogFragment() {
                     titleText.text.toString(),
                     genre,
                     platform,
+                    platformUrl,
                     startDateMilliseconds,
                     deadlineMilliseconds,
                     if (checkBox.isChecked) 1 else 0
@@ -212,6 +216,7 @@ class CreateAudiovisualFragment : DialogFragment() {
                 genre = it.genre
                 binding.platformDropdown.setText(it.platform)
                 platform = it.platform
+                platformUrl = it.platformUrl
                 binding.startDateText.setText(dateService.getFormattedDate(it.startDate))
                 startDateMilliseconds =
                     dateService.convertDateToMilliseconds(binding.startDateText.text.toString())

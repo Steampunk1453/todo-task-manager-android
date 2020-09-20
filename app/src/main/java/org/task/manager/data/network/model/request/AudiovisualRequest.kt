@@ -16,6 +16,9 @@ data class AudiovisualRequest(
     @SerializedName("platform")
     val platform: String,
 
+    @SerializedName("platformUrl")
+    val platformUrl: String,
+
     @SerializedName("startDate")
     val startDate: String,
 
