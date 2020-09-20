@@ -21,12 +21,10 @@ class LoginViewModel(
 
     val authenticationResult = MutableLiveData<AuthenticationResult>()
     val logoutState = MutableLiveData<LogoutState>()
-    var username: String
 
     init {
         // In this case, the user is always unauthenticated when MainActivity is launched
         authenticationResult.value?.state = AuthenticationState.UNAUTHENTICATED
-        username = ""
     }
 
     fun refuseAuthentication() {
