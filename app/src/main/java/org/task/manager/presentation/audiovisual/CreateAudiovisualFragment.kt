@@ -112,11 +112,6 @@ class CreateAudiovisualFragment : DialogFragment() {
             binding.deadlineText.setText(deadlinePicker.headerText)
         }
 
-        audiovisualViewModel.audiovisual.observe(viewLifecycleOwner, Observer {
-            dismiss()
-            navController.navigate(R.id.fragment_audiovisual)
-        })
-
         audiovisualViewModel.titles.observe(viewLifecycleOwner, Observer { list ->
             val titles = list as MutableList<Title>
             val titleNames = titles.map { it.name }
@@ -152,7 +147,7 @@ class CreateAudiovisualFragment : DialogFragment() {
             genresDropdown.setAdapter(adapter)
 
             genresDropdown.setOnItemClickListener { adapterView, view, pos, id ->
-               genre = adapterView.getItemAtPosition(pos).toString()
+                genre = adapterView.getItemAtPosition(pos).toString()
             }
         })
 
@@ -176,7 +171,13 @@ class CreateAudiovisualFragment : DialogFragment() {
             }
         })
 
+        audiovisualViewModel.audiovisual.observe(viewLifecycleOwner, Observer {
+            dismiss()
+            navController.navigate(R.id.fragment_audiovisual)
+        })
+
         binding.save.setOnClickListener {
+
             if (binding.audiovisualId.tag != null) {
                 audiovisualViewModel.updateAudiovisual(
                     binding.audiovisualId.tag.toString().toLong(),
@@ -189,7 +190,8 @@ class CreateAudiovisualFragment : DialogFragment() {
                     if (checkBox.isChecked) 1 else 0,
                     binding.userId.tag.toString().toLong()
                 )
-            } else {
+            }
+            else {
                 audiovisualViewModel.createAudiovisual(
                     titleText.text.toString(),
                     genre,
@@ -200,6 +202,7 @@ class CreateAudiovisualFragment : DialogFragment() {
                     if (checkBox.isChecked) 1 else 0
                 )
             }
+
         }
 
         binding.cancel.setOnClickListener {
@@ -228,6 +231,7 @@ class CreateAudiovisualFragment : DialogFragment() {
         }
     }
 
+
     override fun onResume() {
         super.onResume()
 
@@ -237,13 +241,12 @@ class CreateAudiovisualFragment : DialogFragment() {
         )
     }
 
+
     private fun isSaveEnabled(
         isTitleFilled: Boolean, isStartDateFilled: Boolean,
         isDeadlineFilled: Boolean
     ) {
         save.isEnabled = isTitleFilled && isStartDateFilled && isDeadlineFilled
     }
-
-
 
 }

@@ -9,6 +9,8 @@ import org.task.manager.domain.repository.LoginRepository
 import org.task.manager.shared.service.SessionManagerService
 import timber.log.Timber
 
+private const val SUCCESSFUL_AUTHENTICATION = "Successful authentication"
+
 class LoginUser(private val repository: LoginRepository,
                 private val sessionManager: SessionManagerService) {
 
@@ -23,9 +25,9 @@ class LoginUser(private val repository: LoginRepository,
 
     private fun manageSuccessfulResponse(loginResponse: LoginResponse): AuthenticationResult {
         saveToken(loginResponse.authToken)
-        Timber.d("Successful authentication")
+        Timber.d(SUCCESSFUL_AUTHENTICATION)
         return AuthenticationResult(
-            AuthenticationState.AUTHENTICATED, "Successful authentication"
+            AuthenticationState.AUTHENTICATED, SUCCESSFUL_AUTHENTICATION
         )
     }
 

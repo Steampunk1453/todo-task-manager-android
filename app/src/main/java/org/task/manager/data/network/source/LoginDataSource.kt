@@ -2,6 +2,7 @@ package org.task.manager.data.network.source
 
 import org.task.manager.data.network.model.request.LoginRequest
 import org.task.manager.data.network.model.response.LoginResponse
+import org.task.manager.shared.Constants.ILLEGAL_STATE_EXCEPTION_CAUSE
 import java.io.IOException
 
 
@@ -13,7 +14,7 @@ class LoginDataSource(private val dataSourceProvider: DataSourceProvider) {
 
         if (!response.isSuccessful) throw IOException(response.message())
 
-        return response.body() ?: throw IllegalStateException("Empty response body")
+        return response.body() ?: throw IllegalStateException(ILLEGAL_STATE_EXCEPTION_CAUSE)
     }
 
 }
