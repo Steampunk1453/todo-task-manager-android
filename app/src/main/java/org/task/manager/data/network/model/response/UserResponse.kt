@@ -15,3 +15,5 @@ data class UserResponse(
 )
 
 fun UserResponse.toDomain(): User = User(id, username, email)
+
+fun User.toResponse(): UserResponse = UserResponse(id, username, email)
