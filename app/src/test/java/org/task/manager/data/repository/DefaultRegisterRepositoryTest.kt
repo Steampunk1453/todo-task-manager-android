@@ -1,5 +1,6 @@
 package org.task.manager.data.repository
 
+import io.kotlintest.shouldBe
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -12,8 +13,10 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.task.manager.data.network.model.request.RegisterRequest
 import org.task.manager.data.network.source.RegisterDataSource
+import org.task.manager.domain.Result
+import org.task.manager.shared.Constants
+import org.task.manager.stub.RegisterRequestStub
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi
@@ -31,14 +34,36 @@ internal class DefaultRegisterRepositoryTest {
     }
 
     @Test
-    fun `should returns register result when register a request`() = runBlockingTest {
+    fun `should return successful result when register a user`() = runBlockingTest {
         // Given
-        val registerRequest = RegisterRequest("login", "email", "password", "en")
-        coEvery { dataSource.register(registerRequest) } just Runs
+        val request = RegisterRequestStub.random()
+        val expected = Result.Success("OK")
+        coEvery { dataSource.register(any()) } just Runs
         // When
-        registerRepository.register(registerRequest)
+        val result = registerRepository.register(request)
         // Then
-        coVerify { registerRepository.register(registerRequest) }
+        coVerify { registerRepository.register(request) }
+
+        result shouldBe expected
+        result as Result.Success
+        result.data shouldBe "OK"
+    }
+
+    @Test
+    fun `should return result with error message when register a user`() = runBlockingTest {
+        // Given
+        val request = RegisterRequestStub.random()
+        val error = Throwable(Constants.ILLEGAL_STATE_EXCEPTION_CAUSE)
+        val expected = Result.Error(error)
+        coEvery { dataSource.register(any()) } throws error
+        // When
+        val result = registerRepository.register(request)
+        // Then
+        coVerify { registerRepository.register(request) }
+
+        result shouldBe expected
+        result as Result.Error
+        result.throwable.message shouldBe Constants.ILLEGAL_STATE_EXCEPTION_CAUSE
     }
 
 }
