@@ -1,4 +1,4 @@
-package org.task.manager
+package org.task.manager.instrumented
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -16,7 +16,7 @@ import kotlin.random.Random
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class SessionManagerServiceInstrumentedTest : KoinTest {
+class SessionManagerServiceTest : KoinTest {
 
     private val sessionManagerService: SessionManagerService by inject()
 
