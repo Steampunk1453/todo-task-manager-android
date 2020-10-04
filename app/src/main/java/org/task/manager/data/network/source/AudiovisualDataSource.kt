@@ -42,9 +42,7 @@ class AudiovisualDataSource(private val dataSourceProvider: DataSourceProvider) 
 
     suspend fun delete(id: Long) {
         val audiovisualApi = dataSourceProvider.getAudiovisualDataSource()
-        val response = audiovisualApi.deleteAudiovisual(id)
-
-        if (!response.isSuccessful) throw IOException(response.message())
+        audiovisualApi.deleteAudiovisual(id)
     }
 
     suspend fun getAllTitles(): List<TitleResponse>{
