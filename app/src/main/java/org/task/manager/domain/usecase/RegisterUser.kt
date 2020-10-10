@@ -5,11 +5,11 @@ import org.task.manager.domain.Result
 import org.task.manager.domain.repository.RegisterRepository
 import timber.log.Timber
 
-class RegisterUser(private val registerRepository: RegisterRepository) {
+class RegisterUser(private val repository: RegisterRepository) {
 
 
     suspend fun execute(request: RegisterRequest) {
-        when (val result = registerRepository.register(request)) {
+        when (val result = repository.register(request)) {
             is Result.Success -> manageSuccessResponse(result.data)
             is Result.Error -> result.throwable.message?.let {
                 manageFailedResponse(it)

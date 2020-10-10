@@ -2,34 +2,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/main_fragment">
+    app:startDestination="@id/fragment_main">
 
     <fragment
-        android:id="@+id/main_fragment"
+        android:id="@+id/fragment_main"
         android:name="org.task.manager.presentation.MainFragment"
-        android:label="main_fragment"
+        android:label="Main"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_main_fragment_to_login_fragment"
-            app:destination="@id/login_fragment" />
+            app:destination="@id/fragment_login" />
         <action
             android:id="@+id/action_main_fragment_to_registration_fragment2"
-            app:destination="@id/registration_fragment" />
+            app:destination="@id/fragment_registration" />
     </fragment>
-
     <fragment
-        android:id="@+id/login_fragment"
-        android:name="org.task.manager.presentation.login.LoginFragment"
-        android:label="login_fragment"
-        tools:layout="@layout/fragment_login"/>
-    <fragment
-        android:id="@+id/registration_fragment"
-        android:name="org.task.manager.presentation.registration.RegistrationFragment"
-        android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" >
+        android:id="@+id/fragment_registration"
+        android:name="org.task.manager.presentation.auth.registration.RegistrationFragment"
+        android:label="Registration"
+        tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_registration_fragment_to_login_fragment"
-            app:destination="@id/login_fragment" />
+            app:destination="@id/fragment_login" />
     </fragment>
-
+    <fragment
+        android:id="@+id/fragment_login"
+        android:name="org.task.manager.presentation.auth.login.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login"/>
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="org.task.manager.presentation.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/fragment_audiovisual"
+        android:name="org.task.manager.presentation.audiovisual.AudiovisualFragment"
+        android:label="Series &amp; Films"
+        tools:layout="@layout/fragment_audiovisual" >
+        <action
+            android:id="@+id/action_fragment_audiovisual_to_createAudiovisualFragment"
+            app:destination="@id/fragment_create_audiovisual" />
+    </fragment>
+    <dialog
+        android:id="@+id/fragment_create_audiovisual"
+        android:name="org.task.manager.presentation.audiovisual.CreateAudiovisualFragment"
+        android:label="Create Audiovisual" />
 </navigation>

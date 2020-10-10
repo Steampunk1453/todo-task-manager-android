@@ -3,6 +3,7 @@ package org.task.manager.data.network.source
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
@@ -12,7 +13,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.task.manager.data.network.api.RegisterApi
-import org.task.manager.data.network.model.request.RegisterRequest
+import org.task.manager.stub.RegisterRequestStub
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi
@@ -30,8 +31,8 @@ internal class RegisterDataSourceTest {
     @Test
     fun `should no returns error response`() = runBlockingTest {
         // Given
-        val registerRequest = RegisterRequest("login", "email", "password", "en")
-        coEvery { provider.getRegisterDataSource() } returns registerApi
+        val registerRequest = RegisterRequestStub.random()
+        every { provider.getRegisterDataSource() } returns registerApi
         coEvery { registerApi.register(registerRequest) } just Runs
         // When
         registerDataSource.register(registerRequest)

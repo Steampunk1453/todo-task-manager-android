@@ -7,12 +7,12 @@ import org.task.manager.domain.repository.RegisterRepository
 
 class DefaultRegisterRepository(private val dataSource: RegisterDataSource) : RegisterRepository {
 
-    override suspend fun register(request: RegisterRequest): Result<String> =
-        try {
+    override suspend fun register(request: RegisterRequest): Result<String> {
+        return try {
             dataSource.register(request)
             Result.Success("OK")
         } catch (ex: Throwable) {
             Result.Error(ex)
         }
-
+    }
 }

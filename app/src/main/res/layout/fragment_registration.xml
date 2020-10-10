@@ -11,14 +11,14 @@
     android:paddingLeft="@dimen/fragment_horizontal_margin"
     android:paddingRight="@dimen/fragment_horizontal_margin"
     android:paddingTop="@dimen/fragment_vertical_margin"
-    tools:context=".presentation.registration.RegistrationFragment">
+    tools:context=".presentation.auth.registration.RegistrationFragment">
 
     <EditText
         android:id="@+id/username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="26dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/prompt_username"
         android:inputType="textPersonName"

@@ -4,4 +4,12 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="white">#FFFFFF</color>
+    <color name="background">@color/lightGrey</color>
+
+    <color name="purple">#7473BD</color>
+    <color name="darkPurple">#565C98</color>
+    <color name="palePurple">#A6A2DC</color>
+    <color name="lightGrey">#EFEFEF</color>
+
+    <color name="dividerColor">#e5e5e5</color>
 </resources>

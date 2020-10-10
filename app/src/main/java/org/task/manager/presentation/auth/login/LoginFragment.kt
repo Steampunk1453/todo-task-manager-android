@@ -1,4 +1,4 @@
-package org.task.manager.presentation.login
+package org.task.manager.presentation.auth.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login.password
@@ -20,11 +21,13 @@ import org.task.manager.R
 import org.task.manager.databinding.FragmentLoginBinding
 import org.task.manager.domain.model.AuthenticationState
 import org.task.manager.hide
+import org.task.manager.presentation.shared.SharedViewModel
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
 class LoginFragment : Fragment(), ViewElements {
-    private val loginViewModel: LoginViewModel by viewModel()
+    private val viewModel: LoginViewModel by viewModel()
+    private lateinit var sharedViewModel: SharedViewModel
     private lateinit var binding: FragmentLoginBinding
     private lateinit var  navController: NavController
 
@@ -38,17 +41,19 @@ class LoginFragment : Fragment(), ViewElements {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
         binding.login.setOnClickListener {
             showProgress()
-            loginViewModel.authenticate(username.text.toString(), password.text.toString(), rememberMe.isActivated)
+            viewModel.authenticate(username.text.toString(), password.text.toString(), rememberMe.isActivated)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            loginViewModel.refuseAuthentication()
-            navController.popBackStack(R.id.main_fragment, false)
+            viewModel.refuseAuthentication()
+            navController.navigate(R.id.fragment_main)
         }
 
-        loginViewModel.authenticationResult.observe(viewLifecycleOwner, Observer { authenticationResult ->
+        viewModel.authenticationResult.observe(viewLifecycleOwner, Observer { authenticationResult ->
             when (authenticationResult.state) {
                 AuthenticationState.AUTHENTICATED -> authenticatedUser(authenticationResult.message)
                 AuthenticationState.INVALID_AUTHENTICATION -> showMessage(authenticationResult.message)
@@ -72,7 +77,8 @@ class LoginFragment : Fragment(), ViewElements {
 
     private fun authenticatedUser(message: String) {
         showMessage(message)
-        navController.navigate(R.id.main_fragment)
+        sharedViewModel.setUserName(username.text.toString())
+        navController.navigate(R.id.fragment_home)
     }
 
 }

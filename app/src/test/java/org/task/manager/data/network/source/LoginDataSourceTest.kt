@@ -1,18 +1,19 @@
 package org.task.manager.data.network.source
 
+import io.kotlintest.shouldBe
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.ResponseBody
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.task.manager.data.network.api.LoginApi
-import org.task.manager.data.network.model.request.LoginRequest
-import org.task.manager.data.network.model.response.LoginResponse
+import org.task.manager.stub.LoginRequestStub
+import org.task.manager.stub.LoginResponseStub
 import retrofit2.Response
 import retrofit2.Response.success
 import java.io.IOException
@@ -32,23 +33,23 @@ internal class LoginDataSourceTest {
     private lateinit var loginDataSource: LoginDataSource
 
     @Test
-    fun `should returns successful response`() = runBlockingTest {
+    fun `should return successful login response when login a user`() = runBlockingTest {
         // Given
-        val loginRequest = LoginRequest("username", "password", false)
-        val loginResponse = LoginResponse(statusCode = 201, authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9")
-        coEvery { provider.getLoginDataSource() } returns loginApi
+        val loginRequest = LoginRequestStub.random()
+        val loginResponse = LoginResponseStub.random()
+        every { provider.getLoginDataSource() } returns loginApi
         coEvery { loginApi.login(any()) } returns success(loginResponse)
         // When
         val response = loginDataSource.login(loginRequest)
-        // Then
-        assertThat(response).isEqualTo(loginResponse)
+        response.statusCode shouldBe 201
+        response.authToken shouldBe loginResponse.authToken
     }
 
     @Test
-    fun `should returns empty body in response and throws exception`() = runBlockingTest {
+    fun `should return empty body in response and throws exception when login a user`() = runBlockingTest {
         // Given
-        val loginRequest = LoginRequest("username", "password", false)
-        coEvery { provider.getLoginDataSource() } returns loginApi
+        val loginRequest = LoginRequestStub.random()
+        every { provider.getLoginDataSource() } returns loginApi
         coEvery { loginApi.login(any()) } returns success(null)
         // When & Then
         assertFailsWith<IllegalStateException>("Empty response body") {
@@ -57,10 +58,10 @@ internal class LoginDataSourceTest {
     }
 
     @Test
-    fun `should returns unsuccessful response throws exception`() = runBlockingTest {
+    fun `should return unsuccessful response throws exception when login a user`() = runBlockingTest {
         // Given
-        val loginRequest = LoginRequest("username", "password", false)
-        coEvery { provider.getLoginDataSource() } returns loginApi
+        val loginRequest = LoginRequestStub.random()
+        every { provider.getLoginDataSource() } returns loginApi
         coEvery { loginApi.login(any()) } returns Response.error(
             400,
             ResponseBody.create(null, ByteArray(0))

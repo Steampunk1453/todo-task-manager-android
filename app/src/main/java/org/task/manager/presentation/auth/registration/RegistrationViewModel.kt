@@ -1,4 +1,4 @@
-package org.task.manager.presentation.registration
+package org.task.manager.presentation.auth.registration
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,11 +12,6 @@ import java.util.Locale
 class RegistrationViewModel(private val registerUser: RegisterUser) : ViewModel() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-
-    enum class RegistrationState {
-        COLLECT_PROFILE_DATA,
-        REGISTRATION_COMPLETED
-    }
 
     val registrationState = MutableLiveData<RegistrationState>(RegistrationState.COLLECT_PROFILE_DATA)
 
@@ -32,7 +27,6 @@ class RegistrationViewModel(private val registerUser: RegisterUser) : ViewModel(
     fun userCancelledRegistration(): Boolean {
         // Clear existing registration data
         registrationState.value = RegistrationState.COLLECT_PROFILE_DATA
-//        authToken = ""
         return true
     }
 
