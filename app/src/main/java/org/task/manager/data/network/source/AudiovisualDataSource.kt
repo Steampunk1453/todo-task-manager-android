@@ -26,7 +26,7 @@ class AudiovisualDataSource(private val dataSourceProvider: DataSourceProvider) 
 
     suspend fun getAll(): List<AudiovisualResponse>{
         val audiovisualApi = dataSourceProvider.getAudiovisualDataSource()
-        val response = audiovisualApi.getAudiovisuals()
+        val response = audiovisualApi.getAllAudiovisuals()
 
         if (!response.isSuccessful) throw IOException(response.message())
 
@@ -47,7 +47,7 @@ class AudiovisualDataSource(private val dataSourceProvider: DataSourceProvider) 
 
     suspend fun getAllTitles(): List<TitleResponse>{
         val audiovisualApi = dataSourceProvider.getAudiovisualDataSource()
-        val response = audiovisualApi.getTitles()
+        val response = audiovisualApi.getAllTitles()
 
         if (!response.isSuccessful) throw IOException(response.message())
 
@@ -56,7 +56,7 @@ class AudiovisualDataSource(private val dataSourceProvider: DataSourceProvider) 
 
     suspend fun getAllPlatforms(): List<PlatformResponse>{
         val audiovisualApi = dataSourceProvider.getAudiovisualDataSource()
-        val response = audiovisualApi.getPlatforms()
+        val response = audiovisualApi.getAllPlatforms()
 
         if (!response.isSuccessful) throw IOException(response.message())
 

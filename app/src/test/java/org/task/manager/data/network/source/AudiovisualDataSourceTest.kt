@@ -99,7 +99,7 @@ internal class AudiovisualDataSourceTest {
             val audiovisualResponse1 = AudiovisualStub.random().toResponse()
             val audiovisuals = listOf(audiovisualResponse, audiovisualResponse1)
             coEvery { provider.getAudiovisualDataSource() } returns audiovisualApi
-            coEvery { audiovisualApi.getAudiovisuals() } returns success(audiovisuals)
+            coEvery { audiovisualApi.getAllAudiovisuals() } returns success(audiovisuals)
             // When
             val response = audiovisualDataSource.getAll()
             // Then
@@ -170,7 +170,7 @@ internal class AudiovisualDataSourceTest {
             val titleResponse1 = TitleResponseStub.random()
             val titles = listOf(titleResponse, titleResponse1)
             coEvery { provider.getAudiovisualDataSource() } returns audiovisualApi
-            coEvery { audiovisualApi.getTitles() } returns success(titles)
+            coEvery { audiovisualApi.getAllTitles() } returns success(titles)
             // When
             val response = audiovisualDataSource.getAllTitles()
             // Then
@@ -192,7 +192,7 @@ internal class AudiovisualDataSourceTest {
             val platformResponse1 = PlatformResponseStub.random()
             val platforms = listOf(platformResponse, platformResponse1)
             coEvery { provider.getAudiovisualDataSource() } returns audiovisualApi
-            coEvery { audiovisualApi.getPlatforms() } returns success(platforms)
+            coEvery { audiovisualApi.getAllPlatforms() } returns success(platforms)
             // When
             val response = audiovisualDataSource.getAllPlatforms()
             // Then

@@ -22,18 +22,18 @@ interface AudiovisualApi {
     suspend fun updateAudiovisual(@Body request: AudiovisualRequest): Response<AudiovisualResponse>
 
     @GET(Constants.AUDIOVISUAL_URL)
-    suspend fun getAudiovisuals(): Response<List<AudiovisualResponse>>
+    suspend fun getAllAudiovisuals(): Response<List<AudiovisualResponse>>
 
-    @GET(Constants.AUDIOVISUAL_URL + Constants.AUDIOVISUAL_ID)
+    @GET(Constants.AUDIOVISUAL_URL + Constants.ID)
     suspend fun getAudiovisual(@Path("id") id: Long): Response<AudiovisualResponse>
 
-    @DELETE(Constants.AUDIOVISUAL_URL + Constants.AUDIOVISUAL_ID)
+    @DELETE(Constants.AUDIOVISUAL_URL + Constants.ID)
     suspend fun deleteAudiovisual(@Path("id") id: Long): Response<Void>
 
     @GET(Constants.TITLE_URL)
-    suspend fun getTitles(): Response<List<TitleResponse>>
+    suspend fun getAllTitles(): Response<List<TitleResponse>>
 
     @GET(Constants.PLATFORM_URL)
-    suspend fun getPlatforms(): Response<List<PlatformResponse>>
+    suspend fun getAllPlatforms(): Response<List<PlatformResponse>>
 
 }
