@@ -19,13 +19,13 @@ data class BookResponse(
     @SerializedName("editorial")
     var editorial: String,
 
-    @SerializedName("editorial_url")
+    @SerializedName("editorialUrl")
     var editorialUrl: String,
 
     @SerializedName("bookshop")
     var bookshop: String,
 
-    @SerializedName("bookshop")
+    @SerializedName("bookshopUrl")
     var bookshopUrl: String,
 
     @SerializedName("startDate")

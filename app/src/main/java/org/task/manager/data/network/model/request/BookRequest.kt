@@ -19,13 +19,13 @@ data class BookRequest(
     @SerializedName("editorial")
     var editorial: String,
 
-    @SerializedName("editorial_url")
+    @SerializedName("editorialUrl")
     var editorialUrl: String,
 
     @SerializedName("bookshop")
     var bookshop: String,
 
-    @SerializedName("bookshop_url")
+    @SerializedName("bookshopUrl")
     var bookshopUrl: String,
 
     @SerializedName("startDate")
