@@ -1,6 +1,7 @@
 package org.task.manager.data.network.model.request
 
 import com.google.gson.annotations.SerializedName
+import org.task.manager.domain.model.Book
 
 data class BookRequest(
     @SerializedName("id")
@@ -40,3 +41,6 @@ data class BookRequest(
     val userRequest: UserRequest?
 )
 
+fun Book.toRequest(): BookRequest = BookRequest(null, title, author, genre, editorial,
+    editorialUrl, bookshop, bookshopUrl, startDate, deadline, check, user?.toRequest()
+)

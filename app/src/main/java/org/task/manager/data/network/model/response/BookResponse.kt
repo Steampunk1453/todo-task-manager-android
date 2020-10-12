@@ -1,10 +1,11 @@
 package org.task.manager.data.network.model.response
 
 import com.google.gson.annotations.SerializedName
+import org.task.manager.domain.model.Book
 
 data class BookResponse(
     @SerializedName("id")
-    val id: Long?,
+    val id: Long,
 
     @SerializedName("title")
     val title: String,
@@ -40,3 +41,10 @@ data class BookResponse(
     val userResponse: UserResponse?
 )
 
+fun BookResponse.toDomain(): Book = Book(id, title, author, genre, editorial, editorialUrl,
+    bookshop, bookshopUrl, startDate, deadline, check, userResponse?.toDomain()
+)
+
+fun Book.toResponse(): BookResponse = BookResponse(id, title, author, genre, editorial, editorialUrl,
+    bookshop, bookshopUrl, startDate, deadline, check, user?.toResponse()
+)

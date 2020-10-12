@@ -1,6 +1,7 @@
 package org.task.manager.data.network.model.response
 
 import com.google.gson.annotations.SerializedName
+import org.task.manager.domain.model.Editorial
 
 data class EditorialResponse(
     @SerializedName("id")
@@ -13,5 +14,7 @@ data class EditorialResponse(
     val url: String
 )
 
+
+fun EditorialResponse.toDomain(): Editorial = Editorial(id, name, url)
 
 

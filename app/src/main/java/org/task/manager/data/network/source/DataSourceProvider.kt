@@ -2,6 +2,7 @@ package org.task.manager.data.network.source
 
 import org.task.manager.data.network.ServiceFactory
 import org.task.manager.data.network.api.AudiovisualApi
+import org.task.manager.data.network.api.BookApi
 import org.task.manager.data.network.api.GenreApi
 import org.task.manager.data.network.api.LoginApi
 import org.task.manager.data.network.api.RegisterApi
@@ -22,5 +23,9 @@ class DataSourceProvider(private val serviceFactory: ServiceFactory) {
 
     fun getGenreDataSource(): GenreApi {
         return serviceFactory.create(GenreApi::class.java)
+    }
+
+    fun getBookDataSource(): BookApi {
+        return serviceFactory.create(BookApi::class.java)
     }
 }

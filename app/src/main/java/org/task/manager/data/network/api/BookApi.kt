@@ -2,6 +2,7 @@ package org.task.manager.data.network.api
 
 import org.task.manager.data.network.model.request.BookRequest
 import org.task.manager.data.network.model.response.BookResponse
+import org.task.manager.data.network.model.response.BookshopResponse
 import org.task.manager.data.network.model.response.EditorialResponse
 import org.task.manager.shared.Constants
 import retrofit2.Response
@@ -30,7 +31,7 @@ interface BookApi {
     suspend fun deleteBook(@Path("id") id: Long): Response<Void>
 
     @GET(Constants.BOOKSHOP_URL)
-    suspend fun getAllBookshops(): Response<List<BookResponse>>
+    suspend fun getAllBookshops(): Response<List<BookshopResponse>>
 
     @GET(Constants.EDITORIAL_URL)
     suspend fun getAllEditorials(): Response<List<EditorialResponse>>
