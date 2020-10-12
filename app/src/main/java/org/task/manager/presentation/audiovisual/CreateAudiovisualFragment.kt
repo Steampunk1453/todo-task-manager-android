@@ -32,7 +32,6 @@ import org.task.manager.presentation.shared.SharedViewModel
 import org.task.manager.shared.Constants.FALSE
 import org.task.manager.shared.Constants.TRUE
 
-
 class CreateAudiovisualFragment : DialogFragment() {
     private val audiovisualViewModel: AudiovisualViewModel by viewModel()
     private lateinit var sharedViewModel: SharedViewModel
@@ -114,7 +113,7 @@ class CreateAudiovisualFragment : DialogFragment() {
             binding.deadlineText.setText(deadlinePicker.headerText)
         }
 
-        audiovisualViewModel.titles.observe(viewLifecycleOwner, Observer { list ->
+        audiovisualViewModel.titles.observe(viewLifecycleOwner, { list ->
             val titles = list as MutableList<Title>
             val titleNames = titles.map { it.name }
 

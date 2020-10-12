@@ -7,7 +7,6 @@ import timber.log.Timber
 
 class RegisterUser(private val repository: RegisterRepository) {
 
-
     suspend fun execute(request: RegisterRequest) {
         when (val result = repository.register(request)) {
             is Result.Success -> manageSuccessResponse(result.data)
