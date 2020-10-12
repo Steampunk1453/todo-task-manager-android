@@ -14,14 +14,14 @@ import org.task.manager.domain.model.Audiovisual
 import org.task.manager.domain.model.Genre
 import org.task.manager.domain.model.Platform
 import org.task.manager.domain.model.Title
-import org.task.manager.domain.usecase.CreateAudiovisual
-import org.task.manager.domain.usecase.DeleteAudiovisual
-import org.task.manager.domain.usecase.GetAudiovisual
-import org.task.manager.domain.usecase.GetAudiovisuals
-import org.task.manager.domain.usecase.GetGenres
-import org.task.manager.domain.usecase.GetPlatforms
-import org.task.manager.domain.usecase.GetTitles
-import org.task.manager.domain.usecase.UpdateAudiovisual
+import org.task.manager.domain.usecase.audiovisual.CreateAudiovisual
+import org.task.manager.domain.usecase.audiovisual.DeleteAudiovisual
+import org.task.manager.domain.usecase.audiovisual.GetAudiovisual
+import org.task.manager.domain.usecase.audiovisual.GetAudiovisuals
+import org.task.manager.domain.usecase.shared.GetGenres
+import org.task.manager.domain.usecase.audiovisual.GetPlatforms
+import org.task.manager.domain.usecase.audiovisual.GetTitles
+import org.task.manager.domain.usecase.audiovisual.UpdateAudiovisual
 import org.task.manager.presentation.shared.DateService
 
 

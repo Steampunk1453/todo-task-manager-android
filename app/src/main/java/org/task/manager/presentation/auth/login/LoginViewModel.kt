@@ -9,8 +9,8 @@ import kotlinx.coroutines.launch
 import org.task.manager.data.network.model.request.LoginRequest
 import org.task.manager.domain.model.AuthenticationResult
 import org.task.manager.domain.model.AuthenticationState
-import org.task.manager.domain.usecase.LoginUser
-import org.task.manager.domain.usecase.LogoutUser
+import org.task.manager.domain.usecase.user.LoginUser
+import org.task.manager.domain.usecase.user.LogoutUser
 
 class LoginViewModel(
     private val loginUser: LoginUser,
