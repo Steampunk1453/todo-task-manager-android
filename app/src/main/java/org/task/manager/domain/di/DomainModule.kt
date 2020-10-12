@@ -16,6 +16,7 @@ import org.task.manager.domain.usecase.book.GetBookshops
 import org.task.manager.domain.usecase.book.GetEditorials
 import org.task.manager.domain.usecase.book.UpdateBook
 import org.task.manager.domain.usecase.shared.GetGenres
+import org.task.manager.domain.usecase.user.ActivateUser
 import org.task.manager.domain.usecase.user.LoginUser
 import org.task.manager.domain.usecase.user.LogoutUser
 import org.task.manager.domain.usecase.user.RegisterUser
@@ -26,6 +27,7 @@ val modules = module {
     single { LoginUser(get(), get()) }
     single { LogoutUser(get()) }
     single { RegisterUser(get()) }
+    single { ActivateUser(get()) }
 
     single { SessionManagerService(get()) }
 

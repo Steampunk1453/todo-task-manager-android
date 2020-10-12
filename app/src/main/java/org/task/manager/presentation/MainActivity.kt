@@ -3,6 +3,7 @@ package org.task.manager.presentation
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -10,13 +11,17 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.BuildConfig
 import org.task.manager.R
+import org.task.manager.domain.model.RegistrationState
+import org.task.manager.presentation.user.registration.RegistrationViewModel
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navView: BottomNavigationView
+    private val viewModel: RegistrationViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +60,26 @@ class MainActivity : AppCompatActivity() {
         if (data != null && data.isHierarchical) {
             val uri = this.intent.dataString
             val activateKey = this.intent.dataString?.toHttpUrlOrNull()?.queryParameter("key")
+
             Timber.i("Deep link clicked: $uri")
             Timber.i("Activate Key from email: $activateKey")
+
+            activateKey?.let {
+                viewModel.activateAccount(it)
+            }
+
+            viewModel.registrationState.observe(this, { registrationResult ->
+                if (registrationResult == RegistrationState.ACTIVATION_COMPLETED) {
+                    Toast.makeText(this, "Your user account has been activated", Toast.LENGTH_LONG).show()
+                    navController.navigate(R.id.fragment_login)
+                }
+                else if (registrationResult == RegistrationState.INVALID_ACTIVATION)  {
+                    Toast.makeText(this, "Your user could not be activated. " +
+                            "Please use the registration form to sign up.", Toast.LENGTH_LONG).show()
+                }
+            })
         }
+
 
     }
 

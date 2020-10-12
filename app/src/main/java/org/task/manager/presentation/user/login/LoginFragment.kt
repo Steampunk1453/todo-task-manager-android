@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -53,7 +52,7 @@ class LoginFragment : Fragment(), ViewElements {
             navController.navigate(R.id.fragment_main)
         }
 
-        viewModel.authenticationResult.observe(viewLifecycleOwner, Observer { authenticationResult ->
+        viewModel.authenticationResult.observe(viewLifecycleOwner, { authenticationResult ->
             when (authenticationResult.state) {
                 AuthenticationState.AUTHENTICATED -> authenticatedUser(authenticationResult.message)
                 AuthenticationState.INVALID_AUTHENTICATION -> showMessage(authenticationResult.message)

@@ -15,13 +15,14 @@ class LoginUser(private val repository: LoginRepository,
                 private val sessionManager: SessionManagerService) {
 
 
-    suspend fun execute(request: LoginRequest): AuthenticationResult? =
-        when (val result = repository.login(request)) {
+    suspend fun execute(request: LoginRequest): AuthenticationResult? {
+       return when (val result = repository.login(request)) {
             is Result.Success -> manageSuccessfulResponse(result.data)
             is Result.Error -> result.throwable.message?.let {
                 manageFailedResponse(it)
             }
         }
+    }
 
     private fun manageSuccessfulResponse(loginResponse: LoginResponse): AuthenticationResult {
         saveToken(loginResponse.authToken)

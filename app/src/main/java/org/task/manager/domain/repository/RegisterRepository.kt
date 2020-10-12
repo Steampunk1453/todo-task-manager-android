@@ -5,4 +5,5 @@ import org.task.manager.domain.Result
 
 interface RegisterRepository {
     suspend fun register(request: RegisterRequest): Result<String>
+    suspend fun activate(key: String): Result<String>
 }

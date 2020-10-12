@@ -15,4 +15,13 @@ class DefaultRegisterRepository(private val dataSource: RegisterDataSource) : Re
             Result.Error(ex)
         }
     }
+
+    override suspend fun activate(key: String): Result<String> {
+        return try {
+            dataSource.activate(key)
+            Result.Success("OK")
+        } catch (ex: Throwable) {
+            Result.Error(ex)
+        }
+    }
 }
