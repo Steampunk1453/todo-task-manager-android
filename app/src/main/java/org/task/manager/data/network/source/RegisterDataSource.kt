@@ -9,4 +9,9 @@ class RegisterDataSource(private val dataSourceProvider: DataSourceProvider) {
         registerApi.register(request)
     }
 
+    suspend fun activate(key: String) {
+        val registerApi = dataSourceProvider.getRegisterDataSource()
+        registerApi.activate(key)
+    }
+
 }

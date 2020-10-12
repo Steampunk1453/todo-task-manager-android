@@ -12,7 +12,7 @@ import org.task.manager.presentation.user.registration.RegistrationViewModel
 val module: Module = module {
 
     viewModel { LoginViewModel(get(), get()) }
-    viewModel { RegistrationViewModel(get()) }
+    viewModel { RegistrationViewModel(get(), get()) }
     viewModel { AudiovisualViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { BookViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { DateService() }

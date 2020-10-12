@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_registration.email
@@ -19,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_registration.username
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentRegistrationBinding
+import org.task.manager.domain.model.RegistrationState
 import org.task.manager.hide
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
@@ -51,7 +51,7 @@ class RegistrationFragment : Fragment(), ViewElements {
         }
 
         registrationViewModel.registrationState.observe(
-            viewLifecycleOwner, Observer { state ->
+            viewLifecycleOwner, { state ->
                 if (state == RegistrationState.REGISTRATION_COMPLETED) {
                     showMessage("Successful register")
                     navController.navigate(R.id.fragment_login)
