@@ -56,7 +56,7 @@
             android:id="@+id/action_fragment_book_to_fragment_create_book"
             app:destination="@id/fragment_create_book" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/fragment_create_book"
         android:name="org.task.manager.presentation.book.CreateBookFragment"
         android:label="Create Book" />
