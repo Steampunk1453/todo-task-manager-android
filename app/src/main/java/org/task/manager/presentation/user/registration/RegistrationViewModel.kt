@@ -1,4 +1,4 @@
-package org.task.manager.presentation.auth.registration
+package org.task.manager.presentation.user.registration
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

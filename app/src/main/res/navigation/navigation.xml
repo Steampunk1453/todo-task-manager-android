@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_registration"
-        android:name="org.task.manager.presentation.auth.registration.RegistrationFragment"
+        android:name="org.task.manager.presentation.user.registration.RegistrationFragment"
         android:label="Registration"
         tools:layout="@layout/fragment_registration">
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_login"
-        android:name="org.task.manager.presentation.auth.login.LoginFragment"
+        android:name="org.task.manager.presentation.user.login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login"/>
     <fragment

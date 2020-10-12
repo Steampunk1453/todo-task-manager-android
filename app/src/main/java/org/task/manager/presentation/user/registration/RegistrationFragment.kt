@@ -1,4 +1,4 @@
-package org.task.manager.presentation.auth.registration
+package org.task.manager.presentation.user.registration
 
 import android.os.Bundle
 import android.view.LayoutInflater

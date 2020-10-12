@@ -1,4 +1,4 @@
-package org.task.manager.presentation.auth.login
+package org.task.manager.presentation.user.login
 
 import android.os.Bundle
 import android.view.LayoutInflater

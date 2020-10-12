@@ -1,4 +1,4 @@
-package org.task.manager.presentation.auth.registration
+package org.task.manager.presentation.user.registration
 
 enum class RegistrationState {
     COLLECT_PROFILE_DATA,

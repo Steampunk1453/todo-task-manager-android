@@ -14,8 +14,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentMainBinding
 import org.task.manager.hide
-import org.task.manager.presentation.auth.login.LoginViewModel
-import org.task.manager.presentation.auth.login.LogoutState
+import org.task.manager.presentation.user.login.LoginViewModel
+import org.task.manager.presentation.user.login.LogoutState
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
