@@ -53,8 +53,8 @@ class RegistrationFragment : Fragment(), ViewElements {
         registrationViewModel.registrationState.observe(
             viewLifecycleOwner, { state ->
                 if (state == RegistrationState.REGISTRATION_COMPLETED) {
-                    showMessage("Successful register")
-                    navController.navigate(R.id.fragment_login)
+                    showMessage("Registration saved! Please check your email for confirmation")
+                    navController.navigate(R.id.fragment_main)
                 }
                 hideProgress()
             }
