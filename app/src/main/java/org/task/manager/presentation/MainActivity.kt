@@ -70,11 +70,12 @@ class MainActivity : AppCompatActivity() {
 
             viewModel.registrationState.observe(this, { registrationResult ->
                 if (registrationResult == RegistrationState.ACTIVATION_COMPLETED) {
-                    Toast.makeText(this, "Successful activation", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Your user account has been activated", Toast.LENGTH_LONG).show()
                     navController.navigate(R.id.fragment_login)
                 }
                 else if (registrationResult == RegistrationState.INVALID_ACTIVATION)  {
-                    Toast.makeText(this, "Invalid activation, try again", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Your user could not be activated. " +
+                            "Please use the registration form to sign up.", Toast.LENGTH_LONG).show()
                 }
             })
         }
