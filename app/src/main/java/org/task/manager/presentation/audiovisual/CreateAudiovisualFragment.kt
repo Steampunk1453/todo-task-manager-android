@@ -29,6 +29,8 @@ import org.task.manager.domain.model.Platform
 import org.task.manager.domain.model.Title
 import org.task.manager.presentation.shared.DateService
 import org.task.manager.presentation.shared.SharedViewModel
+import org.task.manager.shared.Constants.FALSE
+import org.task.manager.shared.Constants.TRUE
 
 
 class CreateAudiovisualFragment : DialogFragment() {
@@ -134,7 +136,7 @@ class CreateAudiovisualFragment : DialogFragment() {
         audiovisualViewModel.genres.observe(viewLifecycleOwner, { list ->
             val genres = list as MutableList<Genre>
             val genresNames = genres
-                .filter { it.literary != 1 }
+                .filter { it.isLiterary != TRUE }
                 .map { it.name }
 
             val adapter = ArrayAdapter(
@@ -187,7 +189,7 @@ class CreateAudiovisualFragment : DialogFragment() {
                     platformUrl,
                     startDateMilliseconds,
                     deadlineMilliseconds,
-                    if (checkBox.isChecked) 1 else 0,
+                    if (checkBox.isChecked) TRUE else FALSE,
                     binding.userId.tag.toString().toLong()
                 )
             }
@@ -199,7 +201,7 @@ class CreateAudiovisualFragment : DialogFragment() {
                     platformUrl,
                     startDateMilliseconds,
                     deadlineMilliseconds,
-                    if (checkBox.isChecked) 1 else 0
+                    if (checkBox.isChecked) TRUE else FALSE
                 )
             }
 

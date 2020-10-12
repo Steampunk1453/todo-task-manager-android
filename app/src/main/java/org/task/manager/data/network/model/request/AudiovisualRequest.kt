@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 import org.task.manager.domain.model.Audiovisual
 
 data class AudiovisualRequest(
-
     @SerializedName("id")
     val id: Long?,
 

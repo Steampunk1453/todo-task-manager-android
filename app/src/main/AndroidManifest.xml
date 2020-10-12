@@ -15,8 +15,17 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "pers-task-manager.herokuapp.com/account/activate” -->
+                <data android:scheme="https"
+                    android:host="pers-task-manager.herokuapp.com"
+                    android:pathPrefix="/account/activate"/>
+                <!-- note that the leading "/" is required for pathPrefix-->
             </intent-filter>
         </activity>
     </application>

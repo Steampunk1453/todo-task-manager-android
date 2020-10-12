@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_registration"
-        android:name="org.task.manager.presentation.auth.registration.RegistrationFragment"
+        android:name="org.task.manager.presentation.user.registration.RegistrationFragment"
         android:label="Registration"
         tools:layout="@layout/fragment_registration">
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_login"
-        android:name="org.task.manager.presentation.auth.login.LoginFragment"
+        android:name="org.task.manager.presentation.user.login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login"/>
     <fragment
@@ -48,4 +48,16 @@
         android:id="@+id/fragment_create_audiovisual"
         android:name="org.task.manager.presentation.audiovisual.CreateAudiovisualFragment"
         android:label="Create Audiovisual" />
+    <fragment
+        android:id="@+id/fragment_book"
+        android:name="org.task.manager.presentation.book.BookFragment"
+        android:label="Books" >
+        <action
+            android:id="@+id/action_fragment_book_to_fragment_create_book"
+            app:destination="@id/fragment_create_book" />
+    </fragment>
+    <dialog
+        android:id="@+id/fragment_create_book"
+        android:name="org.task.manager.presentation.book.CreateBookFragment"
+        android:label="Create Book" />
 </navigation>

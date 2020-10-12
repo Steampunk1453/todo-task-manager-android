@@ -1,5 +1,6 @@
 package org.task.manager.presentation
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.task.manager.BuildConfig
 import org.task.manager.R
 import timber.log.Timber
@@ -48,6 +50,15 @@ class MainActivity : AppCompatActivity() {
                 else -> hideBottomNav()
             }
         }
+
+        val data: Uri? = this.intent.data
+        if (data != null && data.isHierarchical) {
+            val uri = this.intent.dataString
+            val activateKey = this.intent.dataString?.toHttpUrlOrNull()?.queryParameter("key")
+            Timber.i("Deep link clicked: $uri")
+            Timber.i("Activate Key from email: $activateKey")
+        }
+
     }
 
     private fun showBottomNav() {

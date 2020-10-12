@@ -20,6 +20,7 @@ import org.task.manager.R
 import org.task.manager.domain.model.Audiovisual
 import org.task.manager.presentation.shared.DateService
 import org.task.manager.presentation.shared.SharedViewModel
+import org.task.manager.shared.Constants.TRUE
 
 class AudiovisualAdapter(private val audiovisuals: List<Audiovisual>,
                          private val audiovisualViewModel: AudiovisualViewModel,
@@ -63,7 +64,7 @@ class AudiovisualAdapter(private val audiovisuals: List<Audiovisual>,
         holder.itemView.platform.text = audiovisuals[position].platform
         holder.itemView.startDate.text = dateService.getFormattedDate(audiovisuals[position].startDate)
         holder.itemView.deadline.text = dateService.getFormattedDate(audiovisuals[position].deadline)
-        holder.itemView.checkBox.isChecked = audiovisuals[position].check == 1
+        holder.itemView.checkBox.isChecked = audiovisuals[position].check == TRUE
     }
 
 }

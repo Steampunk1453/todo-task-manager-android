@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="32dp"
+        tools:context=".presentation.book.CreateBookFragment">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="@string/cancel"
+            app:layout_constraintBottom_toBottomOf="@+id/save"
+            app:layout_constraintEnd_toStartOf="@+id/save"
+            app:layout_constraintTop_toTopOf="@+id/save"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:enabled="false"
+            android:text="@string/save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="32dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/author"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/authorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/genre"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/genre"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/author">
+
+            <AutoCompleteTextView
+                android:id="@+id/genre_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editorial"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/editorial"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/genre">
+
+            <AutoCompleteTextView
+                android:id="@+id/editorial_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bookshop"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/bookshop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editorial">
+
+            <AutoCompleteTextView
+                android:id="@+id/bookshop_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/startDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookshop"
+            tools:layout_editor_absoluteX="32dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/startDateText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/start_date"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/deadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/startDate"
+            tools:layout_editor_absoluteX="32dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/deadlineText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/deadline"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/checkBoxLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deadline"
+            tools:layout_editor_absoluteX="32dp">
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/done" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/bookId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
