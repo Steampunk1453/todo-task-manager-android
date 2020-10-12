@@ -1,4 +1,4 @@
-package org.task.manager.domain.usecase
+package org.task.manager.domain.usecase.user
 
 import org.task.manager.shared.service.SessionManagerService
 

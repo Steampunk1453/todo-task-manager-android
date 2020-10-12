@@ -1,4 +1,4 @@
-package org.task.manager.domain.usecase
+package org.task.manager.domain.usecase.shared
 
 import org.task.manager.domain.model.Genre
 import org.task.manager.domain.repository.GenreRepository
