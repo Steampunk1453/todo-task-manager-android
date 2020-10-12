@@ -17,4 +17,8 @@ object Constants {
     // Exceptions
     const val ILLEGAL_STATE_EXCEPTION_CAUSE = "Empty response body"
 
+    // Shared
+    const val FALSE = 0
+    const val TRUE = 1
+
 }

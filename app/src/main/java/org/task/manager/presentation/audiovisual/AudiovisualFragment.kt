@@ -60,7 +60,7 @@ class AudiovisualFragment : Fragment(), ViewElements {
         showProgress()
         audiovisualViewModel.audiovisuals.observe(viewLifecycleOwner, Observer {
             audiovisuals = it as MutableList<Audiovisual>
-            adapter = AudiovisualAdapter(audiovisuals,audiovisualViewModel, sharedViewModel, dateService)
+            adapter = AudiovisualAdapter(audiovisuals, audiovisualViewModel, sharedViewModel, dateService)
             binding.audiovisualList.adapter = adapter
             binding.audiovisualList.addItemDecoration(SimpleDividerItemDecoration(binding.root.context))
         })
