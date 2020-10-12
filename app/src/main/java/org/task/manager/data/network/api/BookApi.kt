@@ -30,10 +30,10 @@ interface BookApi {
     @DELETE(Constants.BOOK_URL + Constants.ID)
     suspend fun deleteBook(@Path("id") id: Long): Response<Void>
 
-    @GET(Constants.BOOKSHOP_URL)
-    suspend fun getAllBookshops(): Response<List<BookshopResponse>>
-
     @GET(Constants.EDITORIAL_URL)
     suspend fun getAllEditorials(): Response<List<EditorialResponse>>
+
+    @GET(Constants.BOOKSHOP_URL)
+    suspend fun getAllBookshops(): Response<List<BookshopResponse>>
 
 }
