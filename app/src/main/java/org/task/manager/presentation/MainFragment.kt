@@ -4,22 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_login.progressBar
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentMainBinding
-import org.task.manager.hide
-import org.task.manager.presentation.user.login.LoginViewModel
-import org.task.manager.presentation.user.login.LogoutState
-import org.task.manager.presentation.view.ViewElements
-import org.task.manager.show
 
-class MainFragment : Fragment(), ViewElements {
-    private val loginViewModel: LoginViewModel by viewModel()
+class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -42,32 +33,5 @@ class MainFragment : Fragment(), ViewElements {
                 MainFragmentDirections.actionMainFragmentToRegistrationFragment2()
             findNavController().navigate(action)
         }
-
-        binding.logoutButton.setOnClickListener {
-            loginViewModel.singOut()
-        }
-
-        loginViewModel.logoutState.observe(
-            viewLifecycleOwner, { state ->
-                if (LogoutState.LOGOUT_COMPLETE == state) {
-                    showMessage("Successful logout")
-                } else {
-                    showMessage("Invalid logout, try again")
-                }
-            }
-        )
     }
-
-    override fun showMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showProgress() {
-        progressBar.show()
-    }
-
-    override fun hideProgress() {
-        progressBar.hide()
-    }
-
 }
