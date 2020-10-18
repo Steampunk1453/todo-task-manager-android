@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.task.manager.data.network.model.request.BookRequest
-import org.task.manager.data.network.model.request.UserRequest
+import org.task.manager.data.network.model.request.UserIdRequest
 import org.task.manager.domain.model.Book
 import org.task.manager.domain.model.Bookshop
 import org.task.manager.domain.model.Editorial
@@ -90,7 +90,7 @@ class BookViewModel(
             dateService.convertToInstant(startDate),
             dateService.convertToInstant(deadline),
             check,
-            UserRequest(userId)
+            UserIdRequest(userId)
         )
         coroutineScope.launch {
             val audiovisualUpdateResult = updateBook.execute(bookRequest)
