@@ -47,12 +47,12 @@ dependencies {
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'com.google.android.material:material:1.2.1'
 
@@ -90,7 +90,7 @@ dependencies {
     testImplementation "org.junit.platform:junit-platform-launcher:1.6.2"
 
     // AssertJ
-    testImplementation "org.assertj:assertj-core:3.17.0"
+    testImplementation "org.assertj:assertj-core:3.17.2"
 
     def kotlintestVersion = "3.3.0-RC3"
     testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintestVersion"
@@ -98,7 +98,7 @@ dependencies {
     // Test Navigation val navController = TestNavHostController(
     //            ApplicationProvider.getApplicationContext())
     //        navController.setGraph(R.navigation.trivia)
-    def nav_version = "2.3.0"
+    def nav_version = "2.3.1"
     debugImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     // AndroidX Test
