@@ -6,6 +6,7 @@ object Constants {
     const val LOGIN_URL = "authenticate"
     const val REGISTER_URL = "register"
     const val ACTIVATE_URL = "activate"
+    const val ACCOUNT_URL = "account"
     const val AUDIOVISUAL_URL = "audiovisuals"
     const val ID = "/{id}"
     const val TITLE_URL = "titles"
