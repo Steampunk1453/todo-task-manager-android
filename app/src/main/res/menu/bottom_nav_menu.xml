@@ -17,7 +17,7 @@
         android:title="@string/title_book" />
 
     <item
-        android:id="@+id/fragment_account"
+        android:id="@+id/menu_account"
         android:icon="@drawable/ic_account_box_24dp"
         android:title="@string/title_account" />
 

@@ -29,7 +29,7 @@
         android:id="@+id/fragment_login"
         android:name="org.task.manager.presentation.user.login.LoginFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_login"/>
+        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/fragment_home"
         android:name="org.task.manager.presentation.home.HomeFragment"
@@ -39,7 +39,7 @@
         android:id="@+id/fragment_audiovisual"
         android:name="org.task.manager.presentation.audiovisual.AudiovisualFragment"
         android:label="Series &amp; Films"
-        tools:layout="@layout/fragment_audiovisual" >
+        tools:layout="@layout/fragment_audiovisual">
         <action
             android:id="@+id/action_fragment_audiovisual_to_createAudiovisualFragment"
             app:destination="@id/fragment_create_audiovisual" />
@@ -51,7 +51,7 @@
     <fragment
         android:id="@+id/fragment_book"
         android:name="org.task.manager.presentation.book.BookFragment"
-        android:label="Books" >
+        android:label="Books">
         <action
             android:id="@+id/action_fragment_book_to_fragment_create_book"
             app:destination="@id/fragment_create_book" />
@@ -60,4 +60,12 @@
         android:id="@+id/fragment_create_book"
         android:name="org.task.manager.presentation.book.CreateBookFragment"
         android:label="Create Book" />
+    <fragment
+        android:id="@+id/fragment_password"
+        android:name="org.task.manager.presentation.account.PasswordFragment"
+        android:label="@string/prompt_password" />
+    <fragment
+        android:id="@+id/fragment_settings"
+        android:name="org.task.manager.presentation.account.SettingsFragment"
+        android:label="@string/settings" />
 </navigation>

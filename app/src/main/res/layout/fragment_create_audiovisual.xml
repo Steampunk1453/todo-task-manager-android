@@ -165,7 +165,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="invisible"/>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

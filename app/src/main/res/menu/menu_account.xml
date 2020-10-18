@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/settings"
+        android:gravity="right"
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/password"
+        android:gravity="right"
+        android:title="@string/prompt_password" />
+    <item
+        android:id="@+id/signOut"
+        android:gravity="right"
+        android:title="@string/sign_out" />
+</menu>
