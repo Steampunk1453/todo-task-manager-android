@@ -2,10 +2,10 @@ package org.task.manager.domain.usecase.user
 
 import org.task.manager.data.network.model.request.RegisterRequest
 import org.task.manager.domain.Result
-import org.task.manager.domain.repository.RegisterRepository
+import org.task.manager.domain.repository.AccountRepository
 import timber.log.Timber
 
-class RegisterUser(private val repository: RegisterRepository) {
+class RegisterUser(private val repository: AccountRepository) {
 
     suspend fun execute(request: RegisterRequest) {
         when (val result = repository.register(request)) {

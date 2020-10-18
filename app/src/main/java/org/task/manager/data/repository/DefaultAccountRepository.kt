@@ -1,11 +1,11 @@
 package org.task.manager.data.repository
 
 import org.task.manager.data.network.model.request.RegisterRequest
-import org.task.manager.data.network.source.RegisterDataSource
+import org.task.manager.data.network.source.AccountDataSource
 import org.task.manager.domain.Result
-import org.task.manager.domain.repository.RegisterRepository
+import org.task.manager.domain.repository.AccountRepository
 
-class DefaultRegisterRepository(private val dataSource: RegisterDataSource) : RegisterRepository {
+class DefaultAccountRepository(private val dataSource: AccountDataSource) : AccountRepository {
 
     override suspend fun register(request: RegisterRequest): Result<String> {
         return try {

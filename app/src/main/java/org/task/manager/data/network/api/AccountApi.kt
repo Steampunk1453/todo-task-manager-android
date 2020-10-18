@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface RegisterApi {
+interface AccountApi {
 
     @POST(Constants.REGISTER_URL)
     suspend fun register(@Body request: RegisterRequest)
