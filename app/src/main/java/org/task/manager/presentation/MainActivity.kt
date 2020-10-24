@@ -67,7 +67,8 @@ class MainActivity : AppCompatActivity(), ViewElements {
                 R.id.fragment_home -> showBottomNav()
                 R.id.fragment_audiovisual -> showBottomNav()
                 R.id.fragment_book -> showBottomNav()
-                R.id.menu_account -> showBottomNav()
+                R.id.fragment_settings -> showBottomNav()
+                R.id.fragment_password -> showBottomNav()
                 else -> hideBottomNav()
             }
         }
@@ -125,8 +126,7 @@ class MainActivity : AppCompatActivity(), ViewElements {
             } else {
                 showMessage("Invalid logout, try again")
             }
-        }
-        )
+        })
     }
 
     override fun showMessage(message: String) {
@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity(), ViewElements {
                 }
                 R.id.signOut -> {
                     loginViewModel.singOut()
-                    Toast.makeText(this@MainActivity, it.title, Toast.LENGTH_SHORT).show()
+                    navController.navigate(R.id.fragment_main)
                     true
                 }
                 else -> false
