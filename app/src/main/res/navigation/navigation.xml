@@ -29,7 +29,11 @@
         android:id="@+id/fragment_login"
         android:name="org.task.manager.presentation.user.login.LoginFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_fragment_login_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_home"
         android:name="org.task.manager.presentation.home.HomeFragment"
@@ -63,9 +67,17 @@
     <fragment
         android:id="@+id/fragment_password"
         android:name="org.task.manager.presentation.account.PasswordFragment"
-        android:label="@string/prompt_password" />
+        android:label="@string/prompt_password" >
+        <action
+            android:id="@+id/action_fragment_password_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_settings"
         android:name="org.task.manager.presentation.account.SettingsFragment"
-        android:label="@string/settings" />
+        android:label="@string/settings" >
+        <action
+            android:id="@+id/action_fragment_settings_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
 </navigation>
