@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.task.manager.data.network.model.request.RegisterRequest
-import org.task.manager.domain.model.RegistrationState
+import org.task.manager.domain.model.state.RegistrationState
 import org.task.manager.domain.usecase.user.ActivateUser
 import org.task.manager.domain.usecase.user.RegisterUser
 import java.util.Locale

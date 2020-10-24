@@ -18,21 +18,22 @@ import kotlinx.android.synthetic.main.fragment_registration.username
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentRegistrationBinding
-import org.task.manager.domain.model.RegistrationState
+import org.task.manager.domain.model.state.RegistrationState
 import org.task.manager.hide
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
 class RegistrationFragment : Fragment(), ViewElements {
 
-    private val registrationViewModel: RegistrationViewModel by viewModel()
     private lateinit var binding: FragmentRegistrationBinding
     private lateinit var  navController: NavController
+    private val viewModel: RegistrationViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false)
         navController = findNavController()
+
         return binding.root
     }
 
@@ -42,7 +43,7 @@ class RegistrationFragment : Fragment(), ViewElements {
            if(validations(email.text.toString(), newPassword.text.toString(),
                    newPasswordConfirmation.text.toString())) {
                showProgress()
-               registrationViewModel.createAccount(
+               viewModel.createAccount(
                    username.text.toString(),
                    email.text.toString(),
                    newPassword.text.toString()
@@ -50,7 +51,7 @@ class RegistrationFragment : Fragment(), ViewElements {
            }
         }
 
-        registrationViewModel.registrationState.observe(
+        viewModel.registrationState.observe(
             viewLifecycleOwner, { state ->
                 if (state == RegistrationState.REGISTRATION_COMPLETED) {
                     showMessage("Registration saved! Please check your email for confirmation")
@@ -61,7 +62,7 @@ class RegistrationFragment : Fragment(), ViewElements {
         )
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            registrationViewModel.userCancelledRegistration()
+            viewModel.userCancelledRegistration()
             navController.navigate(R.id.fragment_main)
         }
 

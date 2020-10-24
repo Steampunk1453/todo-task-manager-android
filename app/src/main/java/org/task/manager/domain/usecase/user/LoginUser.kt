@@ -4,7 +4,7 @@ import org.task.manager.data.network.model.request.LoginRequest
 import org.task.manager.data.network.model.response.LoginResponse
 import org.task.manager.domain.Result
 import org.task.manager.domain.model.AuthenticationResult
-import org.task.manager.domain.model.AuthenticationState
+import org.task.manager.domain.model.state.AuthenticationState
 import org.task.manager.domain.repository.LoginRepository
 import org.task.manager.shared.service.SessionManagerService
 import timber.log.Timber

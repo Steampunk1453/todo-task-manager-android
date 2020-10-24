@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_login.username
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentLoginBinding
-import org.task.manager.domain.model.AuthenticationState
+import org.task.manager.domain.model.state.AuthenticationState
 import org.task.manager.hide
 import org.task.manager.presentation.shared.SharedViewModel
 import org.task.manager.presentation.view.ViewElements
