@@ -36,8 +36,8 @@ import org.task.manager.shared.Constants.TRUE
 
 class CreateBookFragment : DialogFragment() {
     private val bookViewModel: BookViewModel by viewModel()
-    private lateinit var sharedViewModel: SharedViewModel
     private val dateService: DateService by inject()
+    private lateinit var sharedViewModel: SharedViewModel
     private lateinit var binding: FragmentCreateBookBinding
     private lateinit var navController: NavController
 
@@ -70,8 +70,12 @@ class CreateBookFragment : DialogFragment() {
         var bookshop = ""
         var bookshopUrl = ""
 
-
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        // Invoke view model
+        bookViewModel.getGenres()
+        bookViewModel.getBookshops()
+        bookViewModel.getEditorials()
 
         binding.titleText.addTextChangedListener {
             isTitleFilled = it?.toString()?.isNotBlank() ?: false

@@ -18,10 +18,10 @@ import org.task.manager.domain.usecase.audiovisual.CreateAudiovisual
 import org.task.manager.domain.usecase.audiovisual.DeleteAudiovisual
 import org.task.manager.domain.usecase.audiovisual.GetAudiovisual
 import org.task.manager.domain.usecase.audiovisual.GetAudiovisuals
-import org.task.manager.domain.usecase.shared.GetGenres
 import org.task.manager.domain.usecase.audiovisual.GetPlatforms
 import org.task.manager.domain.usecase.audiovisual.GetTitles
 import org.task.manager.domain.usecase.audiovisual.UpdateAudiovisual
+import org.task.manager.domain.usecase.shared.GetGenres
 import org.task.manager.presentation.shared.DateService
 
 
@@ -45,16 +45,10 @@ class AudiovisualViewModel(
     val genres = MutableLiveData<List<Genre>>()
     val platforms = MutableLiveData<List<Platform>>()
 
-    init {
+    fun getAudiovisuals() {
         coroutineScope.launch {
             val audiovisualsResult = getAudiovisuals.execute()
             audiovisuals.postValue(audiovisualsResult)
-            val titlesResult = getTitles.execute()
-            titles.postValue(titlesResult)
-            val genresResult = getGenres.execute()
-            genres.postValue(genresResult)
-            val platformsResult = getPlatforms.execute()
-            platforms.postValue(platformsResult)
         }
     }
 
@@ -108,6 +102,27 @@ class AudiovisualViewModel(
     fun deleteAudiovisual(id: Long) {
         coroutineScope.launch {
             deleteAudiovisual.execute(id)
+        }
+    }
+
+    fun getTitles() {
+        coroutineScope.launch {
+            val titlesResult = getTitles.execute()
+            titles.postValue(titlesResult)
+        }
+    }
+
+    fun getGenres() {
+        coroutineScope.launch {
+            val genresResult = getGenres.execute()
+            genres.postValue(genresResult)
+        }
+    }
+
+    fun getPlatforms() {
+        coroutineScope.launch {
+            val platformsResult = getPlatforms.execute()
+            platforms.postValue(platformsResult)
         }
     }
 
