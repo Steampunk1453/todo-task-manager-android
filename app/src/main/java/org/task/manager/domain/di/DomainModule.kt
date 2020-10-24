@@ -17,9 +17,11 @@ import org.task.manager.domain.usecase.book.GetEditorials
 import org.task.manager.domain.usecase.book.UpdateBook
 import org.task.manager.domain.usecase.shared.GetGenres
 import org.task.manager.domain.usecase.user.ActivateUser
+import org.task.manager.domain.usecase.user.GetUser
 import org.task.manager.domain.usecase.user.LoginUser
 import org.task.manager.domain.usecase.user.LogoutUser
 import org.task.manager.domain.usecase.user.RegisterUser
+import org.task.manager.domain.usecase.user.UpdaterUser
 import org.task.manager.shared.service.SessionManagerService
 
 val modules = module {
@@ -28,6 +30,8 @@ val modules = module {
     single { LogoutUser(get()) }
     single { RegisterUser(get()) }
     single { ActivateUser(get()) }
+    single { GetUser(get()) }
+    single { UpdaterUser(get()) }
 
     single { SessionManagerService(get()) }
 

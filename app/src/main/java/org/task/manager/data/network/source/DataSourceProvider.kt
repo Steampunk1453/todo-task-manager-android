@@ -1,11 +1,11 @@
 package org.task.manager.data.network.source
 
 import org.task.manager.data.network.ServiceFactory
+import org.task.manager.data.network.api.AccountApi
 import org.task.manager.data.network.api.AudiovisualApi
 import org.task.manager.data.network.api.BookApi
 import org.task.manager.data.network.api.GenreApi
 import org.task.manager.data.network.api.LoginApi
-import org.task.manager.data.network.api.AccountApi
 
 
 class DataSourceProvider(private val serviceFactory: ServiceFactory) {
@@ -13,7 +13,7 @@ class DataSourceProvider(private val serviceFactory: ServiceFactory) {
         return serviceFactory.create(LoginApi::class.java)
     }
 
-    fun getRegisterDataSource(): AccountApi {
+    fun getAccountDataSource(): AccountApi {
         return serviceFactory.create(AccountApi::class.java)
     }
 

@@ -1,7 +1,7 @@
 package org.task.manager.domain.usecase.user
 
 import org.task.manager.domain.Result
-import org.task.manager.domain.model.RegistrationState
+import org.task.manager.domain.model.state.RegistrationState
 import org.task.manager.domain.repository.AccountRepository
 import timber.log.Timber
 
@@ -25,6 +25,5 @@ class ActivateUser(private val repository: AccountRepository) {
         Timber.e("Invalid activation: %s", error)
         return RegistrationState.INVALID_ACTIVATION
     }
-
 
 }
