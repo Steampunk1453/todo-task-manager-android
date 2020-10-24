@@ -45,16 +45,10 @@ class BookViewModel(
     val bookshops = MutableLiveData<List<Bookshop>>()
     val editorials = MutableLiveData<List<Editorial>>()
 
-    init {
+    fun getBooks() {
         coroutineScope.launch {
             val booksResult = getBooks.execute()
             books.postValue(booksResult)
-            val genresResult = getGenres.execute()
-            genres.postValue(genresResult)
-            val bookshopsResult = getBookshops.execute()
-            bookshops.postValue(bookshopsResult)
-            val editorialsResult = getEditorials.execute()
-            editorials.postValue(editorialsResult)
         }
     }
 
@@ -114,6 +108,27 @@ class BookViewModel(
     fun deleteBook(id: Long) {
         coroutineScope.launch {
             deleteBook.execute(id)
+        }
+    }
+
+    fun getGenres() {
+        coroutineScope.launch {
+            val genresResult = getGenres.execute()
+            genres.postValue(genresResult)
+        }
+    }
+
+    fun getBookshops() {
+        coroutineScope.launch {
+            val bookshopsResult = getBookshops.execute()
+            bookshops.postValue(bookshopsResult)
+        }
+    }
+
+    fun getEditorials() {
+        coroutineScope.launch {
+            val editorialsResult = getEditorials.execute()
+            editorials.postValue(editorialsResult)
         }
     }
 

@@ -29,9 +29,10 @@ import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
 class AudiovisualFragment : Fragment(), ViewElements {
+
     private val audiovisualViewModel: AudiovisualViewModel by viewModel()
-    private val dateService: DateService by inject()
     private lateinit var sharedViewModel: SharedViewModel
+    private val dateService: DateService by inject()
     private lateinit var adapter: AudiovisualAdapter
     private lateinit var binding: FragmentAudiovisualBinding
     private lateinit var navController: NavController
@@ -49,12 +50,15 @@ class AudiovisualFragment : Fragment(), ViewElements {
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         var audiovisuals = mutableListOf<Audiovisual>()
 
+        // Invoke view model
+        audiovisualViewModel.getAudiovisuals()
+
         binding.addAudiovisual.setOnClickListener {
             navController.navigate(R.id.fragment_create_audiovisual)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            navController.navigate(R.id.fragment_main)
+            navController.navigate(R.id.fragment_home)
         }
 
         showProgress()

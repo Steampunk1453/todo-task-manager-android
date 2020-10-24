@@ -34,8 +34,8 @@ import org.task.manager.shared.Constants.TRUE
 
 class CreateAudiovisualFragment : DialogFragment() {
     private val audiovisualViewModel: AudiovisualViewModel by viewModel()
-    private lateinit var sharedViewModel: SharedViewModel
     private val dateService: DateService by inject()
+    private lateinit var sharedViewModel: SharedViewModel
     private lateinit var binding: FragmentCreateAudiovisualBinding
     private lateinit var navController: NavController
 
@@ -67,6 +67,10 @@ class CreateAudiovisualFragment : DialogFragment() {
         var platformUrl = ""
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        audiovisualViewModel.getTitles()
+        audiovisualViewModel.getGenres()
+        audiovisualViewModel.getPlatforms()
 
         binding.titleText.addTextChangedListener {
             isTitleFilled = it?.toString()?.isNotBlank() ?: false

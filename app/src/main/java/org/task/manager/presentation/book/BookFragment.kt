@@ -49,12 +49,15 @@ class BookFragment : Fragment(), ViewElements {
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         var books = mutableListOf<Book>()
 
+        // Invoke view model
+        bookViewModel.getBooks()
+
         binding.addBook.setOnClickListener {
             navController.navigate(R.id.fragment_create_book)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            navController.navigate(R.id.fragment_main)
+            navController.navigate(R.id.fragment_home)
         }
 
         showProgress()
