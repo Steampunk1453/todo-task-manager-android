@@ -18,7 +18,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.BuildConfig
 import org.task.manager.R
-import org.task.manager.domain.model.RegistrationState
+import org.task.manager.domain.model.state.RegistrationState
 import org.task.manager.hide
 import org.task.manager.presentation.user.login.LoginViewModel
 import org.task.manager.presentation.user.login.LogoutState
