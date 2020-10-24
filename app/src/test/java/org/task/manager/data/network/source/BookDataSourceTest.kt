@@ -63,8 +63,6 @@ internal class BookDataSourceTest {
             response.deadline shouldBe bookResponse.deadline
             response.check shouldBe bookResponse.check
             response.userResponse?.id shouldBe bookResponse.userResponse?.id
-            response.userResponse?.username shouldBe bookResponse.userResponse?.username
-            response.userResponse?.email shouldBe bookResponse.userResponse?.email
         }
 
     @Test
@@ -92,8 +90,6 @@ internal class BookDataSourceTest {
             response.deadline shouldBe bookResponse.deadline
             response.check shouldBe bookResponse.check
             response.userResponse?.id shouldBe bookResponse.userResponse?.id
-            response.userResponse?.username shouldBe bookResponse.userResponse?.username
-            response.userResponse?.email shouldBe bookResponse.userResponse?.email
         }
     }
 
@@ -123,8 +119,6 @@ internal class BookDataSourceTest {
             response[0].deadline shouldBe bookResponse.deadline
             response[0].check shouldBe bookResponse.check
             response[0].userResponse?.id shouldBe bookResponse.userResponse?.id
-            response[0].userResponse?.username shouldBe bookResponse.userResponse?.username
-            response[0].userResponse?.email shouldBe bookResponse.userResponse?.email
             response[1] shouldBe bookResponse1
             response[1].title shouldBe bookResponse1.title
         }
@@ -156,8 +150,6 @@ internal class BookDataSourceTest {
             response.deadline shouldBe bookResponse.deadline
             response.check shouldBe bookResponse.check
             response.userResponse?.id shouldBe bookResponse.userResponse?.id
-            response.userResponse?.username shouldBe bookResponse.userResponse?.username
-            response.userResponse?.email shouldBe bookResponse.userResponse?.email
         }
     }
 

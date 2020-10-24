@@ -32,7 +32,7 @@ internal class AccountDataSourceTest {
     fun `should no returns error response`() = runBlockingTest {
         // Given
         val registerRequest = RegisterRequestStub.random()
-        every { provider.getRegisterDataSource() } returns accountApi
+        every { provider.getAccountDataSource() } returns accountApi
         coEvery { accountApi.register(registerRequest) } just Runs
         // When
         accountDataSource.register(registerRequest)

@@ -10,6 +10,9 @@ data class UserRequest(
     val lastName: String,
 
     @SerializedName("email")
-    val email: String
+    val email: String,
+
+    @SerializedName("langKey")
+    var langKey: String
 )
 

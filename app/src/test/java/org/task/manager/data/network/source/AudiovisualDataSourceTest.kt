@@ -60,8 +60,6 @@ internal class AudiovisualDataSourceTest {
             response.deadline shouldBe audiovisualResponse.deadline
             response.check shouldBe audiovisualResponse.check
             response.userResponse?.id shouldBe audiovisualResponse.userResponse?.id
-            response.userResponse?.username shouldBe audiovisualResponse.userResponse?.username
-            response.userResponse?.email shouldBe audiovisualResponse.userResponse?.email
         }
 
     @Test
@@ -86,8 +84,6 @@ internal class AudiovisualDataSourceTest {
             response.deadline shouldBe audiovisualResponse.deadline
             response.check shouldBe audiovisualResponse.check
             response.userResponse?.id shouldBe audiovisualResponse.userResponse?.id
-            response.userResponse?.username shouldBe audiovisualResponse.userResponse?.username
-            response.userResponse?.email shouldBe audiovisualResponse.userResponse?.email
         }
     }
 
@@ -114,8 +110,6 @@ internal class AudiovisualDataSourceTest {
             response[0].deadline shouldBe audiovisualResponse.deadline
             response[0].check shouldBe audiovisualResponse.check
             response[0].userResponse?.id shouldBe audiovisualResponse.userResponse?.id
-            response[0].userResponse?.username shouldBe audiovisualResponse.userResponse?.username
-            response[0].userResponse?.email shouldBe audiovisualResponse.userResponse?.email
             response[1] shouldBe audiovisualResponse1
             response[1].title shouldBe audiovisualResponse1.title
         }
@@ -143,8 +137,6 @@ internal class AudiovisualDataSourceTest {
             response.deadline shouldBe audiovisualResponse.deadline
             response.check shouldBe audiovisualResponse.check
             response.userResponse?.id shouldBe audiovisualResponse.userResponse?.id
-            response.userResponse?.username shouldBe audiovisualResponse.userResponse?.username
-            response.userResponse?.email shouldBe audiovisualResponse.userResponse?.email
         }
     }
 
