@@ -22,8 +22,8 @@ class RegistrationViewModel(private val registerUser: RegisterUser,
         val langKey = Locale.getDefault().language
         val registerRequest = RegisterRequest(username, email, password, langKey)
         coroutineScope.launch {
-            registerUser.execute(registerRequest)
-            registrationState.postValue(RegistrationState.REGISTRATION_COMPLETED)
+            val registrationResponse = registerUser.execute(registerRequest)
+            registrationState.postValue(registrationResponse)
         }
     }
 
