@@ -20,9 +20,6 @@ android {
     }
 
     buildTypes {
-//        debug {
-//            buildConfigField "String", "SERVER_URL", '"http://10.0.2.2:8080/api/"' //emulator
-//        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -95,9 +92,6 @@ dependencies {
     def kotlintestVersion = "3.3.0-RC3"
     testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintestVersion"
 
-    // Test Navigation val navController = TestNavHostController(
-    //            ApplicationProvider.getApplicationContext())
-    //        navController.setGraph(R.navigation.trivia)
     def nav_version = "2.3.1"
     debugImplementation "androidx.navigation:navigation-testing:$nav_version"
 
