@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.task.manager.data.network.model.request.AudiovisualRequest
-import org.task.manager.data.network.model.request.UserRequest
+import org.task.manager.data.network.model.request.UserIdRequest
 import org.task.manager.domain.model.Audiovisual
 import org.task.manager.domain.model.Genre
 import org.task.manager.domain.model.Platform
@@ -84,7 +84,7 @@ class AudiovisualViewModel(
             dateService.convertToInstant(startDate),
             dateService.convertToInstant(deadline),
             check,
-            UserRequest(userId)
+            UserIdRequest(userId)
         )
         coroutineScope.launch {
             val audiovisualUpdateResult = updateAudiovisual.execute(audiovisualRequest)

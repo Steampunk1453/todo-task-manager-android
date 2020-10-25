@@ -18,14 +18,14 @@ import kotlinx.android.synthetic.main.fragment_login.username
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentLoginBinding
-import org.task.manager.domain.model.AuthenticationState
+import org.task.manager.domain.model.state.AuthenticationState
 import org.task.manager.hide
 import org.task.manager.presentation.shared.SharedViewModel
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
 class LoginFragment : Fragment(), ViewElements {
-    private val viewModel: LoginViewModel by viewModel()
+    private val loginViewModel: LoginViewModel by viewModel()
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var binding: FragmentLoginBinding
     private lateinit var  navController: NavController
@@ -44,15 +44,15 @@ class LoginFragment : Fragment(), ViewElements {
 
         binding.login.setOnClickListener {
             showProgress()
-            viewModel.authenticate(username.text.toString(), password.text.toString(), rememberMe.isActivated)
+            loginViewModel.authenticate(username.text.toString(), password.text.toString(), rememberMe.isActivated)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            viewModel.refuseAuthentication()
+            loginViewModel.refuseAuthentication()
             navController.navigate(R.id.fragment_main)
         }
 
-        viewModel.authenticationResult.observe(viewLifecycleOwner, { authenticationResult ->
+        loginViewModel.authenticationResult.observe(viewLifecycleOwner, { authenticationResult ->
             when (authenticationResult.state) {
                 AuthenticationState.AUTHENTICATED -> authenticatedUser(authenticationResult.message)
                 AuthenticationState.INVALID_AUTHENTICATION -> showMessage(authenticationResult.message)

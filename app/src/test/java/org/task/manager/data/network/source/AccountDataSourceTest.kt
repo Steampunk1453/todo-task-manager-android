@@ -12,31 +12,31 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.task.manager.data.network.api.RegisterApi
+import org.task.manager.data.network.api.AccountApi
 import org.task.manager.stub.RegisterRequestStub
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi
-internal class RegisterDataSourceTest {
+internal class AccountDataSourceTest {
 
     @MockK
     private lateinit var provider: DataSourceProvider
 
     @MockK
-    private lateinit var registerApi: RegisterApi
+    private lateinit var accountApi: AccountApi
 
     @InjectMockKs
-    private lateinit var registerDataSource: RegisterDataSource
+    private lateinit var accountDataSource: AccountDataSource
 
     @Test
     fun `should no returns error response`() = runBlockingTest {
         // Given
         val registerRequest = RegisterRequestStub.random()
-        every { provider.getRegisterDataSource() } returns registerApi
-        coEvery { registerApi.register(registerRequest) } just Runs
+        every { provider.getAccountDataSource() } returns accountApi
+        coEvery { accountApi.register(registerRequest) } just Runs
         // When
-        registerDataSource.register(registerRequest)
+        accountDataSource.register(registerRequest)
         // Then
-        coVerify { registerApi.register(registerRequest) }
+        coVerify { accountApi.register(registerRequest) }
     }
 }

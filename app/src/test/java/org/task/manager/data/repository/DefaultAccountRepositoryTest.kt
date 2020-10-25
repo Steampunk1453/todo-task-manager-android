@@ -13,24 +13,24 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.task.manager.data.network.source.RegisterDataSource
+import org.task.manager.data.network.source.AccountDataSource
 import org.task.manager.domain.Result
 import org.task.manager.shared.Constants
 import org.task.manager.stub.RegisterRequestStub
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi
-internal class DefaultRegisterRepositoryTest {
+internal class DefaultAccountRepositoryTest {
 
     @MockK(relaxed = true)
-    private lateinit var dataSource: RegisterDataSource
+    private lateinit var dataSource: AccountDataSource
 
     @InjectMockKs
-    private lateinit var registerRepository: DefaultRegisterRepository
+    private lateinit var accountRepository: DefaultAccountRepository
 
     @BeforeEach
     fun setup() {
-        registerRepository = DefaultRegisterRepository(dataSource)
+        accountRepository = DefaultAccountRepository(dataSource)
     }
 
     @Test
@@ -40,9 +40,9 @@ internal class DefaultRegisterRepositoryTest {
         val expected = Result.Success("OK")
         coEvery { dataSource.register(any()) } just Runs
         // When
-        val result = registerRepository.register(request)
+        val result = accountRepository.register(request)
         // Then
-        coVerify { registerRepository.register(request) }
+        coVerify { accountRepository.register(request) }
 
         result shouldBe expected
         result as Result.Success
@@ -57,9 +57,9 @@ internal class DefaultRegisterRepositoryTest {
         val expected = Result.Error(error)
         coEvery { dataSource.register(any()) } throws error
         // When
-        val result = registerRepository.register(request)
+        val result = accountRepository.register(request)
         // Then
-        coVerify { registerRepository.register(request) }
+        coVerify { accountRepository.register(request) }
 
         result shouldBe expected
         result as Result.Error

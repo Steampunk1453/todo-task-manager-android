@@ -38,7 +38,7 @@ data class BookRequest(
     val check: Int,
 
     @SerializedName("user")
-    val userRequest: UserRequest?
+    val userIdRequest: UserIdRequest?
 )
 
 fun Book.toRequest(): BookRequest = BookRequest(null, title, author, genre, editorial,

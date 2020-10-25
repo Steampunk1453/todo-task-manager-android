@@ -22,8 +22,11 @@ open class AudiovisualStub {
             check: Int = Random.nextInt(0, 1),
             user: User = User(
                 Random.nextLong(1, 5000),
+                faker.name.name(),
+                faker.internet.email(),
                 faker.name.firstName(),
-                faker.internet.email()
+                faker.name.lastName(),
+
             )
         ) = Audiovisual(
             id,

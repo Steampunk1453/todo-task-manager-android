@@ -11,9 +11,15 @@ data class UserResponse(
     val username: String,
 
     @SerializedName("email")
-    val email: String
+    val email: String,
+
+    @SerializedName("firstName")
+    val firstName: String?,
+
+    @SerializedName("lastName")
+    val lastName: String?
 )
 
-fun UserResponse.toDomain(): User = User(id, username, email)
+fun UserResponse.toDomain(): User = User(id, username, email, firstName, lastName)
 
-fun User.toResponse(): UserResponse = UserResponse(id, username, email)
+fun User.toResponse(): UserResponse = UserResponse(id, username, email, firstName, lastName)

@@ -1,4 +1,4 @@
-package org.task.manager.domain.model
+package org.task.manager.domain.model.state
 
 enum class AuthenticationState {
     AUTHENTICATED,

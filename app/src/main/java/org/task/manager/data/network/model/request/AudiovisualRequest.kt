@@ -29,7 +29,7 @@ data class AudiovisualRequest(
     val check: Int,
 
     @SerializedName("user")
-    val userRequest: UserRequest?
+    val userIdRequest: UserIdRequest?
 )
 
 fun Audiovisual.toRequest(): AudiovisualRequest = AudiovisualRequest(null, title, genre, platform,

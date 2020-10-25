@@ -1,11 +1,11 @@
 package org.task.manager.domain.usecase.user
 
 import org.task.manager.domain.Result
-import org.task.manager.domain.model.RegistrationState
-import org.task.manager.domain.repository.RegisterRepository
+import org.task.manager.domain.model.state.RegistrationState
+import org.task.manager.domain.repository.AccountRepository
 import timber.log.Timber
 
-class ActivateUser(private val repository: RegisterRepository) {
+class ActivateUser(private val repository: AccountRepository) {
 
     suspend fun execute(activateKey: String): RegistrationState? {
         return when (val result = repository.activate(activateKey)) {
@@ -25,6 +25,5 @@ class ActivateUser(private val repository: RegisterRepository) {
         Timber.e("Invalid activation: %s", error)
         return RegistrationState.INVALID_ACTIVATION
     }
-
 
 }
