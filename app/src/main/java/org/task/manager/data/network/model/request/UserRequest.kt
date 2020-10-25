@@ -3,6 +3,9 @@ package org.task.manager.data.network.model.request
 import com.google.gson.annotations.SerializedName
 
 data class UserRequest(
+    @SerializedName("login")
+    val username: String,
+
     @SerializedName("firstName")
     val firstName: String,
 
