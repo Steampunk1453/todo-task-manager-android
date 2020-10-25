@@ -216,7 +216,7 @@ class CreateAudiovisualFragment : DialogFragment() {
 
         val action = arguments?.getString("action")
         if (action == "update") {
-            sharedViewModel.audiovisual.observe(viewLifecycleOwner, Observer {
+            sharedViewModel.audiovisual.observe(viewLifecycleOwner, {
                 binding.audiovisualId.tag = it.id
                 binding.userId.tag = it.user?.id
                 binding.titleText.setText(it.title)
