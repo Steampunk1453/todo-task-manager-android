@@ -14,9 +14,11 @@ import kotlinx.android.synthetic.main.fragment_login.progressBar
 import kotlinx.android.synthetic.main.fragment_registration.email
 import kotlinx.android.synthetic.main.fragment_settings.firstName
 import kotlinx.android.synthetic.main.fragment_settings.lastName
+import kotlinx.android.synthetic.main.fragment_settings.username
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentSettingsBinding
+import org.task.manager.domain.model.state.AccountState
 import org.task.manager.hide
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
@@ -36,19 +38,35 @@ class SettingsFragment : Fragment(), ViewElements {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.getAccount()
 
-
+        viewModel.user.observe(viewLifecycleOwner, {
+            binding.username.text = it.username
+            binding.firstName.setText(it.firstName)
+            binding.lastName.setText(it.lastName)
+            binding.email.setText(it.email)
+        })
 
         binding.saveButton.setOnClickListener {
+            showProgress()
             if(emailValidation(email.text.toString())) {
-                showProgress()
                 viewModel.updateAccount(
+                    username.text.toString(),
                     firstName.text.toString(),
                     lastName.text.toString(),
                     email.text.toString(),
                 )
             }
         }
+
+        viewModel.updateAccountState.observe(viewLifecycleOwner, {
+            when (it) {
+                AccountState.UPDATE_COMPLETED -> manageUpdateComplete()
+                AccountState.INVALID_UPDATE -> showMessage("Error saving settings, try again")
+                AccountState.UPDATING -> showMessage("Updating")
+            }
+            hideProgress()
+        })
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             navController.navigate(R.id.fragment_home)
@@ -73,6 +91,11 @@ class SettingsFragment : Fragment(), ViewElements {
             return false
         }
         return true
+    }
+
+    private fun manageUpdateComplete() {
+        showMessage("Settings saved")
+        navController.navigate(R.id.fragment_home)
     }
 
 }

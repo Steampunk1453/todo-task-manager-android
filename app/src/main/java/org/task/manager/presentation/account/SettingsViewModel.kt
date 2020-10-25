@@ -27,14 +27,13 @@ class SettingsViewModel(private val getUser: GetUser,
         }
     }
 
-    fun updateAccount(firstName: String, lastName: String, email: String) {
+    fun updateAccount(username: String, firstName: String, lastName: String, email: String) {
         val langKey = Locale.getDefault().language
-        val userRequest = UserRequest(firstName, lastName, email, langKey)
+        val userRequest = UserRequest(username, firstName, lastName, email, langKey)
         coroutineScope.launch {
             val updateAccountResponse = updaterUser.execute(userRequest)
             updateAccountState.postValue(updateAccountResponse)
         }
-
     }
 
 }
