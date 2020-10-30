@@ -20,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentBookBinding
 import org.task.manager.domain.model.Book
+import org.task.manager.domain.model.state.DeleteState
 import org.task.manager.hide
 import org.task.manager.presentation.shared.DateService
 import org.task.manager.presentation.shared.SharedViewModel
@@ -74,9 +75,13 @@ class BookFragment : Fragment(), ViewElements {
                 val position = viewHolder.adapterPosition
                 val id = books[position].id
                 bookViewModel.deleteBook(id)
-                showMessage("Item removed")
-                navController.navigate(R.id.fragment_book)
-                adapter.notifyItemRemoved(position)
+                bookViewModel.deleteState.observe(viewLifecycleOwner, { state ->
+                    if (state == DeleteState.DELETE_COMPLETED) {
+                        showMessage("Item removed")
+                        adapter.notifyItemRemoved(position)
+                        navController.navigate(R.id.fragment_book)
+                    }
+                })
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeCallback)
@@ -84,7 +89,7 @@ class BookFragment : Fragment(), ViewElements {
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showProgress() {

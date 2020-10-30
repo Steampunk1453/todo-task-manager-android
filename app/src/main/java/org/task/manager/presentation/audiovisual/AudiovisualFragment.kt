@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -20,6 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentAudiovisualBinding
 import org.task.manager.domain.model.Audiovisual
+import org.task.manager.domain.model.state.DeleteState
 import org.task.manager.hide
 import org.task.manager.presentation.shared.DateService
 import org.task.manager.presentation.shared.SharedViewModel
@@ -62,7 +62,7 @@ class AudiovisualFragment : Fragment(), ViewElements {
         }
 
         showProgress()
-        audiovisualViewModel.audiovisuals.observe(viewLifecycleOwner, Observer {
+        audiovisualViewModel.audiovisuals.observe(viewLifecycleOwner, {
             audiovisuals = it as MutableList<Audiovisual>
             adapter = AudiovisualAdapter(audiovisuals, audiovisualViewModel, sharedViewModel, dateService)
             binding.audiovisualList.adapter = adapter
@@ -75,9 +75,13 @@ class AudiovisualFragment : Fragment(), ViewElements {
                 val position = viewHolder.adapterPosition
                 val id = audiovisuals[position].id
                 audiovisualViewModel.deleteAudiovisual(id)
-                showMessage("Item removed")
-                navController.navigate(R.id.fragment_audiovisual)
-                adapter.notifyItemRemoved(position)
+                audiovisualViewModel.deleteState.observe(viewLifecycleOwner, { state ->
+                    if (state == DeleteState.DELETE_COMPLETED) {
+                        showMessage("Item removed")
+                        adapter.notifyItemRemoved(position)
+                        navController.navigate(R.id.fragment_audiovisual)
+                    }
+                })
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeCallback)
@@ -85,7 +89,7 @@ class AudiovisualFragment : Fragment(), ViewElements {
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showProgress() {
