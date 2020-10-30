@@ -40,12 +40,14 @@ class SettingsFragment : Fragment(), ViewElements {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.getAccount()
 
+        showProgress()
         viewModel.user.observe(viewLifecycleOwner, {
             binding.username.text = it.username
             binding.firstName.setText(it.firstName)
             binding.lastName.setText(it.lastName)
             binding.email.setText(it.email)
         })
+        hideProgress()
 
         binding.saveButton.setOnClickListener {
             showProgress()

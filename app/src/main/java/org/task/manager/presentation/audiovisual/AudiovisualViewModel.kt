@@ -14,6 +14,7 @@ import org.task.manager.domain.model.Audiovisual
 import org.task.manager.domain.model.Genre
 import org.task.manager.domain.model.Platform
 import org.task.manager.domain.model.Title
+import org.task.manager.domain.model.state.DeleteState
 import org.task.manager.domain.usecase.audiovisual.CreateAudiovisual
 import org.task.manager.domain.usecase.audiovisual.DeleteAudiovisual
 import org.task.manager.domain.usecase.audiovisual.GetAudiovisual
@@ -44,6 +45,7 @@ class AudiovisualViewModel(
     val titles = MutableLiveData<List<Title>>()
     val genres = MutableLiveData<List<Genre>>()
     val platforms = MutableLiveData<List<Platform>>()
+    val deleteState = MutableLiveData(DeleteState.DELETE_STARTED)
 
     fun getAudiovisuals() {
         coroutineScope.launch {
@@ -101,7 +103,8 @@ class AudiovisualViewModel(
 
     fun deleteAudiovisual(id: Long) {
         coroutineScope.launch {
-            deleteAudiovisual.execute(id)
+            val deleteResult = deleteAudiovisual.execute(id)
+            deleteState.postValue(deleteResult)
         }
     }
 

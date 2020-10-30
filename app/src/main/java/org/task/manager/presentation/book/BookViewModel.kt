@@ -14,6 +14,7 @@ import org.task.manager.domain.model.Book
 import org.task.manager.domain.model.Bookshop
 import org.task.manager.domain.model.Editorial
 import org.task.manager.domain.model.Genre
+import org.task.manager.domain.model.state.DeleteState
 import org.task.manager.domain.usecase.book.CreateBook
 import org.task.manager.domain.usecase.book.DeleteBook
 import org.task.manager.domain.usecase.book.GetBook
@@ -44,6 +45,7 @@ class BookViewModel(
     val genres = MutableLiveData<List<Genre>>()
     val bookshops = MutableLiveData<List<Bookshop>>()
     val editorials = MutableLiveData<List<Editorial>>()
+    val deleteState = MutableLiveData(DeleteState.DELETE_STARTED)
 
     fun getBooks() {
         coroutineScope.launch {
@@ -53,8 +55,10 @@ class BookViewModel(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun createBook(title: String, author: String, genre: String, editorial: String, editorialUrl: String,
-                   bookshop: String,  bookshopUrl: String, startDate: Long, deadline: Long, check: Int) {
+    fun createBook(
+        title: String, author: String, genre: String, editorial: String, editorialUrl: String,
+        bookshop: String, bookshopUrl: String, startDate: Long, deadline: Long, check: Int
+    ) {
         val bookRequest = BookRequest(
             null,
             title,
@@ -76,8 +80,20 @@ class BookViewModel(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun updateBook(id: Long, title: String, author: String, genre: String, editorial: String, editorialUrl: String,
-                   bookshop: String,  bookshopUrl: String, startDate: Long, deadline: Long, check: Int, userId: Long) {
+    fun updateBook(
+        id: Long,
+        title: String,
+        author: String,
+        genre: String,
+        editorial: String,
+        editorialUrl: String,
+        bookshop: String,
+        bookshopUrl: String,
+        startDate: Long,
+        deadline: Long,
+        check: Int,
+        userId: Long
+    ) {
         val bookRequest = BookRequest(
             id,
             title,
@@ -107,7 +123,8 @@ class BookViewModel(
 
     fun deleteBook(id: Long) {
         coroutineScope.launch {
-            deleteBook.execute(id)
+            val deleteResult = deleteBook.execute(id)
+            deleteState.postValue(deleteResult)
         }
     }
 
