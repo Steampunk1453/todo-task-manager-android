@@ -12,7 +12,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -130,7 +129,7 @@ class CreateAudiovisualFragment : DialogFragment() {
             val suggestedTitlesDropdown: AutoCompleteTextView = binding.suggestedTitlesDropdown
             suggestedTitlesDropdown.setAdapter(adapter)
 
-            suggestedTitlesDropdown.setOnItemClickListener { adapterView, view, pos, id ->
+            suggestedTitlesDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
                 val title = adapterView.getItemAtPosition(pos)
                 binding.titleText.setText(title.toString())
             }
@@ -151,7 +150,7 @@ class CreateAudiovisualFragment : DialogFragment() {
             val genresDropdown: AutoCompleteTextView = binding.genreDropdown
             genresDropdown.setAdapter(adapter)
 
-            genresDropdown.setOnItemClickListener { adapterView, view, pos, id ->
+            genresDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
                 genre = adapterView.getItemAtPosition(pos).toString()
             }
         })
@@ -170,13 +169,13 @@ class CreateAudiovisualFragment : DialogFragment() {
             val platformsDropdown: AutoCompleteTextView = binding.platformDropdown
             platformsDropdown.setAdapter(adapter)
 
-            platformsDropdown.setOnItemClickListener { adapterView, view, pos, id ->
+            platformsDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
                 platform = adapterView.getItemAtPosition(pos).toString()
                 platformUrl = platforms[pos].url
             }
         })
 
-        audiovisualViewModel.audiovisual.observe(viewLifecycleOwner, Observer {
+        audiovisualViewModel.audiovisual.observe(viewLifecycleOwner, {
             dismiss()
             navController.navigate(R.id.fragment_audiovisual)
         })
@@ -247,10 +246,8 @@ class CreateAudiovisualFragment : DialogFragment() {
     }
 
 
-    private fun isSaveEnabled(
-        isTitleFilled: Boolean, isStartDateFilled: Boolean,
-        isDeadlineFilled: Boolean
-    ) {
+    private fun isSaveEnabled(isTitleFilled: Boolean, isStartDateFilled: Boolean,
+                              isDeadlineFilled: Boolean) {
         save.isEnabled = isTitleFilled && isStartDateFilled && isDeadlineFilled
     }
 

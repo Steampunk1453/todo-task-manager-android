@@ -137,7 +137,7 @@ class CreateBookFragment : DialogFragment() {
             val genresDropdown: AutoCompleteTextView = binding.genreDropdown
             genresDropdown.setAdapter(adapter)
 
-            genresDropdown.setOnItemClickListener { adapterView, view, pos, id ->
+            genresDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
                 genre = adapterView.getItemAtPosition(pos).toString()
             }
         })
@@ -156,7 +156,7 @@ class CreateBookFragment : DialogFragment() {
             val editorialsDropdown: AutoCompleteTextView = binding.editorialDropdown
             editorialsDropdown.setAdapter(adapter)
 
-            editorialsDropdown.setOnItemClickListener { adapterView, view, pos, id ->
+            editorialsDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
                 editorial = adapterView.getItemAtPosition(pos).toString()
                 editorialUrl = editorials[pos].url
             }
@@ -175,7 +175,7 @@ class CreateBookFragment : DialogFragment() {
             val bookshopDropdown: AutoCompleteTextView = binding.bookshopDropdown
             bookshopDropdown.setAdapter(adapter)
 
-            bookshopDropdown.setOnItemClickListener { adapterView, view, pos, id ->
+            bookshopDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
                 bookshop = adapterView.getItemAtPosition(pos).toString()
                 bookshopUrl = bookshops[pos].url
             }
@@ -228,7 +228,7 @@ class CreateBookFragment : DialogFragment() {
 
         val action = arguments?.getString("action")
         if (action == "update") {
-            sharedViewModel.book.observe(viewLifecycleOwner, Observer {
+            sharedViewModel.book.observe(viewLifecycleOwner, {
                 binding.bookId.tag = it.id
                 binding.userId.tag = it.user?.id
                 binding.titleText.setText(it.title)
