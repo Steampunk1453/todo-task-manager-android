@@ -5,11 +5,12 @@ private const val USERNAME_PATTERN_ERROR_MESSAGE = "Your username can only conta
 private const val EMAIL_ERROR_MESSAGE = "The email isn't correct"
 private const val PASSWORD_LENGTH_ERROR_MESSAGE = "The password is required to be at least 4 characters"
 private const val PASSWORD_MATCH_ERROR_MESSAGE = "The password and its confirmation do not match!"
+private const val PATTER_ONLY_LETTERS_NUMBERS = "^[_.@A-Za-z0-9-]*$"
 
 class ValidatorService {
 
     fun isValidUsername(username: String): Pair<Boolean, String> {
-        val regex = "^[_.@A-Za-z0-9-]*$".toRegex()
+        val regex = PATTER_ONLY_LETTERS_NUMBERS.toRegex()
         if (!username.isNotBlank()) return Pair(false, USERNAME_EMPTY_ERROR_MESSAGE)
         else if (!regex.matches(username)) return Pair(false, USERNAME_PATTERN_ERROR_MESSAGE)
         return Pair(true, "")
