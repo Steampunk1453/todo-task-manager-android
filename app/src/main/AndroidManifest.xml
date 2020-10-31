@@ -21,10 +21,10 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "pers-task-manager.herokuapp.com/account/activate” -->
+                <!-- Accepts URIs that begin with "pers-task-manager.herokuapp.com/account” -->
                 <data android:scheme="https"
                     android:host="pers-task-manager.herokuapp.com"
-                    android:pathPrefix="/account/activate"/>
+                    android:pathPrefix="/account"/>
                 <!-- note that the leading "/" is required for pathPrefix-->
             </intent-filter>
         </activity>
