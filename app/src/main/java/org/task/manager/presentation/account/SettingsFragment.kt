@@ -15,11 +15,13 @@ import kotlinx.android.synthetic.main.fragment_registration.email
 import kotlinx.android.synthetic.main.fragment_settings.firstName
 import kotlinx.android.synthetic.main.fragment_settings.lastName
 import kotlinx.android.synthetic.main.fragment_settings.username
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentSettingsBinding
 import org.task.manager.domain.model.state.AccountState
 import org.task.manager.hide
+import org.task.manager.presentation.shared.ValidatorService
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
@@ -28,6 +30,7 @@ class SettingsFragment : Fragment(), ViewElements {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var navController: NavController
     private val viewModel: SettingsViewModel by viewModel()
+    private val validatorService: ValidatorService by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,14 +53,17 @@ class SettingsFragment : Fragment(), ViewElements {
         hideProgress()
 
         binding.saveButton.setOnClickListener {
-            showProgress()
-            if(emailValidation(email.text.toString())) {
+            val (isValid, error) = validatorService.isValidEmail(email.text.toString())
+            if (isValid) {
+                showProgress()
                 viewModel.updateAccount(
                     username.text.toString(),
                     firstName.text.toString(),
                     lastName.text.toString(),
                     email.text.toString(),
                 )
+            } else {
+                showMessage(error)
             }
         }
 
@@ -85,14 +91,6 @@ class SettingsFragment : Fragment(), ViewElements {
 
     override fun hideProgress() {
         progressBar.hide()
-    }
-
-    private fun emailValidation(email: String): Boolean {
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            showMessage("The email isn't correct")
-            return false
-        }
-        return true
     }
 
     private fun manageUpdateComplete() {
