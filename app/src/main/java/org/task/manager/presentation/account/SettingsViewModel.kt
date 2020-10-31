@@ -9,11 +9,11 @@ import org.task.manager.data.network.model.request.UserRequest
 import org.task.manager.domain.model.User
 import org.task.manager.domain.model.state.AccountState
 import org.task.manager.domain.usecase.user.GetUser
-import org.task.manager.domain.usecase.user.UpdaterUser
+import org.task.manager.domain.usecase.user.UpdateUser
 import java.util.Locale
 
 class SettingsViewModel(private val getUser: GetUser,
-                        private val updaterUser: UpdaterUser) : ViewModel() {
+                        private val updateUser: UpdateUser) : ViewModel() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
@@ -31,7 +31,7 @@ class SettingsViewModel(private val getUser: GetUser,
         val langKey = Locale.getDefault().language
         val userRequest = UserRequest(username, firstName, lastName, email, langKey)
         coroutineScope.launch {
-            val updateAccountResponse = updaterUser.execute(userRequest)
+            val updateAccountResponse = updateUser.execute(userRequest)
             updateAccountState.postValue(updateAccountResponse)
         }
     }

@@ -71,7 +71,7 @@ class SettingsFragment : Fragment(), ViewElements {
             when (it) {
                 AccountState.UPDATE_COMPLETED -> manageUpdateComplete()
                 AccountState.INVALID_UPDATE -> showMessage("Error saving settings, try again")
-                AccountState.UPDATING -> showMessage("Updating")
+                AccountState.UPDATING -> showMessage("Updating settings")
             }
             hideProgress()
         })
