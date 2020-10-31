@@ -29,6 +29,7 @@ import timber.log.Timber
 import timber.log.Timber.DebugTree
 
 class MainActivity : AppCompatActivity(), ViewElements {
+
     private lateinit var navView: BottomNavigationView
     private lateinit var navController: NavController
     private val registrationViewModel: RegistrationViewModel by viewModel()
@@ -99,9 +100,11 @@ class MainActivity : AppCompatActivity(), ViewElements {
         if (data != null && data.isHierarchical) {
             val uri = this.intent.dataString
             val activateKey = this.intent.dataString?.toHttpUrlOrNull()?.queryParameter("key")
+            val secondPath = this.intent.dataString?.toHttpUrlOrNull()?.pathSegments?.get(1)
 
             Timber.i("Deep link clicked: $uri")
-            Timber.i("Activate Key from email: $activateKey")
+            Timber.i("Activate Key: $activateKey")
+            Timber.i("Second Path: $secondPath")
 
             activateKey?.let {
                 registrationViewModel.activateAccount(it)
@@ -120,6 +123,7 @@ class MainActivity : AppCompatActivity(), ViewElements {
                 }
             })
         }
+
         loginViewModel.logoutState.observe(this, { state ->
             if (LogoutState.LOGOUT_COMPLETE == state) {
                 showMessage("Successful logout")
