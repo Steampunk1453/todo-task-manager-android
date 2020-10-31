@@ -5,8 +5,9 @@
     <string name="prompt_firstName">First Name</string>
     <string name="prompt_lastName">Last Name</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_current_password">Current password</string>
     <string name="prompt_new_password">New password</string>
-    <string name="prompt_new_password_confirmation">Confirm the new password</string>
+    <string name="prompt_new_password_confirmation">New password confirmation</string>
     <string name="prompt_bio">Bio</string>
     <string name="action_sign_in">Login</string>
     <string name="action_register">Register</string>

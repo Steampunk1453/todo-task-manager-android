@@ -11,9 +11,16 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login.progressBar
+import kotlinx.android.synthetic.main.fragment_password.currentPassword
+import kotlinx.android.synthetic.main.fragment_password.newPassword
+import kotlinx.android.synthetic.main.fragment_password.newPasswordConfirmation
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentPasswordBinding
+import org.task.manager.domain.model.state.AccountState
 import org.task.manager.hide
+import org.task.manager.presentation.shared.ValidatorService
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
@@ -21,6 +28,8 @@ class PasswordFragment : Fragment(), ViewElements {
 
     private lateinit var binding: FragmentPasswordBinding
     private lateinit var navController: NavController
+    private val viewModel: PasswordViewModel by viewModel()
+    private val validatorService: ValidatorService by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -30,6 +39,27 @@ class PasswordFragment : Fragment(), ViewElements {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.saveButton.setOnClickListener {
+            val (isValid, error) = validatorService.isValidPassword(newPassword.text.toString(),
+                newPasswordConfirmation.text.toString())
+            if (isValid) {
+                viewModel.updatePassword(
+                    currentPassword.text.toString(),
+                    newPassword.text.toString()
+                )
+            } else {
+                showMessage(error)
+            }
+        }
+
+        viewModel.updatePasswordState.observe(viewLifecycleOwner, {
+            when (it) {
+                AccountState.UPDATE_COMPLETED -> showMessage("Password changed!")
+                AccountState.INVALID_UPDATE -> showMessage("Incorrect password")
+                AccountState.UPDATING -> showMessage("Updating password")
+            }
+        })
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             navController.navigate(R.id.fragment_home)
         }

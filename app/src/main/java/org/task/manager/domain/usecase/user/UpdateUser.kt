@@ -6,7 +6,7 @@ import org.task.manager.domain.model.state.AccountState
 import org.task.manager.domain.repository.AccountRepository
 import timber.log.Timber
 
-class UpdaterUser(private val repository: AccountRepository) {
+class UpdateUser(private val repository: AccountRepository) {
 
     suspend fun execute(request: UserRequest): AccountState? {
         return when (val result = repository.save(request)) {

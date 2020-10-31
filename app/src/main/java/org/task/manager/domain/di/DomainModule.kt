@@ -21,7 +21,8 @@ import org.task.manager.domain.usecase.user.GetUser
 import org.task.manager.domain.usecase.user.LoginUser
 import org.task.manager.domain.usecase.user.LogoutUser
 import org.task.manager.domain.usecase.user.RegisterUser
-import org.task.manager.domain.usecase.user.UpdaterUser
+import org.task.manager.domain.usecase.user.UpdateUser
+import org.task.manager.domain.usecase.user.password.UpdatePassword
 import org.task.manager.shared.service.SessionManagerService
 
 val modules = module {
@@ -31,7 +32,8 @@ val modules = module {
     single { RegisterUser(get()) }
     single { ActivateUser(get()) }
     single { GetUser(get()) }
-    single { UpdaterUser(get()) }
+    single { UpdateUser(get()) }
+    single { UpdatePassword(get()) }
 
     single { SessionManagerService(get()) }
 
