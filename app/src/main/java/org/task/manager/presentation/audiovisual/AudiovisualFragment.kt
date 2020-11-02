@@ -28,30 +28,34 @@ import org.task.manager.presentation.view.SwipeCallback
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
+private const val ITEM_REMOVE_MESSAGE = "Item removed"
+
 class AudiovisualFragment : Fragment(), ViewElements {
 
-    private val audiovisualViewModel: AudiovisualViewModel by viewModel()
-    private lateinit var sharedViewModel: SharedViewModel
-    private val dateService: DateService by inject()
-    private lateinit var adapter: AudiovisualAdapter
     private lateinit var binding: FragmentAudiovisualBinding
     private lateinit var navController: NavController
+    private lateinit var adapter: AudiovisualAdapter
+    private lateinit var sharedViewModel: SharedViewModel
+    private val audiovisualViewModel: AudiovisualViewModel by viewModel()
+    private val dateService: DateService by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_audiovisual, container, false)
         navController = findNavController()
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        var audiovisuals = mutableListOf<Audiovisual>()
 
-        // Invoke view model
         audiovisualViewModel.getAudiovisuals()
+
+        showProgress()
+        observeAudiovisualViewModel()
+        hideProgress()
 
         binding.addAudiovisual.setOnClickListener {
             navController.navigate(R.id.fragment_create_audiovisual)
@@ -60,32 +64,6 @@ class AudiovisualFragment : Fragment(), ViewElements {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             navController.navigate(R.id.fragment_home)
         }
-
-        showProgress()
-        audiovisualViewModel.audiovisuals.observe(viewLifecycleOwner, {
-            audiovisuals = it as MutableList<Audiovisual>
-            adapter = AudiovisualAdapter(audiovisuals, audiovisualViewModel, sharedViewModel, dateService)
-            binding.audiovisualList.adapter = adapter
-            binding.audiovisualList.addItemDecoration(SimpleDividerItemDecoration(binding.root.context))
-        })
-        hideProgress()
-
-        val swipeCallback = object : SwipeCallback() {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
-                val id = audiovisuals[position].id
-                audiovisualViewModel.deleteAudiovisual(id)
-                audiovisualViewModel.deleteState.observe(viewLifecycleOwner, { state ->
-                    if (state == DeleteState.DELETE_COMPLETED) {
-                        showMessage("Item removed")
-                        adapter.notifyItemRemoved(position)
-                        navController.navigate(R.id.fragment_audiovisual)
-                    }
-                })
-            }
-        }
-        val itemTouchHelper = ItemTouchHelper(swipeCallback)
-        itemTouchHelper.attachToRecyclerView(binding.audiovisualList)
     }
 
     override fun showMessage(message: String) {
@@ -98,6 +76,50 @@ class AudiovisualFragment : Fragment(), ViewElements {
 
     override fun hideProgress() {
         progressBar.hide()
+    }
+
+    private fun observeAudiovisualViewModel() {
+        audiovisualViewModel.audiovisuals.observe(viewLifecycleOwner, {
+            adapter = createAdapter(it, audiovisualViewModel, sharedViewModel, dateService)
+            buildAudiovisualsList(adapter)
+            addRemoveItemEvent(it)
+        })
+    }
+
+    private fun buildAudiovisualsList(adapter: AudiovisualAdapter) {
+        binding.audiovisualList.adapter = adapter
+        binding.audiovisualList.addItemDecoration(SimpleDividerItemDecoration(binding.root.context))
+    }
+
+    private fun createAdapter(
+        audiovisuals: List<Audiovisual>,
+        audiovisualViewModel: AudiovisualViewModel,
+        sharedViewModel: SharedViewModel,
+        dateService: DateService
+    ) =
+        AudiovisualAdapter(audiovisuals, audiovisualViewModel, sharedViewModel, dateService)
+
+    private fun addRemoveItemEvent(audiovisuals: List<Audiovisual>) {
+        val swipeCallback = object : SwipeCallback() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val id = audiovisuals[position].id
+                audiovisualViewModel.deleteAudiovisual(id)
+                handleDeleteAudiovisual(position)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeCallback)
+        itemTouchHelper.attachToRecyclerView(binding.audiovisualList)
+    }
+
+    private fun handleDeleteAudiovisual(position: Int) {
+        audiovisualViewModel.deleteState.observe(viewLifecycleOwner, { state ->
+            if (state == DeleteState.DELETE_COMPLETED) {
+                showMessage(ITEM_REMOVE_MESSAGE)
+                this@AudiovisualFragment.adapter.notifyItemRemoved(position)
+                navController.navigate(R.id.fragment_audiovisual)
+            }
+        })
     }
 
 }
