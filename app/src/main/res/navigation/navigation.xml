@@ -66,7 +66,7 @@
         android:label="Create Book" />
     <fragment
         android:id="@+id/fragment_password"
-        android:name="org.task.manager.presentation.account.PasswordFragment"
+        android:name="org.task.manager.presentation.account.password.PasswordFragment"
         android:label="@string/prompt_password" >
         <action
             android:id="@+id/action_fragment_password_to_fragment_home"
