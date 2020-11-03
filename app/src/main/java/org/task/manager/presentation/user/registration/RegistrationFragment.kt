@@ -25,6 +25,8 @@ import org.task.manager.presentation.shared.ValidatorService
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
+private const val SUCCESSFUL_REGISTRATION_MESSAGE = "Registration saved! Please check your email for confirmation"
+
 class RegistrationFragment : Fragment(), ViewElements {
 
     private lateinit var binding: FragmentRegistrationBinding
@@ -52,7 +54,6 @@ class RegistrationFragment : Fragment(), ViewElements {
                 newPasswordConfirmation.text.toString()
             )
             if (isValid) {
-                showProgress()
                 viewModel.createAccount(
                     username.text.toString(),
                     email.text.toString(),
@@ -63,24 +64,15 @@ class RegistrationFragment : Fragment(), ViewElements {
             }
         }
 
-        viewModel.registrationState.observe(
-            viewLifecycleOwner, { state ->
-                if (state == RegistrationState.REGISTRATION_COMPLETED) {
-                    showMessage("Registration saved! Please check your email for confirmation")
-                    navController.navigate(R.id.fragment_main)
-                }
-                hideProgress()
-            }
-        )
-
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             viewModel.userCancelledRegistration()
             navController.navigate(R.id.fragment_main)
         }
+
+        observeViewModel()
     }
 
     override fun showMessage(message: String) {
-        
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
@@ -91,6 +83,20 @@ class RegistrationFragment : Fragment(), ViewElements {
     override fun hideProgress() {
         progressBarReg.hide()
     }
+
+    private fun observeViewModel() {
+        showProgress()
+        viewModel.registrationState.observe(
+            viewLifecycleOwner, { state ->
+                if (state == RegistrationState.REGISTRATION_COMPLETED) {
+                    showMessage(SUCCESSFUL_REGISTRATION_MESSAGE)
+                    navController.navigate(R.id.fragment_main)
+                }
+            }
+        )
+        hideProgress()
+    }
+
 
     private fun validate(username: String, email: String, password: String, passwordConfirmation: String): Pair<Boolean, String> {
         val (isValidUsername, usernameErrorMessage) = validatorService.isValidUsername(username)
