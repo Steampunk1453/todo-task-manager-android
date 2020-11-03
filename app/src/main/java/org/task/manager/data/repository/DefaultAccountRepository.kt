@@ -1,5 +1,6 @@
 package org.task.manager.data.repository
 
+import org.task.manager.data.network.model.request.PasswordRequest
 import org.task.manager.data.network.model.request.RegisterRequest
 import org.task.manager.data.network.model.request.UserRequest
 import org.task.manager.data.network.model.response.toDomain
@@ -38,6 +39,15 @@ class DefaultAccountRepository(private val dataSource: AccountDataSource) : Acco
     override suspend fun save(userRequest: UserRequest): Result<String> {
         return try {
             dataSource.save(userRequest)
+            Result.Success(SUCCESSFUL_RESPONSE)
+        } catch (ex: Throwable) {
+            Result.Error(ex)
+        }
+    }
+
+    override suspend fun changePassword(passwordRequest: PasswordRequest): Result<String> {
+        return try {
+            dataSource.changePassword(passwordRequest)
             Result.Success(SUCCESSFUL_RESPONSE)
         } catch (ex: Throwable) {
             Result.Error(ex)

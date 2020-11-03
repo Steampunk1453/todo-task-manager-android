@@ -7,6 +7,7 @@ object Constants {
     const val REGISTER_URL = "register"
     const val ACTIVATE_URL = "activate"
     const val ACCOUNT_URL = "account"
+    const val CHANGE_PASSWORD_URL = "/change-password"
     const val AUDIOVISUAL_URL = "audiovisuals"
     const val ID = "/{id}"
     const val TITLE_URL = "titles"
@@ -22,5 +23,6 @@ object Constants {
     // Shared
     const val FALSE = 0
     const val TRUE = 1
+    const val DATE_PICKER_TITLE_TEXT = "Select a date"
 
 }

@@ -28,7 +28,14 @@ import org.task.manager.show
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
+private const val USER_ACCOUNT_ACTIVATE_MESSAGE = "Your user account has been activated"
+private const val USER_ACCOUNT_ERROR_MESSAGE = "Your user could not be activated." +
+        "Please use the registration form to sign up"
+private const val SUCCESSFUL_LOGOUT_MESSAGE = "Successful logout"
+private const val ERROR_LOGOUT_MESSAGE = "Invalid logout, try again"
+
 class MainActivity : AppCompatActivity(), ViewElements {
+
     private lateinit var navView: BottomNavigationView
     private lateinit var navController: NavController
     private val registrationViewModel: RegistrationViewModel by viewModel()
@@ -36,17 +43,44 @@ class MainActivity : AppCompatActivity(), ViewElements {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         }
+
         setContentView(R.layout.activity_main)
 
         navView = findViewById(R.id.nav_view)
-
         navController = findNavController(R.id.nav_host_fragment)
+
+        val appBarConfiguration = buildBarConfiguration()
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
+
+        handleBottomNavigationView()
+
+        handleNavigationController()
+
+        handleIntentData()
+    }
+
+    override fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showProgress() {
+        progressBar.show()
+    }
+
+    override fun hideProgress() {
+        progressBar.hide()
+    }
+
+    private fun buildBarConfiguration(): AppBarConfiguration {
         // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration
+        // menu should be considered as top level destinations
+        return AppBarConfiguration
             .Builder(
                 R.id.fragment_main,
                 R.id.fragment_login,
@@ -58,10 +92,9 @@ class MainActivity : AppCompatActivity(), ViewElements {
                 R.id.fragment_password
             )
             .build()
+    }
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-
+    private fun handleBottomNavigationView() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.fragment_home -> showBottomNav()
@@ -72,7 +105,9 @@ class MainActivity : AppCompatActivity(), ViewElements {
                 else -> hideBottomNav()
             }
         }
+    }
 
+    private fun handleNavigationController() {
         navView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.fragment_home -> {
@@ -88,72 +123,57 @@ class MainActivity : AppCompatActivity(), ViewElements {
                     true
                 }
                 R.id.menu_account -> {
-                    showAccountPopup(navView)
+                    showUserAccountPopup(navView)
                     true
                 }
                 else -> false
             }
         }
+    }
 
+    private fun handleIntentData() {
         val data: Uri? = this.intent.data
+
         if (data != null && data.isHierarchical) {
             val uri = this.intent.dataString
             val activateKey = this.intent.dataString?.toHttpUrlOrNull()?.queryParameter("key")
+            val secondPath = this.intent.dataString?.toHttpUrlOrNull()?.pathSegments?.get(1)
 
             Timber.i("Deep link clicked: $uri")
-            Timber.i("Activate Key from email: $activateKey")
+            Timber.i("Activate Key: $activateKey")
+            Timber.i("Second Path: $secondPath")
 
-            activateKey?.let {
-                registrationViewModel.activateAccount(it)
-            }
-
-            registrationViewModel.registrationState.observe(this, { registrationResult ->
-                if (registrationResult == RegistrationState.ACTIVATION_COMPLETED) {
-                    Toast.makeText(this, "Your user account has been activated", Toast.LENGTH_LONG)
-                        .show()
-                    navController.navigate(R.id.fragment_login)
-                } else if (registrationResult == RegistrationState.INVALID_ACTIVATION) {
-                    Toast.makeText(
-                        this, "Your user could not be activated. " +
-                                "Please use the registration form to sign up.", Toast.LENGTH_LONG
-                    ).show()
-                }
-            })
+            activateUserAccount(activateKey)
         }
-        loginViewModel.logoutState.observe(this, { state ->
-            if (LogoutState.LOGOUT_COMPLETE == state) {
-                showMessage("Successful logout")
-            } else {
-                showMessage("Invalid logout, try again")
+    }
+
+    private fun activateUserAccount(activateKey: String?) {
+        activateKey?.let {
+            registrationViewModel.activateAccount(it)
+        }
+
+        registrationViewModel.registrationState.observe(this, { registrationResult ->
+            if (registrationResult == RegistrationState.ACTIVATION_COMPLETED) {
+                Toast.makeText(this, USER_ACCOUNT_ACTIVATE_MESSAGE, Toast.LENGTH_SHORT).show()
+                navController.navigate(R.id.fragment_login)
+            }
+            else if (registrationResult == RegistrationState.INVALID_ACTIVATION) {
+                Toast.makeText(this, USER_ACCOUNT_ERROR_MESSAGE, Toast.LENGTH_LONG).show()
             }
         })
     }
 
-    override fun showMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showProgress() {
-        progressBar.show()
-    }
-
-    override fun hideProgress() {
-        progressBar.hide()
-    }
-
-    private fun showBottomNav() {
-        navView.visibility = View.VISIBLE
-    }
-
-    private fun hideBottomNav() {
-        navView.visibility = View.GONE
-    }
-
-    private fun showAccountPopup(view: View) {
+    private fun showUserAccountPopup(view: View) {
         val popup = PopupMenu(this, view)
         popup.inflate(R.menu.menu_account)
         popup.gravity = Gravity.RIGHT
 
+        popup.show()
+
+        handleNavigationAccountPopup(popup)
+    }
+
+    private fun handleNavigationAccountPopup(popup: PopupMenu) {
         popup.setOnMenuItemClickListener {
             when (it?.itemId) {
                 R.id.settings -> {
@@ -165,14 +185,33 @@ class MainActivity : AppCompatActivity(), ViewElements {
                     true
                 }
                 R.id.signOut -> {
-                    loginViewModel.singOut()
+                    singOutUser()
                     navController.navigate(R.id.fragment_main)
                     true
                 }
                 else -> false
             }
         }
-        popup.show()
+    }
+
+    private fun singOutUser() {
+        loginViewModel.singOut()
+
+        loginViewModel.logoutState.observe(this, { state ->
+            if (LogoutState.LOGOUT_COMPLETE == state) {
+                showMessage(SUCCESSFUL_LOGOUT_MESSAGE)
+            } else {
+                showMessage(ERROR_LOGOUT_MESSAGE)
+            }
+        })
+    }
+
+    private fun showBottomNav() {
+        navView.visibility = View.VISIBLE
+    }
+
+    private fun hideBottomNav() {
+        navView.visibility = View.GONE
     }
 
 }

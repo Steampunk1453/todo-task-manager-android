@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -29,29 +28,33 @@ import org.task.manager.presentation.view.SwipeCallback
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
+private const val BOOK_REMOVE_MESSAGE = "Book removed"
+
 class BookFragment : Fragment(), ViewElements {
-    private val bookViewModel: BookViewModel by viewModel()
-    private val dateService: DateService by inject()
-    private lateinit var sharedViewModel: SharedViewModel
-    private lateinit var adapter: BookAdapter
     private lateinit var binding: FragmentBookBinding
     private lateinit var navController: NavController
+    private lateinit var adapter: BookAdapter
+    private lateinit var sharedViewModel: SharedViewModel
+    private val bookViewModel: BookViewModel by viewModel()
+    private val dateService: DateService by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_book, container, false)
         navController = findNavController()
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        var books = mutableListOf<Book>()
 
-        // Invoke view model
         bookViewModel.getBooks()
+
+        showProgress()
+        observeBookViewModel()
+        hideProgress()
 
         binding.addBook.setOnClickListener {
             navController.navigate(R.id.fragment_create_book)
@@ -60,32 +63,6 @@ class BookFragment : Fragment(), ViewElements {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             navController.navigate(R.id.fragment_home)
         }
-
-        showProgress()
-        bookViewModel.books.observe(viewLifecycleOwner, Observer {
-            books = it as MutableList<Book>
-            adapter = BookAdapter(books, bookViewModel, sharedViewModel, dateService)
-            binding.bookList.adapter = adapter
-            binding.bookList.addItemDecoration(SimpleDividerItemDecoration(binding.root.context))
-        })
-        hideProgress()
-
-        val swipeCallback = object : SwipeCallback() {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
-                val id = books[position].id
-                bookViewModel.deleteBook(id)
-                bookViewModel.deleteState.observe(viewLifecycleOwner, { state ->
-                    if (state == DeleteState.DELETE_COMPLETED) {
-                        showMessage("Item removed")
-                        adapter.notifyItemRemoved(position)
-                        navController.navigate(R.id.fragment_book)
-                    }
-                })
-            }
-        }
-        val itemTouchHelper = ItemTouchHelper(swipeCallback)
-        itemTouchHelper.attachToRecyclerView(binding.bookList)
     }
 
     override fun showMessage(message: String) {
@@ -99,5 +76,50 @@ class BookFragment : Fragment(), ViewElements {
     override fun hideProgress() {
         progressBar.hide()
     }
+
+    private fun observeBookViewModel() {
+        bookViewModel.books.observe(viewLifecycleOwner, {
+            adapter = createAdapter(it, bookViewModel, sharedViewModel, dateService)
+            buildBooksList()
+            addRemoveItemEvent(it)
+        })
+    }
+
+    private fun createAdapter(
+        it: List<Book>,
+        bookViewModel: BookViewModel,
+        sharedViewModel: SharedViewModel,
+        dateService: DateService
+    ) =
+        BookAdapter(it, bookViewModel, sharedViewModel, dateService)
+
+    private fun buildBooksList() {
+        binding.bookList.adapter = adapter
+        binding.bookList.addItemDecoration(SimpleDividerItemDecoration(binding.root.context))
+    }
+
+    private fun addRemoveItemEvent(books: List<Book>) {
+        val swipeCallback = object : SwipeCallback() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val id = books[position].id
+                bookViewModel.deleteBook(id)
+                handleDeleteBook(position)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeCallback)
+        itemTouchHelper.attachToRecyclerView(binding.bookList)
+    }
+
+    private fun handleDeleteBook(position: Int) {
+        bookViewModel.deleteState.observe(viewLifecycleOwner, { state ->
+            if (state == DeleteState.DELETE_COMPLETED) {
+                showMessage(BOOK_REMOVE_MESSAGE)
+                adapter.notifyItemRemoved(position)
+                navController.navigate(R.id.fragment_book)
+            }
+        })
+    }
+
 
 }

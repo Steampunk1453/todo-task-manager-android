@@ -15,57 +15,61 @@ import kotlinx.android.synthetic.main.fragment_registration.newPassword
 import kotlinx.android.synthetic.main.fragment_registration.newPasswordConfirmation
 import kotlinx.android.synthetic.main.fragment_registration.progressBarReg
 import kotlinx.android.synthetic.main.fragment_registration.username
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentRegistrationBinding
 import org.task.manager.domain.model.state.RegistrationState
 import org.task.manager.hide
+import org.task.manager.presentation.shared.ValidatorService
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
+
+private const val SUCCESSFUL_REGISTRATION_MESSAGE = "Registration saved! Please check your email for confirmation"
 
 class RegistrationFragment : Fragment(), ViewElements {
 
     private lateinit var binding: FragmentRegistrationBinding
-    private lateinit var  navController: NavController
+    private lateinit var navController: NavController
     private val viewModel: RegistrationViewModel by viewModel()
+    private val validatorService: ValidatorService by inject()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false)
         navController = findNavController()
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-       binding.registerButton.setOnClickListener {
-           if(validations(email.text.toString(), newPassword.text.toString(),
-                   newPasswordConfirmation.text.toString())) {
-               showProgress()
-               viewModel.createAccount(
-                   username.text.toString(),
-                   email.text.toString(),
-                   newPassword.text.toString()
-               )
-           }
-        }
-
-        viewModel.registrationState.observe(
-            viewLifecycleOwner, { state ->
-                if (state == RegistrationState.REGISTRATION_COMPLETED) {
-                    showMessage("Registration saved! Please check your email for confirmation")
-                    navController.navigate(R.id.fragment_main)
-                }
-                hideProgress()
+        binding.registerButton.setOnClickListener {
+            val (isValid, error) = validate(
+                username.text.toString(),
+                email.text.toString(),
+                newPassword.text.toString(),
+                newPasswordConfirmation.text.toString()
+            )
+            if (isValid) {
+                viewModel.createAccount(
+                    username.text.toString(),
+                    email.text.toString(),
+                    newPassword.text.toString()
+                )
+            } else {
+                showMessage(error)
             }
-        )
+        }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             viewModel.userCancelledRegistration()
             navController.navigate(R.id.fragment_main)
         }
 
+        observeViewModel()
     }
 
     override fun showMessage(message: String) {
@@ -80,19 +84,31 @@ class RegistrationFragment : Fragment(), ViewElements {
         progressBarReg.hide()
     }
 
-    private fun validations(email: String, password: String, passwordConfirmation: String): Boolean {
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            showMessage("The email isn't correct")
-            return false
-        }
-        else if (password.length < 4 || passwordConfirmation.length < 4) {
-            showMessage("The password is required to be at least 4 characters")
-            return false
-        }
-        else if (password != passwordConfirmation) {
-            showMessage("The password and its confirmation do not match!")
-            return false
-        }
-        return true
+    private fun observeViewModel() {
+        showProgress()
+        viewModel.registrationState.observe(
+            viewLifecycleOwner, { state ->
+                if (state == RegistrationState.REGISTRATION_COMPLETED) {
+                    showMessage(SUCCESSFUL_REGISTRATION_MESSAGE)
+                    navController.navigate(R.id.fragment_main)
+                }
+            }
+        )
+        hideProgress()
     }
+
+
+    private fun validate(username: String, email: String, password: String, passwordConfirmation: String): Pair<Boolean, String> {
+        val (isValidUsername, usernameErrorMessage) = validatorService.isValidUsername(username)
+        if (!isValidUsername) return Pair(isValidUsername, usernameErrorMessage)
+
+        val (isValidEmail, emailErrorMessage) = validatorService.isValidEmail(email)
+        if (!isValidEmail) return Pair(isValidEmail, emailErrorMessage)
+
+        val (isValidPassword, passwordErrorMessage) = validatorService.isValidPassword(password, passwordConfirmation)
+        if (!isValidPassword) return Pair(isValidPassword, passwordErrorMessage)
+
+        return Pair(true, "")
+    }
+
 }

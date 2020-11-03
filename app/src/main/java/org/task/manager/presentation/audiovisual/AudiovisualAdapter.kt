@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_audiovisual.view.checkBox
@@ -45,7 +44,7 @@ class AudiovisualAdapter(private val audiovisuals: List<Audiovisual>,
         holder.itemView.setOnLongClickListener {
             audiovisualViewModel.getAudiovisual(audiovisuals[position].id)
 
-            audiovisualViewModel.audiovisual.observe(holder.itemView.context as LifecycleOwner, Observer {
+            audiovisualViewModel.audiovisual.observe(holder.itemView.context as LifecycleOwner, {
                 sharedViewModel.sendAudiovisual(it)
 
                 val bundle = bundleOf("action" to "update")

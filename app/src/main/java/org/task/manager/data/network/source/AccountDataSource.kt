@@ -1,5 +1,6 @@
 package org.task.manager.data.network.source
 
+import org.task.manager.data.network.model.request.PasswordRequest
 import org.task.manager.data.network.model.request.RegisterRequest
 import org.task.manager.data.network.model.request.UserRequest
 import org.task.manager.data.network.model.response.UserResponse
@@ -28,6 +29,11 @@ class AccountDataSource(private val dataSourceProvider: DataSourceProvider) {
     suspend fun save(request: UserRequest) {
         val accountApi = dataSourceProvider.getAccountDataSource()
         accountApi.save(request)
+    }
+
+    suspend fun changePassword(request: PasswordRequest) {
+        val accountApi = dataSourceProvider.getAccountDataSource()
+        accountApi.changePassword(request)
     }
 
 }

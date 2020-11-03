@@ -1,5 +1,6 @@
 package org.task.manager.domain.repository
 
+import org.task.manager.data.network.model.request.PasswordRequest
 import org.task.manager.data.network.model.request.RegisterRequest
 import org.task.manager.data.network.model.request.UserRequest
 import org.task.manager.domain.Result
@@ -10,4 +11,5 @@ interface AccountRepository {
     suspend fun activate(key: String): Result<String>
     suspend fun get(): User
     suspend fun save(userRequest: UserRequest): Result<String>
+    suspend fun changePassword(passwordRequest: PasswordRequest): Result<String>
 }

@@ -34,16 +34,15 @@ class LoginFragment : Fragment(), ViewElements {
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         navController = findNavController()
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-
         binding.login.setOnClickListener {
-            showProgress()
             loginViewModel.authenticate(username.text.toString(), password.text.toString(), rememberMe.isActivated)
         }
 
@@ -52,14 +51,7 @@ class LoginFragment : Fragment(), ViewElements {
             navController.navigate(R.id.fragment_main)
         }
 
-        loginViewModel.authenticationResult.observe(viewLifecycleOwner, { authenticationResult ->
-            when (authenticationResult.state) {
-                AuthenticationState.AUTHENTICATED -> authenticatedUser(authenticationResult.message)
-                AuthenticationState.INVALID_AUTHENTICATION -> showMessage(authenticationResult.message)
-                AuthenticationState.UNAUTHENTICATED ->  navController.popBackStack()
-            }
-            hideProgress()
-        })
+        observeViewModel()
     }
 
     override fun showMessage(message: String) {
@@ -72,6 +64,18 @@ class LoginFragment : Fragment(), ViewElements {
 
     override fun hideProgress() {
         progressBar.hide()
+    }
+
+    private fun observeViewModel() {
+        showProgress()
+        loginViewModel.authenticationResult.observe(viewLifecycleOwner, { authenticationResult ->
+            when (authenticationResult.state) {
+                AuthenticationState.AUTHENTICATED -> authenticatedUser(authenticationResult.message)
+                AuthenticationState.INVALID_AUTHENTICATION -> showMessage(authenticationResult.message)
+                AuthenticationState.UNAUTHENTICATED -> navController.popBackStack()
+            }
+        })
+        hideProgress()
     }
 
     private fun authenticatedUser(message: String) {
