@@ -27,19 +27,24 @@ import org.task.manager.R
 import org.task.manager.databinding.FragmentCreateBookBinding
 import org.task.manager.domain.model.Bookshop
 import org.task.manager.domain.model.Editorial
-import org.task.manager.domain.model.Genre
 import org.task.manager.presentation.shared.DateService
 import org.task.manager.presentation.shared.SharedViewModel
+import org.task.manager.shared.Constants.DATE_PICKER_TITLE_TEXT
 import org.task.manager.shared.Constants.FALSE
 import org.task.manager.shared.Constants.TRUE
 
-
 class CreateBookFragment : DialogFragment() {
-    private val bookViewModel: BookViewModel by viewModel()
-    private val dateService: DateService by inject()
-    private lateinit var sharedViewModel: SharedViewModel
+
     private lateinit var binding: FragmentCreateBookBinding
     private lateinit var navController: NavController
+    private lateinit var sharedViewModel: SharedViewModel
+    private val bookViewModel: BookViewModel by viewModel()
+    private val dateService: DateService by inject()
+    private lateinit var genre: String
+    private lateinit var editorial: String
+    private lateinit var editorialUrl: String
+    private lateinit var bookshop: String
+    private lateinit var bookshopUrl: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +58,7 @@ class CreateBookFragment : DialogFragment() {
             false
         )
         navController = findNavController()
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         return binding.root
     }
@@ -64,167 +70,6 @@ class CreateBookFragment : DialogFragment() {
         var isDeadlineFilled = false
         var startDateMilliseconds = 1L
         var deadlineMilliseconds = 1L
-        var genre = ""
-        var editorial = ""
-        var editorialUrl = ""
-        var bookshop = ""
-        var bookshopUrl = ""
-
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-
-        // Invoke view model
-        bookViewModel.getGenres()
-        bookViewModel.getBookshops()
-        bookViewModel.getEditorials()
-
-        binding.titleText.addTextChangedListener {
-            isTitleFilled = it?.toString()?.isNotBlank() ?: false
-            isSaveEnabled(isTitleFilled, isStartDateFilled, isDeadlineFilled)
-        }
-
-        binding.startDateText.addTextChangedListener {
-            isStartDateFilled = it?.toString()?.isNotBlank() ?: false
-            isSaveEnabled(isTitleFilled, isStartDateFilled, isDeadlineFilled)
-        }
-
-        binding.deadlineText.addTextChangedListener {
-            isDeadlineFilled = it?.toString()?.isNotBlank() ?: false
-            isSaveEnabled(isTitleFilled, isStartDateFilled, isDeadlineFilled)
-
-        }
-
-        val builder = MaterialDatePicker.Builder.datePicker()
-        builder.setSelection(Calendar.getInstance().timeInMillis);
-        builder.setTitleText("Select a date")
-
-        val startDatePicker = builder.build()
-        binding.startDateText.setOnClickListener {
-            if (!startDatePicker.isAdded) startDatePicker.show(
-                parentFragmentManager, "start_date_picker_tag"
-            )
-        }
-
-        startDatePicker.addOnPositiveButtonClickListener {
-            startDateMilliseconds = it
-            binding.startDateText.setText(startDatePicker.headerText)
-        }
-
-        val deadlinePicker = builder.build()
-        binding.deadlineText.setOnClickListener {
-            if (!deadlinePicker.isAdded) deadlinePicker.show(
-                parentFragmentManager,
-                "deadline_picker_tag"
-            )
-        }
-
-        deadlinePicker.addOnPositiveButtonClickListener {
-            deadlineMilliseconds = it
-            binding.deadlineText.setText(deadlinePicker.headerText)
-        }
-
-        bookViewModel.genres.observe(viewLifecycleOwner, { list ->
-            val genres = list as MutableList<Genre>
-            val genresNames = genres
-                .filter { it.isLiterary != FALSE }
-                .map { it.name }
-
-            val adapter = ArrayAdapter(
-                requireContext(),
-                R.layout.dropdown_menu_popup_item,
-                genresNames
-            )
-
-            val genresDropdown: AutoCompleteTextView = binding.genreDropdown
-            genresDropdown.setAdapter(adapter)
-
-            genresDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
-                genre = adapterView.getItemAtPosition(pos).toString()
-            }
-        })
-
-        bookViewModel.editorials.observe(viewLifecycleOwner, { list ->
-            val editorials = list as MutableList<Editorial>
-            val editorialNames = editorials
-                .map { it.name }
-
-            val adapter = ArrayAdapter(
-                requireContext(),
-                R.layout.dropdown_menu_popup_item,
-                editorialNames
-            )
-
-            val editorialsDropdown: AutoCompleteTextView = binding.editorialDropdown
-            editorialsDropdown.setAdapter(adapter)
-
-            editorialsDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
-                editorial = adapterView.getItemAtPosition(pos).toString()
-                editorialUrl = editorials[pos].url
-            }
-        })
-
-        bookViewModel.bookshops.observe(viewLifecycleOwner, Observer { list ->
-            val bookshops = list as MutableList<Bookshop>
-            val bookshopNames = bookshops.map { it.name }
-
-            val adapter = ArrayAdapter(
-                requireContext(),
-                R.layout.dropdown_menu_popup_item,
-                bookshopNames
-            )
-
-            val bookshopDropdown: AutoCompleteTextView = binding.bookshopDropdown
-            bookshopDropdown.setAdapter(adapter)
-
-            bookshopDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
-                bookshop = adapterView.getItemAtPosition(pos).toString()
-                bookshopUrl = bookshops[pos].url
-            }
-        })
-
-
-        bookViewModel.book.observe(viewLifecycleOwner, Observer {
-            dismiss()
-            navController.navigate(R.id.fragment_book)
-        })
-
-        binding.save.setOnClickListener {
-
-            if (binding.bookId.tag != null) {
-                bookViewModel.updateBook(
-                    binding.bookId.tag.toString().toLong(),
-                    titleText.text.toString(),
-                    authorText.text.toString(),
-                    genre,
-                    editorial,
-                    editorialUrl,
-                    bookshop,
-                    bookshopUrl,
-                    startDateMilliseconds,
-                    deadlineMilliseconds,
-                    if (checkBox.isChecked) TRUE else FALSE,
-                    binding.userId.tag.toString().toLong()
-                )
-            }
-            else {
-                bookViewModel.createBook(
-                    titleText.text.toString(),
-                    authorText.text.toString(),
-                    genre,
-                    editorial,
-                    editorialUrl,
-                    bookshop,
-                    bookshopUrl,
-                    startDateMilliseconds,
-                    deadlineMilliseconds,
-                    if (checkBox.isChecked) TRUE else FALSE
-                )
-            }
-
-        }
-
-        binding.cancel.setOnClickListener {
-            dismiss()
-        }
 
         val action = arguments?.getString("action")
         if (action == "update") {
@@ -250,8 +95,101 @@ class CreateBookFragment : DialogFragment() {
                 binding.checkBox.isChecked = it.check == 1
             })
         }
-    }
 
+        bookViewModel.book.observe(viewLifecycleOwner, Observer {
+            dismiss()
+            navController.navigate(R.id.fragment_book)
+        })
+
+        bookViewModel.getGenres()
+        handleGenres()
+
+        bookViewModel.getEditorials()
+        handleEditorials()
+
+        bookViewModel.getBookshops()
+        handleBookshops()
+
+        val startDatePicker = getDatePickerBuilder().build()
+        startDatePicker.addOnPositiveButtonClickListener {
+            startDateMilliseconds = it
+            binding.startDateText.setText(startDatePicker.headerText)
+        }
+
+        val deadlinePicker = getDatePickerBuilder().build()
+        deadlinePicker.addOnPositiveButtonClickListener {
+            deadlineMilliseconds = it
+            binding.deadlineText.setText(deadlinePicker.headerText)
+        }
+
+        binding.titleText.addTextChangedListener {
+            isTitleFilled = it?.toString()?.isNotBlank() ?: false
+            isSaveEnabled(isTitleFilled, isStartDateFilled, isDeadlineFilled)
+        }
+
+        binding.startDateText.addTextChangedListener {
+            isStartDateFilled = it?.toString()?.isNotBlank() ?: false
+            isSaveEnabled(isTitleFilled, isStartDateFilled, isDeadlineFilled)
+        }
+
+        binding.deadlineText.addTextChangedListener {
+            isDeadlineFilled = it?.toString()?.isNotBlank() ?: false
+            isSaveEnabled(isTitleFilled, isStartDateFilled, isDeadlineFilled)
+
+        }
+
+        binding.startDateText.setOnClickListener {
+            if (!startDatePicker.isAdded) startDatePicker.show(
+                parentFragmentManager, "start_date_picker_tag"
+            )
+        }
+
+        binding.deadlineText.setOnClickListener {
+            if (!deadlinePicker.isAdded) deadlinePicker.show(
+                parentFragmentManager,
+                "deadline_picker_tag"
+            )
+        }
+
+        binding.save.setOnClickListener {
+
+            if (binding.bookId.tag != null) {
+                bookViewModel.updateBook(
+                    binding.bookId.tag.toString().toLong(),
+                    titleText.text.toString(),
+                    authorText.text.toString(),
+                    genre,
+                    editorial,
+                    editorialUrl,
+                    bookshop,
+                    bookshopUrl,
+                    startDateMilliseconds,
+                    deadlineMilliseconds,
+                    if (checkBox.isChecked) TRUE else FALSE,
+                    binding.userId.tag.toString().toLong()
+                )
+            } else {
+                bookViewModel.createBook(
+                    titleText.text.toString(),
+                    authorText.text.toString(),
+                    genre,
+                    editorial,
+                    editorialUrl,
+                    bookshop,
+                    bookshopUrl,
+                    startDateMilliseconds,
+                    deadlineMilliseconds,
+                    if (checkBox.isChecked) TRUE else FALSE
+                )
+            }
+
+        }
+
+        binding.cancel.setOnClickListener {
+            dismiss()
+        }
+
+    }
 
     override fun onResume() {
         super.onResume()
@@ -262,6 +200,109 @@ class CreateBookFragment : DialogFragment() {
         )
     }
 
+    private fun handleGenres() {
+        bookViewModel.genres.observe(viewLifecycleOwner, { list ->
+            val genresNames = list
+                .filter { it.isLiterary != FALSE }
+                .map { it.name }
+
+            val genresDropdown = buildGenresDropdown(genresNames)
+            addGenresItemSelectEvent(genresDropdown)
+        })
+    }
+
+    private fun buildGenresDropdown(genresNames: List<String>): AutoCompleteTextView {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.dropdown_menu_popup_item,
+            genresNames
+        )
+
+        val genresDropdown = binding.genreDropdown
+        genresDropdown.setAdapter(adapter)
+
+        return genresDropdown
+    }
+
+    private fun addGenresItemSelectEvent(genresDropdown: AutoCompleteTextView) {
+        genresDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
+            genre = adapterView.getItemAtPosition(pos).toString()
+        }
+    }
+
+    private fun handleEditorials() {
+        bookViewModel.editorials.observe(viewLifecycleOwner, { list ->
+            val editorialNames = list
+                .map { it.name }
+
+            val editorialsDropdown = buildEditorialsDropdown(editorialNames)
+            addEditorialsItemSelectEvent(editorialsDropdown, list)
+        })
+    }
+
+    private fun buildEditorialsDropdown(editorialNames: List<String>): AutoCompleteTextView {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.dropdown_menu_popup_item,
+            editorialNames
+        )
+
+        val editorialsDropdown = binding.editorialDropdown
+        editorialsDropdown.setAdapter(adapter)
+
+        return editorialsDropdown
+    }
+
+    private fun addEditorialsItemSelectEvent(
+        editorialsDropdown: AutoCompleteTextView,
+        editorials: List<Editorial>
+    ) {
+        editorialsDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
+            editorial = adapterView.getItemAtPosition(pos).toString()
+            editorialUrl = editorials[pos].url
+        }
+    }
+
+    private fun handleBookshops() {
+        bookViewModel.bookshops.observe(viewLifecycleOwner, { list ->
+            val bookshopNames = list
+                .map { it.name }
+
+            val bookshopDropdown = buildBookshopsDropdown(bookshopNames)
+            addBookshopsItemSelectEvent(bookshopDropdown, list)
+        })
+    }
+
+    private fun buildBookshopsDropdown(bookshopNames: List<String>): AutoCompleteTextView {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.dropdown_menu_popup_item,
+            bookshopNames
+        )
+
+        val bookshopDropdown = binding.bookshopDropdown
+        bookshopDropdown.setAdapter(adapter)
+
+        return bookshopDropdown
+    }
+
+    private fun addBookshopsItemSelectEvent(
+        bookshopDropdown: AutoCompleteTextView,
+        bookshops: List<Bookshop>
+    ) {
+        bookshopDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
+            bookshop = adapterView.getItemAtPosition(pos).toString()
+            bookshopUrl = bookshops[pos].url
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getDatePickerBuilder(): MaterialDatePicker.Builder<Long> {
+        val builder = MaterialDatePicker.Builder.datePicker()
+        builder.setSelection(Calendar.getInstance().timeInMillis);
+        builder.setTitleText(DATE_PICKER_TITLE_TEXT)
+        return builder
+    }
 
     private fun isSaveEnabled(
         isTitleFilled: Boolean, isStartDateFilled: Boolean,
