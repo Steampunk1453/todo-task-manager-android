@@ -33,6 +33,8 @@ private const val USER_ACCOUNT_ERROR_MESSAGE = "Your user could not be activated
         "Please use the registration form to sign up"
 private const val SUCCESSFUL_LOGOUT_MESSAGE = "Successful logout"
 private const val ERROR_LOGOUT_MESSAGE = "Invalid logout, try again"
+private const val ACTIVATE_ACCOUNT_PATH = "account"
+private const val RESET_ACCOUNT_PATH = "reset"
 
 class MainActivity : AppCompatActivity(), ViewElements {
 
@@ -143,7 +145,8 @@ class MainActivity : AppCompatActivity(), ViewElements {
             Timber.i("Activate Key: $activateKey")
             Timber.i("Second Path: $secondPath")
 
-            activateUserAccount(activateKey)
+            if (secondPath == ACTIVATE_ACCOUNT_PATH) activateUserAccount(activateKey)
+            else if (secondPath == RESET_ACCOUNT_PATH) resetUserPassword(activateKey)
         }
     }
 
@@ -161,6 +164,10 @@ class MainActivity : AppCompatActivity(), ViewElements {
                 Toast.makeText(this, USER_ACCOUNT_ERROR_MESSAGE, Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    private fun resetUserPassword(key: String?) {
+       // TODO Go to PasswordResetFinishFragment with key as bundle
     }
 
     private fun showUserAccountPopup(view: View) {
