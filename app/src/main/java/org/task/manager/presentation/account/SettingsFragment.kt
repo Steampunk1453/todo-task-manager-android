@@ -25,6 +25,10 @@ import org.task.manager.presentation.shared.ValidatorService
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
+private const val SAVING_SETTINGS_ERROR_MESSAGE = "Error saving settings, try again"
+private const val UPDATING_SETTINGS_MESSAGE = "Updating settings"
+private const val SAVING_SETTINGS__MESSAGE = "Settings saved"
+
 class SettingsFragment : Fragment(), ViewElements {
 
     private lateinit var binding: FragmentSettingsBinding
@@ -43,14 +47,7 @@ class SettingsFragment : Fragment(), ViewElements {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.getAccount()
 
-        showProgress()
-        viewModel.user.observe(viewLifecycleOwner, {
-            binding.username.text = it.username
-            binding.firstName.setText(it.firstName)
-            binding.lastName.setText(it.lastName)
-            binding.email.setText(it.email)
-        })
-        hideProgress()
+        observeViewModel()
 
         binding.saveButton.setOnClickListener {
             val (isValid, error) = validatorService.isValidEmail(email.text.toString())
@@ -66,15 +63,6 @@ class SettingsFragment : Fragment(), ViewElements {
                 showMessage(error)
             }
         }
-
-        viewModel.updateAccountState.observe(viewLifecycleOwner, {
-            when (it) {
-                AccountState.UPDATE_COMPLETED -> manageUpdateComplete()
-                AccountState.INVALID_UPDATE -> showMessage("Error saving settings, try again")
-                AccountState.UPDATING -> showMessage("Updating settings")
-            }
-            hideProgress()
-        })
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             navController.navigate(R.id.fragment_home)
@@ -93,8 +81,27 @@ class SettingsFragment : Fragment(), ViewElements {
         progressBar.hide()
     }
 
+    private fun observeViewModel() {
+        showProgress()
+        viewModel.user.observe(viewLifecycleOwner, {
+            binding.username.text = it.username
+            binding.firstName.setText(it.firstName)
+            binding.lastName.setText(it.lastName)
+            binding.email.setText(it.email)
+        })
+
+        viewModel.updateAccountState.observe(viewLifecycleOwner, {
+            when (it) {
+                AccountState.UPDATE_COMPLETED -> manageUpdateComplete()
+                AccountState.INVALID_UPDATE -> showMessage(SAVING_SETTINGS_ERROR_MESSAGE)
+                AccountState.UPDATING -> showMessage(UPDATING_SETTINGS_MESSAGE)
+            }
+        })
+        hideProgress()
+    }
+
     private fun manageUpdateComplete() {
-        showMessage("Settings saved")
+        showMessage(SAVING_SETTINGS__MESSAGE)
         navController.navigate(R.id.fragment_home)
     }
 

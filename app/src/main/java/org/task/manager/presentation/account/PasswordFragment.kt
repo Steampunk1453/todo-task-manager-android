@@ -24,6 +24,10 @@ import org.task.manager.presentation.shared.ValidatorService
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
+private const val CHANGED_PASSWORD_MESSAGE = "Password changed!"
+private const val INCORRECT_PASSWORD_ERROR_MESSAGE = "Incorrect password"
+private const val UPDATING_PASSWORD_MESSAGE = "Updating password"
+
 class PasswordFragment : Fragment(), ViewElements {
 
     private lateinit var binding: FragmentPasswordBinding
@@ -35,6 +39,7 @@ class PasswordFragment : Fragment(), ViewElements {
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_password, container, false)
         navController = findNavController()
+
         return binding.root
     }
 
@@ -51,18 +56,21 @@ class PasswordFragment : Fragment(), ViewElements {
                 showMessage(error)
             }
         }
-
-        viewModel.updatePasswordState.observe(viewLifecycleOwner, {
-            when (it) {
-                AccountState.UPDATE_COMPLETED -> showMessage("Password changed!")
-                AccountState.INVALID_UPDATE -> showMessage("Incorrect password")
-                AccountState.UPDATING -> showMessage("Updating password")
-            }
-        })
-
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             navController.navigate(R.id.fragment_home)
         }
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.updatePasswordState.observe(viewLifecycleOwner, {
+            when (it) {
+                AccountState.UPDATE_COMPLETED -> showMessage(CHANGED_PASSWORD_MESSAGE)
+                AccountState.INVALID_UPDATE -> showMessage(INCORRECT_PASSWORD_ERROR_MESSAGE)
+                AccountState.UPDATING -> showMessage(UPDATING_PASSWORD_MESSAGE)
+            }
+        })
     }
 
     override fun showMessage(message: String) {
