@@ -2,6 +2,7 @@ package org.task.manager.data.network.source
 
 import org.task.manager.data.network.model.request.PasswordRequest
 import org.task.manager.data.network.model.request.RegisterRequest
+import org.task.manager.data.network.model.request.ResetPasswordRequest
 import org.task.manager.data.network.model.request.UserRequest
 import org.task.manager.data.network.model.response.UserResponse
 import org.task.manager.shared.Constants
@@ -35,5 +36,16 @@ class AccountDataSource(private val dataSourceProvider: DataSourceProvider) {
         val accountApi = dataSourceProvider.getAccountDataSource()
         accountApi.changePassword(request)
     }
+
+    suspend fun requestPasswordReset(mail: String) {
+        val accountApi = dataSourceProvider.getAccountDataSource()
+        accountApi.requestPasswordReset(mail)
+    }
+
+    suspend fun finishPasswordReset(request: ResetPasswordRequest) {
+        val accountApi = dataSourceProvider.getAccountDataSource()
+        accountApi.finishPasswordReset(request)
+    }
+
 
 }

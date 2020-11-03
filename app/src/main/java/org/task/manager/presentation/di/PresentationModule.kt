@@ -3,8 +3,8 @@ package org.task.manager.presentation.di
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
-import org.task.manager.presentation.account.PasswordViewModel
 import org.task.manager.presentation.account.SettingsViewModel
+import org.task.manager.presentation.account.password.PasswordViewModel
 import org.task.manager.presentation.audiovisual.AudiovisualViewModel
 import org.task.manager.presentation.book.BookViewModel
 import org.task.manager.presentation.shared.DateService
@@ -19,7 +19,7 @@ val module: Module = module {
     viewModel { AudiovisualViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { BookViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SettingsViewModel(get(), get()) }
-    viewModel { PasswordViewModel(get()) }
+    viewModel { PasswordViewModel(get(), get(), get()) }
     single { DateService() }
     single { ValidatorService() }
 
