@@ -23,5 +23,6 @@ object Constants {
     // Shared
     const val FALSE = 0
     const val TRUE = 1
+    const val DATE_PICKER_TITLE_TEXT = "Select a date"
 
 }

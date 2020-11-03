@@ -46,6 +46,7 @@ class AudiovisualAdapter(private val audiovisuals: List<Audiovisual>,
 
             audiovisualViewModel.audiovisual.observe(holder.itemView.context as LifecycleOwner, {
                 sharedViewModel.sendAudiovisual(it)
+
                 val bundle = bundleOf("action" to "update")
                 Navigation.findNavController(holder.itemView).navigate(R.id.fragment_create_audiovisual, bundle)
             })

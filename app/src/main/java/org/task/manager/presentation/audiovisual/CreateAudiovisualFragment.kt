@@ -26,6 +26,7 @@ import org.task.manager.databinding.FragmentCreateAudiovisualBinding
 import org.task.manager.domain.model.Platform
 import org.task.manager.presentation.shared.DateService
 import org.task.manager.presentation.shared.SharedViewModel
+import org.task.manager.shared.Constants.DATE_PICKER_TITLE_TEXT
 import org.task.manager.shared.Constants.FALSE
 import org.task.manager.shared.Constants.TRUE
 
@@ -46,6 +47,7 @@ class CreateAudiovisualFragment : DialogFragment() {
             false
         )
         navController = findNavController()
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         return binding.root
     }
@@ -57,8 +59,6 @@ class CreateAudiovisualFragment : DialogFragment() {
         var isDeadlineFilled = false
         var startDateMilliseconds = 1L
         var deadlineMilliseconds = 1L
-
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         val action = arguments?.getString("action")
         if (action == "update") {
@@ -221,7 +221,7 @@ class CreateAudiovisualFragment : DialogFragment() {
             genresNames
         )
 
-        val genresDropdown: AutoCompleteTextView = binding.genreDropdown
+        val genresDropdown = binding.genreDropdown
         genresDropdown.setAdapter(adapter)
 
         return genresDropdown
@@ -250,7 +250,7 @@ class CreateAudiovisualFragment : DialogFragment() {
             platformNames
         )
 
-        val platformsDropdown: AutoCompleteTextView = binding.platformDropdown
+        val platformsDropdown = binding.platformDropdown
         platformsDropdown.setAdapter(adapter)
 
         return platformsDropdown
@@ -268,7 +268,7 @@ class CreateAudiovisualFragment : DialogFragment() {
     private fun getDatePickerBuilder(): MaterialDatePicker.Builder<Long> {
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setSelection(Calendar.getInstance().timeInMillis);
-        builder.setTitleText("Select a date")
+        builder.setTitleText(DATE_PICKER_TITLE_TEXT)
         return builder
     }
 

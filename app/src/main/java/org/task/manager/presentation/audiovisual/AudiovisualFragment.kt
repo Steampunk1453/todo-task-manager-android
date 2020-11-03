@@ -86,11 +86,6 @@ class AudiovisualFragment : Fragment(), ViewElements {
         })
     }
 
-    private fun buildAudiovisualsList(adapter: AudiovisualAdapter) {
-        binding.audiovisualList.adapter = adapter
-        binding.audiovisualList.addItemDecoration(SimpleDividerItemDecoration(binding.root.context))
-    }
-
     private fun createAdapter(
         audiovisuals: List<Audiovisual>,
         audiovisualViewModel: AudiovisualViewModel,
@@ -98,6 +93,11 @@ class AudiovisualFragment : Fragment(), ViewElements {
         dateService: DateService
     ) =
         AudiovisualAdapter(audiovisuals, audiovisualViewModel, sharedViewModel, dateService)
+
+    private fun buildAudiovisualsList(adapter: AudiovisualAdapter) {
+        binding.audiovisualList.adapter = adapter
+        binding.audiovisualList.addItemDecoration(SimpleDividerItemDecoration(binding.root.context))
+    }
 
     private fun addRemoveItemEvent(audiovisuals: List<Audiovisual>) {
         val swipeCallback = object : SwipeCallback() {
