@@ -7,6 +7,7 @@ import org.task.manager.BuildConfig
 import org.task.manager.shared.service.SessionManagerService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 
@@ -35,6 +36,7 @@ abstract class ServiceFactory(
     ): Retrofit {
         val builder = Retrofit.Builder()
             .client(client)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BuildConfig.SERVER_URL)
         return builder.build()
