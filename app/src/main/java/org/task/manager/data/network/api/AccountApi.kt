@@ -2,12 +2,16 @@ package org.task.manager.data.network.api
 
 import org.task.manager.data.network.model.request.PasswordRequest
 import org.task.manager.data.network.model.request.RegisterRequest
+import org.task.manager.data.network.model.request.ResetPasswordRequest
 import org.task.manager.data.network.model.request.UserRequest
 import org.task.manager.data.network.model.response.UserResponse
 import org.task.manager.shared.Constants.ACCOUNT_URL
 import org.task.manager.shared.Constants.ACTIVATE_URL
 import org.task.manager.shared.Constants.CHANGE_PASSWORD_URL
+import org.task.manager.shared.Constants.FINISH_URL
+import org.task.manager.shared.Constants.INIT_URL
 import org.task.manager.shared.Constants.REGISTER_URL
+import org.task.manager.shared.Constants.RESET_PASSWORD_URL
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -30,5 +34,11 @@ interface AccountApi {
 
     @POST(ACCOUNT_URL + CHANGE_PASSWORD_URL)
     suspend fun changePassword(@Body passwordRequest: PasswordRequest)
+
+    @POST(ACCOUNT_URL + RESET_PASSWORD_URL + INIT_URL)
+    suspend fun requestPasswordReset(@Body mail: String)
+
+    @POST(ACCOUNT_URL + RESET_PASSWORD_URL + FINISH_URL)
+    suspend fun finishPasswordReset(@Body resetPasswordRequest: ResetPasswordRequest)
 
 }

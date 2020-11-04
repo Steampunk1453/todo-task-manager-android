@@ -42,8 +42,12 @@ class LoginFragment : Fragment(), ViewElements {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.login.setOnClickListener {
+        binding.loginButton.setOnClickListener {
             loginViewModel.authenticate(username.text.toString(), password.text.toString(), rememberMe.isActivated)
+        }
+
+        binding.resetButton.setOnClickListener {
+            navController.navigate(R.id.fragment_reset_init_password)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

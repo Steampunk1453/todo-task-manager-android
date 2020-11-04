@@ -1,4 +1,4 @@
-package org.task.manager.presentation.account
+package org.task.manager.presentation.account.password
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/fragment_main"
         android:name="org.task.manager.presentation.MainFragment"
-        android:label="Main"
+        android:label="@string/main"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_main_fragment_to_login_fragment"
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/fragment_registration"
         android:name="org.task.manager.presentation.user.registration.RegistrationFragment"
-        android:label="Registration"
+        android:label="@string/registration"
         tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_registration_fragment_to_login_fragment"
@@ -28,21 +28,24 @@
     <fragment
         android:id="@+id/fragment_login"
         android:name="org.task.manager.presentation.user.login.LoginFragment"
-        android:label="Login"
+        android:label="@string/login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_fragment_login_to_fragment_home"
             app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_login_to_fragment_reset_init_password"
+            app:destination="@id/fragment_reset_init_password" />
     </fragment>
     <fragment
         android:id="@+id/fragment_home"
         android:name="org.task.manager.presentation.home.HomeFragment"
-        android:label="Home"
+        android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/fragment_audiovisual"
         android:name="org.task.manager.presentation.audiovisual.AudiovisualFragment"
-        android:label="Series &amp; Films"
+        android:label="@string/title_audiovisual"
         tools:layout="@layout/fragment_audiovisual">
         <action
             android:id="@+id/action_fragment_audiovisual_to_createAudiovisualFragment"
@@ -51,11 +54,11 @@
     <dialog
         android:id="@+id/fragment_create_audiovisual"
         android:name="org.task.manager.presentation.audiovisual.CreateAudiovisualFragment"
-        android:label="Create Audiovisual" />
+        android:label="@string/create_audiovisual" />
     <fragment
         android:id="@+id/fragment_book"
         android:name="org.task.manager.presentation.book.BookFragment"
-        android:label="Books">
+        android:label="@string/title_book">
         <action
             android:id="@+id/action_fragment_book_to_fragment_create_book"
             app:destination="@id/fragment_create_book" />
@@ -63,10 +66,10 @@
     <dialog
         android:id="@+id/fragment_create_book"
         android:name="org.task.manager.presentation.book.CreateBookFragment"
-        android:label="Create Book" />
+        android:label="@string/create_book" />
     <fragment
         android:id="@+id/fragment_password"
-        android:name="org.task.manager.presentation.account.PasswordFragment"
+        android:name="org.task.manager.presentation.account.password.PasswordFragment"
         android:label="@string/prompt_password" >
         <action
             android:id="@+id/action_fragment_password_to_fragment_home"
@@ -79,5 +82,17 @@
         <action
             android:id="@+id/action_fragment_settings_to_fragment_home"
             app:destination="@id/fragment_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_reset_init_password"
+        android:name="org.task.manager.presentation.account.password.PasswordResetInitFragment"
+        android:label="@string/reset_your_password" />
+    <fragment
+        android:id="@+id/fragment_reset_finish_password"
+        android:name="org.task.manager.presentation.account.password.PasswordResetFinishFragment"
+        android:label="@string/reset_password" >
+        <action
+            android:id="@+id/action_fragment_reset_finish_password_to_fragment_main"
+            app:destination="@id/fragment_main" />
     </fragment>
 </navigation>
