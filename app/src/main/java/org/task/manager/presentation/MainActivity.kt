@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -91,7 +92,9 @@ class MainActivity : AppCompatActivity(), ViewElements {
                 R.id.fragment_audiovisual,
                 R.id.fragment_book,
                 R.id.fragment_settings,
-                R.id.fragment_password
+                R.id.fragment_password,
+                R.id.fragment_reset_init_password,
+                R.id.fragment_reset_finish_password,
             )
             .build()
     }
@@ -167,7 +170,8 @@ class MainActivity : AppCompatActivity(), ViewElements {
     }
 
     private fun resetUserPassword(key: String?) {
-       // TODO Go to PasswordResetFinishFragment with key as bundle
+        val bundle = bundleOf("key" to key)
+        navController.navigate(R.id.fragment_reset_finish_password, bundle)
     }
 
     private fun showUserAccountPopup(view: View) {

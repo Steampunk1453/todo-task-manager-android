@@ -24,7 +24,7 @@
     <string name="login_unsuccessful_msg">Login unsuccessful</string>
     <string name="login_failed">"Login failed"</string>
     <string name="login_prompt">Login to set customizations!</string>
-    <string name="login_btn">Login</string>
+    <string name="login">Login</string>
     <string name="settings">Settings</string>
     <string name="action_next">Next</string>
     <string name="menu_audiovisual">Audiovisual</string>
@@ -49,4 +49,12 @@
     <string name="editorial">Editorial</string>
     <string name="bookshop">Bookshop</string>
     <string name="sign_out">Sign out</string>
+    <string name="main">Main</string>
+    <string name="registration">Registration</string>
+    <string name="create_audiovisual">Create Audiovisual</string>
+    <string name="create_book">Create Book</string>
+    <string name="reset_password">"Reset password</string>
+    <string name="reset_your_password">"Reset your password</string>
+    <string name="validate_password">"Validate new password</string>
+    <string name="forget_password">"Forget your password?</string>
 </resources>
