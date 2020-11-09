@@ -51,7 +51,7 @@ class PasswordResetInitFragment : Fragment(), ViewElements {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            navController.navigate(R.id.fragment_main)
+            navController.navigate(R.id.fragment_login)
         }
 
         observeViewModel()

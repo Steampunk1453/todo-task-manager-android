@@ -8,6 +8,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 private const val INSTANT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'"
 private const val SPANISH_DATE_PATTERN = "dd/MM/yy"
@@ -31,8 +32,9 @@ class DateService {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun convertToInstant(dateMilliseconds: Long): String {
-        return Timestamp(dateMilliseconds).toInstant().toString()
-    }
+    fun convertToInstant(dateMilliseconds: Long): String =
+        Timestamp(dateMilliseconds).toInstant().toString()
+
+    fun addHours(hours: Long) = TimeUnit.HOURS.toMillis(hours)
 
 }

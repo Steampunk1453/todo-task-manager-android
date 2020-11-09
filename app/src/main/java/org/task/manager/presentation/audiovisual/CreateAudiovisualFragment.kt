@@ -30,6 +30,9 @@ import org.task.manager.shared.Constants.DATE_PICKER_TITLE_TEXT
 import org.task.manager.shared.Constants.FALSE
 import org.task.manager.shared.Constants.TRUE
 
+private const val EVENT_TITLE_PREFIX = "Watch "
+private const val AUDIOVISUAL_EVENT = "Video to watch"
+
 class CreateAudiovisualFragment : DialogFragment() {
 
     private lateinit var binding: FragmentCreateAudiovisualBinding
@@ -81,10 +84,7 @@ class CreateAudiovisualFragment : DialogFragment() {
             })
         }
 
-        audiovisualViewModel.audiovisual.observe(viewLifecycleOwner, {
-            dismiss()
-            navController.navigate(R.id.fragment_audiovisual)
-        })
+        observeViewModel()
 
         audiovisualViewModel.getTitles()
         handleTitles()
@@ -97,13 +97,13 @@ class CreateAudiovisualFragment : DialogFragment() {
 
         val startDatePicker = getDatePickerBuilder().build()
         startDatePicker.addOnPositiveButtonClickListener {
-            startDateMilliseconds = it
+            startDateMilliseconds = it + dateService.addHours(19)
             binding.startDateText.setText(startDatePicker.headerText)
         }
 
         val deadlinePicker = getDatePickerBuilder().build()
         deadlinePicker.addOnPositiveButtonClickListener {
-            deadlineMilliseconds = it
+            deadlineMilliseconds = it + dateService.addHours(19)
             binding.deadlineText.setText(deadlinePicker.headerText)
         }
 
@@ -159,6 +159,11 @@ class CreateAudiovisualFragment : DialogFragment() {
                     deadlineMilliseconds,
                     if (checkBox.isChecked) TRUE else FALSE
                 )
+                audiovisualViewModel.createCalendarEvent(
+                    startDateMilliseconds,
+                    EVENT_TITLE_PREFIX + titleText.text.toString(),
+                    AUDIOVISUAL_EVENT
+                )
             }
 
         }
@@ -166,6 +171,17 @@ class CreateAudiovisualFragment : DialogFragment() {
         binding.cancel.setOnClickListener {
             dismiss()
         }
+    }
+
+    private fun observeViewModel() {
+        audiovisualViewModel.calendarEvents.observe(viewLifecycleOwner, { intent ->
+            startActivity(intent)
+        })
+
+        audiovisualViewModel.audiovisual.observe(viewLifecycleOwner, {
+            dismiss()
+            navController.navigate(R.id.fragment_audiovisual)
+        })
     }
 
     override fun onResume() {

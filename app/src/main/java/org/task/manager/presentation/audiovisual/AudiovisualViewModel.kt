@@ -1,5 +1,6 @@
 package org.task.manager.presentation.audiovisual
 
+import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 import org.task.manager.data.network.model.request.AudiovisualRequest
 import org.task.manager.data.network.model.request.UserIdRequest
 import org.task.manager.domain.model.Audiovisual
+import org.task.manager.domain.model.CalendarEvent
 import org.task.manager.domain.model.Genre
 import org.task.manager.domain.model.Platform
 import org.task.manager.domain.model.Title
@@ -22,6 +24,7 @@ import org.task.manager.domain.usecase.audiovisual.GetAudiovisuals
 import org.task.manager.domain.usecase.audiovisual.GetPlatforms
 import org.task.manager.domain.usecase.audiovisual.GetTitles
 import org.task.manager.domain.usecase.audiovisual.UpdateAudiovisual
+import org.task.manager.domain.usecase.calendar.CreateCalendarEvent
 import org.task.manager.domain.usecase.shared.GetGenres
 import org.task.manager.presentation.shared.DateService
 
@@ -35,7 +38,8 @@ class AudiovisualViewModel(
     private val getTitles: GetTitles,
     private val getGenres: GetGenres,
     private val getPlatforms: GetPlatforms,
-    private val dateService: DateService
+    private val dateService: DateService,
+    private val createCalendarEvent: CreateCalendarEvent
 ) : ViewModel() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
@@ -45,6 +49,7 @@ class AudiovisualViewModel(
     val titles = MutableLiveData<List<Title>>()
     val genres = MutableLiveData<List<Genre>>()
     val platforms = MutableLiveData<List<Platform>>()
+    val calendarEvents = MutableLiveData<Intent>()
     val deleteState = MutableLiveData(DeleteState.DELETE_STARTED)
 
     fun getAudiovisuals() {
@@ -126,6 +131,18 @@ class AudiovisualViewModel(
         coroutineScope.launch {
             val platformsResult = getPlatforms.execute()
             platforms.postValue(platformsResult)
+        }
+    }
+
+    fun createCalendarEvent(beginTime: Long, title: String, description: String) {
+        val calendarEvent = CalendarEvent(
+            beginTime,
+            title,
+            description
+        )
+        coroutineScope.launch {
+            val calendarEventResult = createCalendarEvent.execute(calendarEvent)
+            calendarEvents.postValue(calendarEventResult)
         }
     }
 
