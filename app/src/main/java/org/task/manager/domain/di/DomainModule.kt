@@ -15,6 +15,7 @@ import org.task.manager.domain.usecase.book.GetBooks
 import org.task.manager.domain.usecase.book.GetBookshops
 import org.task.manager.domain.usecase.book.GetEditorials
 import org.task.manager.domain.usecase.book.UpdateBook
+import org.task.manager.domain.usecase.calendar.CreateCalendarEvent
 import org.task.manager.domain.usecase.shared.GetGenres
 import org.task.manager.domain.usecase.user.ActivateUser
 import org.task.manager.domain.usecase.user.GetUser
@@ -58,6 +59,9 @@ val modules = module {
     single { GetEditorials(get()) }
 
     single { GetGenres(get()) }
+
+    single { CreateCalendarEvent(get()) }
+
 
 }
 

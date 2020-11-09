@@ -12,17 +12,20 @@ import org.task.manager.data.network.api.LoginApi
 import org.task.manager.data.network.source.AccountDataSource
 import org.task.manager.data.network.source.AudiovisualDataSource
 import org.task.manager.data.network.source.BookDataSource
+import org.task.manager.data.network.source.CalendarDataSource
 import org.task.manager.data.network.source.DataSourceProvider
 import org.task.manager.data.network.source.GenreDataSource
 import org.task.manager.data.network.source.LoginDataSource
 import org.task.manager.data.repository.DefaultAccountRepository
 import org.task.manager.data.repository.DefaultAudiovisualRepository
 import org.task.manager.data.repository.DefaultBookRepository
+import org.task.manager.data.repository.DefaultCalendarRepository
 import org.task.manager.data.repository.DefaultGenreRepository
 import org.task.manager.data.repository.DefaultLoginRepository
 import org.task.manager.domain.repository.AccountRepository
 import org.task.manager.domain.repository.AudiovisualRepository
 import org.task.manager.domain.repository.BookRepository
+import org.task.manager.domain.repository.CalendarRepository
 import org.task.manager.domain.repository.GenreRepository
 import org.task.manager.domain.repository.LoginRepository
 import retrofit2.Retrofit
@@ -64,6 +67,10 @@ val networkModule = module {
         BookDataSource(get())
     }
 
+    single {
+        CalendarDataSource()
+    }
+
     single<LoginRepository> {
         DefaultLoginRepository(get())
     }
@@ -82,6 +89,10 @@ val networkModule = module {
 
     single<BookRepository> {
         DefaultBookRepository(get())
+    }
+
+    single<CalendarRepository> {
+        DefaultCalendarRepository(get())
     }
 
     single { get<Retrofit>().create(LoginApi::class.java) }
