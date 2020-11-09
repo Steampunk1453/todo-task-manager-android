@@ -1,5 +1,6 @@
 package org.task.manager.presentation.book
 
+import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +13,7 @@ import org.task.manager.data.network.model.request.BookRequest
 import org.task.manager.data.network.model.request.UserIdRequest
 import org.task.manager.domain.model.Book
 import org.task.manager.domain.model.Bookshop
+import org.task.manager.domain.model.CalendarEvent
 import org.task.manager.domain.model.Editorial
 import org.task.manager.domain.model.Genre
 import org.task.manager.domain.model.state.DeleteState
@@ -22,6 +24,7 @@ import org.task.manager.domain.usecase.book.GetBooks
 import org.task.manager.domain.usecase.book.GetBookshops
 import org.task.manager.domain.usecase.book.GetEditorials
 import org.task.manager.domain.usecase.book.UpdateBook
+import org.task.manager.domain.usecase.calendar.CreateCalendarEvent
 import org.task.manager.domain.usecase.shared.GetGenres
 import org.task.manager.presentation.shared.DateService
 
@@ -35,7 +38,8 @@ class BookViewModel(
     private val getGenres: GetGenres,
     private val getBookshops: GetBookshops,
     private val getEditorials: GetEditorials,
-    private val dateService: DateService
+    private val dateService: DateService,
+    private val createCalendarEvent: CreateCalendarEvent
 ) : ViewModel() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
@@ -45,6 +49,7 @@ class BookViewModel(
     val genres = MutableLiveData<List<Genre>>()
     val bookshops = MutableLiveData<List<Bookshop>>()
     val editorials = MutableLiveData<List<Editorial>>()
+    val calendarEvents = MutableLiveData<Intent>()
     val deleteState = MutableLiveData(DeleteState.DELETE_STARTED)
 
     fun getBooks() {
@@ -146,6 +151,18 @@ class BookViewModel(
         coroutineScope.launch {
             val editorialsResult = getEditorials.execute()
             editorials.postValue(editorialsResult)
+        }
+    }
+
+    fun createCalendarEvent(beginTime: Long, title: String, description: String) {
+        val calendarEvent = CalendarEvent(
+            beginTime,
+            title,
+            description
+        )
+        coroutineScope.launch {
+            val calendarEventResult = createCalendarEvent.execute(calendarEvent)
+            calendarEvents.postValue(calendarEventResult)
         }
     }
 

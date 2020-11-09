@@ -33,6 +33,9 @@ import org.task.manager.shared.Constants.DATE_PICKER_TITLE_TEXT
 import org.task.manager.shared.Constants.FALSE
 import org.task.manager.shared.Constants.TRUE
 
+private const val EVENT_TITLE_PREFIX = "Read "
+private const val BOOK_EVENT = "Book to read"
+
 class CreateBookFragment : DialogFragment() {
 
     private lateinit var binding: FragmentCreateBookBinding
@@ -96,10 +99,7 @@ class CreateBookFragment : DialogFragment() {
             })
         }
 
-        bookViewModel.book.observe(viewLifecycleOwner, Observer {
-            dismiss()
-            navController.navigate(R.id.fragment_book)
-        })
+        observeViewModel()
 
         bookViewModel.getGenres()
         handleGenres()
@@ -112,13 +112,13 @@ class CreateBookFragment : DialogFragment() {
 
         val startDatePicker = getDatePickerBuilder().build()
         startDatePicker.addOnPositiveButtonClickListener {
-            startDateMilliseconds = it
+            startDateMilliseconds = it + dateService.addHours(19)
             binding.startDateText.setText(startDatePicker.headerText)
         }
 
         val deadlinePicker = getDatePickerBuilder().build()
         deadlinePicker.addOnPositiveButtonClickListener {
-            deadlineMilliseconds = it
+            deadlineMilliseconds = it + dateService.addHours(19)
             binding.deadlineText.setText(deadlinePicker.headerText)
         }
 
@@ -181,6 +181,11 @@ class CreateBookFragment : DialogFragment() {
                     deadlineMilliseconds,
                     if (checkBox.isChecked) TRUE else FALSE
                 )
+                bookViewModel.createCalendarEvent(
+                    startDateMilliseconds,
+                    EVENT_TITLE_PREFIX + titleText.text.toString(),
+                    BOOK_EVENT
+                )
             }
 
         }
@@ -189,6 +194,17 @@ class CreateBookFragment : DialogFragment() {
             dismiss()
         }
 
+    }
+
+    private fun observeViewModel() {
+        bookViewModel.calendarEvents.observe(viewLifecycleOwner, { intent ->
+            startActivity(intent)
+        })
+
+        bookViewModel.book.observe(viewLifecycleOwner, Observer {
+            dismiss()
+            navController.navigate(R.id.fragment_book)
+        })
     }
 
     override fun onResume() {
