@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_audiovisual.view.checkBox
@@ -25,13 +23,9 @@ import org.task.manager.presentation.shared.SharedViewModel
 import org.task.manager.shared.Constants.TRUE
 
 class BookAdapter(private val books: List<Book>,
-                  private val bookViewModel: BookViewModel,
                   private val sharedViewModel: SharedViewModel,
                   private val dateService : DateService
 ) : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -45,19 +39,18 @@ class BookAdapter(private val books: List<Book>,
         populateItemView(holder, position)
 
         holder.itemView.setOnLongClickListener {
-            bookViewModel.getBook(books[position].id)
+            sharedViewModel.sendBook(books[position])
 
-            bookViewModel.book.observe(holder.itemView.context as LifecycleOwner, Observer {
-                sharedViewModel.sendBook(it)
+            val bundle = bundleOf("action" to "update")
+            Navigation.findNavController(holder.itemView).navigate(R.id.fragment_create_book, bundle)
 
-                val bundle = bundleOf("action" to "update")
-                Navigation.findNavController(holder.itemView).navigate(R.id.fragment_create_book, bundle)
-            })
             return@setOnLongClickListener true
         }
     }
 
     override fun getItemCount() = books.size
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun populateItemView(holder: ViewHolder, position: Int) {
