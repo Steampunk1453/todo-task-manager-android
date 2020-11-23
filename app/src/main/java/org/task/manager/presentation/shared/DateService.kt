@@ -32,6 +32,12 @@ class DateService {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    fun getLocalDate(date: String): LocalDate {
+        val inputFormatter = DateTimeFormatter.ofPattern(INSTANT_PATTERN, Locale.ENGLISH)
+        return LocalDate.parse(date, inputFormatter)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun convertToInstant(dateMilliseconds: Long): String =
         Timestamp(dateMilliseconds).toInstant().toString()
 
