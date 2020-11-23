@@ -1,45 +1,47 @@
 package org.task.manager.presentation.home
 
-import android.view.LayoutInflater
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_calendar.view.itemFlightDateText
 import org.task.manager.R
+import org.task.manager.databinding.ItemCalendarBinding
+import org.task.manager.presentation.calendar.getColorCompat
+import org.task.manager.presentation.calendar.getDrawableCompat
+import org.task.manager.presentation.calendar.layoutInflater
 import org.task.manager.presentation.shared.CalendarItem
 import org.task.manager.presentation.shared.DateService
 import org.task.manager.presentation.shared.ItemType
-import org.task.manager.shared.Constants
 
-class HomeAdapter(private val calendarItems: List<CalendarItem>,
-                  private val viewModel: HomeViewModel,
-                  private val dateService : DateService
+class HomeAdapter(
+    val calendarItems: MutableList<CalendarItem>,
+    private val viewModel: HomeViewModel,
+    private val dateService : DateService
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_calendar, parent, false)
-
-        return ViewHolder(view)
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            ItemCalendarBinding.inflate(parent.context.layoutInflater, parent, false)
+        )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: HomeAdapter.ViewHolder, position: Int) {
-        populateItemView(holder, position)
+        holder.bind(calendarItems[position])
 
         holder.itemView.setOnClickListener {
             val itemType = calendarItems[position].itemType
             val itemId = calendarItems[position].id
 
             if (itemType == ItemType.AUDIOVISUAL) {
-                handleAudiovisualItem(itemId, holder)
-            } else {
-                handleBookItem(itemId, holder)
+                handleAudiovisualItem(itemId, holder.itemView)
+            } else if (itemType == ItemType.BOOK) {
+                handleBookItem(itemId, holder.itemView)
             }
             return@setOnClickListener
         }
@@ -47,32 +49,46 @@ class HomeAdapter(private val calendarItems: List<CalendarItem>,
 
     override fun getItemCount() = calendarItems.size
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    @RequiresApi(Build.VERSION_CODES.O)
+    inner class ViewHolder(val binding: ItemCalendarBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    private fun populateItemView(holder: ViewHolder, position: Int) {
-        holder.itemView.itemFlightDateText.text = calendarItems[position].title
-        calendarItems[position].check == Constants.TRUE
+        fun bind(calendarItem: CalendarItem) {
+            binding.startDateItem.apply {
+                text = dateService.getFormattedDate(calendarItem.startDate)
+                setBackgroundColor(itemView.context.getColorCompat(calendarItem.color))
+            }
+            binding.deadlineDateItem.apply {
+                text = dateService.getFormattedDate(calendarItem.deadline)
+                setBackgroundColor(itemView.context.getColorCompat(calendarItem.color))
+            }
+            binding.image.setImageDrawable(itemView.context.getDrawableCompat(calendarItem.icon))
+            binding.titleItem.text = calendarItem.title
+        }
     }
 
-    private fun handleAudiovisualItem(id: Long, holder: ViewHolder) {
+    private fun handleAudiovisualItem(id: Long, itemView: View) {
         viewModel.getAudiovisual(id)
 
-        viewModel.audiovisual.observe(holder.itemView.context as LifecycleOwner, {
+        viewModel.audiovisual.observe(itemView.context as LifecycleOwner, {
             viewModel.sendAudiovisual(it)
             val bundle = bundleOf("action" to "update")
-            Navigation.findNavController(holder.itemView)
+            Navigation.findNavController(itemView)
                 .navigate(R.id.fragment_create_audiovisual, bundle)
         })
     }
 
-    private fun handleBookItem(id: Long, holder: ViewHolder) {
+    private fun handleBookItem(id: Long, itemView: View) {
         viewModel.getBook(id)
 
-        viewModel.book.observe(holder.itemView.context as LifecycleOwner, {
+        viewModel.book.observe(itemView.context as LifecycleOwner, {
             viewModel.sendBook(it)
-            val bundle = bundleOf("action" to "update")
-            Navigation.findNavController(holder.itemView)
-                .navigate(R.id.fragment_create_book, bundle)
+            viewModel.book.observe(itemView.context as LifecycleOwner, {
+                val bundle = bundleOf("action" to "update")
+                Navigation.findNavController(itemView)
+                    .navigate(R.id.fragment_create_book, bundle)
+            })
+
         })
     }
 
