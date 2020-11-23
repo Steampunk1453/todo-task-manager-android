@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/example_5_item_view_bg_color">
+    android:background="@color/item_view_bg_color">
 
     <TextView
-        android:id="@+id/itemFlightDateText"
+        android:id="@+id/startDateItem"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#5D4037"
         android:gravity="center"
         android:lineSpacingExtra="2.5dp"
         android:textAllCaps="true"
-        android:textColor="@color/example_5_text_grey"
+        android:textColor="@color/text_grey"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="H,1:1"
@@ -30,7 +30,7 @@
         android:layout_height="0dp"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/itemFlightDateText"
+        app:layout_constraintEnd_toEndOf="@id/startDateItem"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -38,129 +38,88 @@
         android:layout_height="0dp"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/itemFlightDateText"
+        app:layout_constraintStart_toEndOf="@id/startDateItem"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/itemFlightDepartureImage"
+    <TextView
+        android:id="@+id/deadlineDateItem"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/itemFlightDateText"
-        app:layout_constraintDimensionRatio="W,1:1"
-        app:layout_constraintStart_toEndOf="@id/itemFlightDateText"
-        app:layout_constraintTop_toTopOf="@id/itemFlightDateText">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical|end"
-            app:tint="@color/example_5_text_grey"
-            app:srcCompat="@drawable/ic_menu_camera" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/itemFlightDepartureLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
+        android:background="#2F4F4F"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/itemFlightDepartureImage"
-        app:layout_constraintDimensionRatio="W,2:1"
-        app:layout_constraintStart_toEndOf="@id/itemFlightDepartureImage"
-        app:layout_constraintTop_toTopOf="@id/itemFlightDepartureImage">
+        android:lineSpacingExtra="2.5dp"
+        android:textAllCaps="true"
+        android:textColor="@color/text_grey"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/startDateItem"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintStart_toEndOf="@id/startDateItem"
+        app:layout_constraintTop_toTopOf="@id/startDateItem"
+        app:layout_constraintWidth_percent="0.143"
+        tools:text="THU\nJUN 31\n14:30" />
 
-        <TextView
-            android:fontFamily="sans-serif-black"
-            android:id="@+id/itemDepartureAirportCodeText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/example_5_text_grey"
-            android:textSize="16sp"
-            tools:text="LOS" />
-
-        <TextView
-            android:fontFamily="sans-serif-light"
-            android:id="@+id/itemDepartureAirportCityText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/example_5_text_grey"
-            android:textSize="16sp"
-            tools:text="Lagos" />
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/itemFlightDestinationImage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/itemFlightDepartureLayout"
-        app:layout_constraintDimensionRatio="W,1:1"
-        app:layout_constraintStart_toEndOf="@id/itemFlightDepartureLayout"
-        app:layout_constraintTop_toTopOf="@id/itemFlightDepartureLayout">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical|end"
-            app:tint="@color/example_5_text_grey"
-            app:srcCompat="@drawable/ic_menu_camera" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/itemFlightDestinationLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/itemFlightDestinationImage"
-        app:layout_constraintDimensionRatio="W,2:1"
-        app:layout_constraintStart_toEndOf="@id/itemFlightDestinationImage"
-        app:layout_constraintTop_toTopOf="@id/itemFlightDestinationImage">
-
-        <TextView
-            android:fontFamily="sans-serif-black"
-            android:id="@+id/itemDestinationAirportCodeText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/example_5_text_grey"
-            android:textSize="16sp"
-            tools:text="ABV" />
-
-        <TextView
-            android:fontFamily="sans-serif-light"
-            android:id="@+id/itemDestinationAirportCityText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/example_5_text_grey"
-            android:textSize="16sp"
-            tools:text="Abuja" />
-    </LinearLayout>
-
-    <!--Departure/Destination dividers-->
+    <!--Colored view dividers-->
     <View
         android:layout_width="1.3dp"
         android:layout_height="0dp"
-        android:background="@color/example_5_page_bg_color"
+        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/itemFlightDepartureLayout"
+        app:layout_constraintEnd_toEndOf="@id/deadlineDateItem"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:layout_width="0.7dp"
         android:layout_height="0dp"
-        android:background="@color/example_5_page_bg_color"
+        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/itemFlightDestinationImage"
+        app:layout_constraintStart_toEndOf="@id/deadlineDateItem"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/imageFrame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/deadlineDateItem"
+        app:layout_constraintDimensionRatio="W,1:1"
+        app:layout_constraintStart_toEndOf="@id/deadlineDateItem"
+        app:layout_constraintTop_toTopOf="@id/deadlineDateItem">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical|end"
+            app:tint="@color/text_grey"
+            app:srcCompat="@drawable/ic_video_library_24px" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/imageFrame"
+        app:layout_constraintDimensionRatio="W,2:1"
+        app:layout_constraintStart_toEndOf="@id/imageFrame"
+        app:layout_constraintTop_toTopOf="@id/imageFrame">
+
+        <TextView
+            android:id="@+id/titleItem"
+            android:fontFamily="sans-serif-light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/text_grey"
+            android:textSize="16sp"
+            tools:text="Mr Robot" />
+    </LinearLayout>
 
     <!--Edge dividers-->
     <View
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:background="@color/example_5_page_bg_color"
+        android:background="@color/page_bg_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -168,8 +127,9 @@
     <View
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:background="@color/example_5_page_bg_color"
+        android:background="@color/page_bg_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
