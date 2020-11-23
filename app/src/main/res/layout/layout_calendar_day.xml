@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/exFiveDayLayout"
+    android:id="@+id/dayLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
@@ -12,21 +12,19 @@
 
 
     <TextView
-        android:id="@+id/calendarDayText"
+        android:id="@+id/dayText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="4dp"
         android:gravity="center"
-        android:textColor="@color/black"
-        style="@style/letter_black"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/red_800"
         android:textSize="14sp"
         tools:text="24" />
 
         <View
-            android:id="@+id/exFiveDayFlightTop"
+            android:id="@+id/dayTop"
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_gravity="bottom"
@@ -34,7 +32,7 @@
             android:background="@color/blue_grey_700" />
 
         <View
-            android:id="@+id/exFiveDayFlightBottom"
+            android:id="@+id/dayBottom"
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_gravity="bottom"
