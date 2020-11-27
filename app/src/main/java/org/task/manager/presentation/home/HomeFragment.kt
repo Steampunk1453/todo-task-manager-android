@@ -38,8 +38,8 @@ import org.task.manager.presentation.calendar.getColorCompat
 import org.task.manager.presentation.calendar.setTextColorRes
 import org.task.manager.presentation.shared.CalendarItem
 import org.task.manager.presentation.shared.DateService
-import org.task.manager.presentation.shared.ItemType
 import org.task.manager.presentation.shared.SharedViewModel
+import org.task.manager.presentation.shared.toCalendar
 import org.task.manager.presentation.view.SimpleDividerItemDecoration
 import org.task.manager.shared.Constants.FALSE
 import java.time.LocalDate
@@ -47,11 +47,6 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
-
-private const val BLUE_COLOR =  R.color.blue_800
-private const val TEAL_COLOR =  R.color.teal_700
-private const val VIDEO_ICON =  R.drawable.ic_video_library_24px
-private const val BOOK_ICON =  R.drawable.ic_books_library_24dp
 
 class HomeFragment : Fragment() {
 
@@ -146,7 +141,7 @@ class HomeFragment : Fragment() {
 
                         if (day.owner == DayOwner.THIS_MONTH) {
                             textView.setTextColorRes(R.color.black)
-                            layout.setBackgroundResource(if (selectedDate == day.date) R.drawable.example_5_selected_bg else 0)
+                            layout.setBackgroundResource(if (selectedDate == day.date) R.drawable.selected_bg else 0)
 
                             val items = calendarItemsMap[day.date]
                             if (items != null) {
@@ -222,14 +217,14 @@ class HomeFragment : Fragment() {
                 val calendarItems = getCalendarItems(audiovisuals, books)
                 calendarItemsMap = calendarItems.groupBy { dateService.getLocalDate(it.startDate) }
 
-                adapter = createAdapter(calendarItems, homeViewModel, dateService)
+                adapter = createAdapter(calendarItems, sharedViewModel, dateService)
             })
         })
     }
 
     private fun createAdapter(
         calendarItems: MutableList<CalendarItem>,
-        viewModel: HomeViewModel,
+        viewModel: SharedViewModel,
         dateService: DateService
     ) = HomeAdapter(calendarItems, viewModel, dateService)
 
@@ -237,12 +232,10 @@ class HomeFragment : Fragment() {
         val calendarItems = mutableListOf<CalendarItem>()
 
         val audiovisualsItems = audiovisuals.filter { it.check == FALSE }
-            .map { CalendarItem(it.id, it.title, it.startDate, it.deadline, ItemType.AUDIOVISUAL,
-               BLUE_COLOR, VIDEO_ICON) }
+            .map { it.toCalendar(it) }
 
         val booksItems = books.filter { it.check == FALSE }
-            .map { CalendarItem(it.id, it.title, it.startDate, it.deadline, ItemType.BOOK,
-                TEAL_COLOR, BOOK_ICON) }
+            .map { it.toCalendar(it) }
 
         calendarItems.addAll(audiovisualsItems + booksItems)
 
