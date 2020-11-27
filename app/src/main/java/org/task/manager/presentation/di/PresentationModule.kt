@@ -22,7 +22,7 @@ val module: Module = module {
     viewModel { BookViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(),get()) }
     viewModel { SettingsViewModel(get(), get()) }
     viewModel { PasswordViewModel(get(), get(), get()) }
-    viewModel { HomeViewModel(get(), get(), get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get()) }
     single { DateService() }
     single { ValidatorService() }
     single { SharedViewModel() }
