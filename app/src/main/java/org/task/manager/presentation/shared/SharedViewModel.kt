@@ -15,11 +15,11 @@ class SharedViewModel : ViewModel() {
     }
 
     fun sendAudiovisual(value: Audiovisual) {
-        audiovisual.postValue(value)
+        audiovisual.value = value
     }
 
     fun sendBook(value: Book) {
-        book.postValue(value)
+        book.value = value
     }
 
 }
