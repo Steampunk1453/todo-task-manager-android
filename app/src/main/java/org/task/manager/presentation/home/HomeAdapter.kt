@@ -5,21 +5,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import org.task.manager.R
 import org.task.manager.databinding.ItemCalendarBinding
+import org.task.manager.domain.model.Audiovisual
+import org.task.manager.domain.model.Book
 import org.task.manager.presentation.calendar.getColorCompat
 import org.task.manager.presentation.calendar.getDrawableCompat
 import org.task.manager.presentation.calendar.layoutInflater
 import org.task.manager.presentation.shared.CalendarItem
 import org.task.manager.presentation.shared.DateService
 import org.task.manager.presentation.shared.ItemType
+import org.task.manager.presentation.shared.SharedViewModel
 
 class HomeAdapter(
     val calendarItems: MutableList<CalendarItem>,
-    private val viewModel: HomeViewModel,
+    private val viewModel: SharedViewModel,
     private val dateService : DateService
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
@@ -36,12 +38,12 @@ class HomeAdapter(
 
         holder.itemView.setOnClickListener {
             val itemType = calendarItems[position].itemType
-            val itemId = calendarItems[position].id
+            val calendarItem = calendarItems[position]
 
             if (itemType == ItemType.AUDIOVISUAL) {
-                handleAudiovisualItem(itemId, holder.itemView)
+                calendarItem.audiovisual?.let { aud -> handleAudiovisualItem(aud, holder.itemView) }
             } else if (itemType == ItemType.BOOK) {
-                handleBookItem(itemId, holder.itemView)
+                calendarItem.book?.let { book -> handleBookItem(book, holder.itemView) }
             }
             return@setOnClickListener
         }
@@ -59,7 +61,7 @@ class HomeAdapter(
                 setBackgroundColor(itemView.context.getColorCompat(calendarItem.color))
             }
             binding.deadlineDateItem.apply {
-                text = dateService.getFormattedDate(calendarItem.deadline)
+                text = dateService.getFormattedDate(calendarItem.endDate)
                 setBackgroundColor(itemView.context.getColorCompat(calendarItem.color))
             }
             binding.image.setImageDrawable(itemView.context.getDrawableCompat(calendarItem.icon))
@@ -67,29 +69,16 @@ class HomeAdapter(
         }
     }
 
-    private fun handleAudiovisualItem(id: Long, itemView: View) {
-        viewModel.getAudiovisual(id)
-
-        viewModel.audiovisual.observe(itemView.context as LifecycleOwner, {
-            viewModel.sendAudiovisual(it)
-            val bundle = bundleOf("action" to "update")
-            Navigation.findNavController(itemView)
-                .navigate(R.id.fragment_create_audiovisual, bundle)
-        })
+    private fun handleAudiovisualItem(audiovisual: Audiovisual, itemView: View) {
+        viewModel.sendAudiovisual(audiovisual)
+        val bundle = bundleOf("action" to "update")
+        Navigation.findNavController(itemView).navigate(R.id.fragment_create_audiovisual, bundle)
     }
 
-    private fun handleBookItem(id: Long, itemView: View) {
-        viewModel.getBook(id)
-
-        viewModel.book.observe(itemView.context as LifecycleOwner, {
-            viewModel.sendBook(it)
-            viewModel.book.observe(itemView.context as LifecycleOwner, {
-                val bundle = bundleOf("action" to "update")
-                Navigation.findNavController(itemView)
-                    .navigate(R.id.fragment_create_book, bundle)
-            })
-
-        })
+    private fun handleBookItem(book: Book, itemView: View) {
+        viewModel.sendBook(book)
+        val bundle = bundleOf("action" to "update")
+        Navigation.findNavController(itemView).navigate(R.id.fragment_create_book, bundle)
     }
 
 }
