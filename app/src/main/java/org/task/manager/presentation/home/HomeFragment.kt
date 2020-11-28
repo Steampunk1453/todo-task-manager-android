@@ -24,7 +24,7 @@ import com.kizitonwose.calendarview.ui.ViewContainer
 import com.kizitonwose.calendarview.utils.next
 import com.kizitonwose.calendarview.utils.previous
 import kotlinx.android.synthetic.main.fragment_home.calendarView
-import kotlinx.android.synthetic.main.fragment_home.welcome
+import kotlinx.android.synthetic.main.fragment_main.welcome
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -44,7 +44,6 @@ import org.task.manager.presentation.view.SimpleDividerItemDecoration
 import org.task.manager.shared.Constants.FALSE
 import java.time.LocalDate
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -57,12 +56,11 @@ class HomeFragment : Fragment() {
     private var calendarItems: List<CalendarItem> = listOf()
     private var calendarItemsMap: Map<LocalDate, List<CalendarItem>> = mapOf()
     private var selectedDate: LocalDate? = null
-    private val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
     private val homeViewModel: HomeViewModel by viewModel()
     private val dateService: DateService by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         navController = findNavController()
 
@@ -82,7 +80,7 @@ class HomeFragment : Fragment() {
 
         val daysOfWeek = daysOfWeekFromLocale()
         val currentMonth = YearMonth.now()
-        calendarView.setup(currentMonth.minusMonths(10), currentMonth.plusMonths(10), daysOfWeek.first())
+        calendarView.setup(currentMonth.minusMonths(12), currentMonth.plusMonths(12), daysOfWeek.first())
         calendarView.scrollToMonth(currentMonth)
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -124,6 +122,7 @@ class HomeFragment : Fragment() {
             override fun create(view: View) = DayViewContainer(view)
             // Called every time we need to reuse a container.
             override fun bind(container: DayViewContainer, day: CalendarDay) {
+                val today = LocalDate.now()
                 homeViewModel.audiovisuals.observe(viewLifecycleOwner, { audiovisuals ->
                     homeViewModel.books.observe(viewLifecycleOwner, { books ->
                         calendarItems = getCalendarItems(audiovisuals, books)
@@ -141,7 +140,12 @@ class HomeFragment : Fragment() {
 
                         if (day.owner == DayOwner.THIS_MONTH) {
                             textView.setTextColorRes(R.color.black)
-                            layout.setBackgroundResource(if (selectedDate == day.date) R.drawable.selected_bg else 0)
+                            layout.setBackgroundResource(
+                                when (day.date) {
+                                    today -> R.drawable.today_bg
+                                    selectedDate -> R.drawable.selected_bg
+                                    else -> 0
+                            })
 
                             val items = calendarItemsMap[day.date]
                             if (items != null) {
@@ -185,7 +189,7 @@ class HomeFragment : Fragment() {
         }
 
         calendarView.monthScrollListener = { month ->
-            val title = "${monthTitleFormatter.format(month.yearMonth)} ${month.yearMonth.year}"
+            val title = "${dateService.getFormattedMonth(month.yearMonth)} ${month.yearMonth.year}"
             binding.monthYear.text = title
 
             selectedDate?.let {
