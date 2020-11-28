@@ -57,11 +57,11 @@ class HomeAdapter(
 
         fun bind(calendarItem: CalendarItem) {
             binding.startDateItem.apply {
-                text = dateService.getFormattedDate(calendarItem.startDate)
+                text = dateService.getFormattedDateWithWeekDay(calendarItem.startDate)
                 setBackgroundColor(itemView.context.getColorCompat(calendarItem.color))
             }
             binding.deadlineDateItem.apply {
-                text = dateService.getFormattedDate(calendarItem.endDate)
+                text = dateService.getFormattedDateWithWeekDay(calendarItem.endDate)
                 setBackgroundColor(itemView.context.getColorCompat(calendarItem.color))
             }
             binding.image.setImageDrawable(itemView.context.getDrawableCompat(calendarItem.icon))
