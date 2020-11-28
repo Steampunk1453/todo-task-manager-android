@@ -10,9 +10,9 @@
         android:id="@+id/startDateItem"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#5D4037"
+        android:background="@color/blue_800"
         android:gravity="center"
-        android:lineSpacingExtra="2.5dp"
+        android:lineSpacingExtra="1.5dp"
         android:textAllCaps="true"
         android:textColor="@color/text_grey"
         android:textSize="12sp"
@@ -45,9 +45,9 @@
         android:id="@+id/deadlineDateItem"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#2F4F4F"
+        android:background="@color/teal_700"
         android:gravity="center"
-        android:lineSpacingExtra="2.5dp"
+        android:lineSpacingExtra="1.5dp"
         android:textAllCaps="true"
         android:textColor="@color/text_grey"
         android:textSize="12sp"
@@ -111,9 +111,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/text_grey"
-            android:textSize="16sp"
+            android:textSize="14sp"
             tools:text="Mr Robot" />
     </LinearLayout>
+
 
     <!--Edge dividers-->
     <View
