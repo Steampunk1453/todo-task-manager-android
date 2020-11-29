@@ -79,7 +79,7 @@ class BookFragment : Fragment(), ViewElements {
 
     private fun observeBookViewModel() {
         bookViewModel.books.observe(viewLifecycleOwner, {
-            adapter = createAdapter(it, bookViewModel, sharedViewModel, dateService)
+            adapter = createAdapter(it, sharedViewModel, dateService)
             buildBooksList()
             addRemoveItemEvent(it)
         })
@@ -87,11 +87,10 @@ class BookFragment : Fragment(), ViewElements {
 
     private fun createAdapter(
         it: List<Book>,
-        bookViewModel: BookViewModel,
         sharedViewModel: SharedViewModel,
         dateService: DateService
     ) =
-        BookAdapter(it, bookViewModel, sharedViewModel, dateService)
+        BookAdapter(it, sharedViewModel, dateService)
 
     private fun buildBooksList() {
         binding.bookList.adapter = adapter

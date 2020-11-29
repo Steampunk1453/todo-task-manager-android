@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/item_view_bg_color">
+
+    <TextView
+        android:id="@+id/startDateItem"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/blue_800"
+        android:gravity="center"
+        android:lineSpacingExtra="1.5dp"
+        android:textAllCaps="true"
+        android:textColor="@color/text_grey"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.143"
+        tools:text="THU\nJUN 30\n14:00" />
+
+    <!--Colored view dividers-->
+    <View
+        android:layout_width="1.3dp"
+        android:layout_height="0dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/startDateItem"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0.7dp"
+        android:layout_height="0dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/startDateItem"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/deadlineDateItem"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/teal_700"
+        android:gravity="center"
+        android:lineSpacingExtra="1.5dp"
+        android:textAllCaps="true"
+        android:textColor="@color/text_grey"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/startDateItem"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintStart_toEndOf="@id/startDateItem"
+        app:layout_constraintTop_toTopOf="@id/startDateItem"
+        app:layout_constraintWidth_percent="0.143"
+        tools:text="THU\nJUN 31\n14:30" />
+
+    <!--Colored view dividers-->
+    <View
+        android:layout_width="1.3dp"
+        android:layout_height="0dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/deadlineDateItem"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0.7dp"
+        android:layout_height="0dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/deadlineDateItem"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/imageFrame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/deadlineDateItem"
+        app:layout_constraintDimensionRatio="W,1:1"
+        app:layout_constraintStart_toEndOf="@id/deadlineDateItem"
+        app:layout_constraintTop_toTopOf="@id/deadlineDateItem">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical|end"
+            app:tint="@color/text_grey"
+            app:srcCompat="@drawable/ic_video_library_24px" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/imageFrame"
+        app:layout_constraintDimensionRatio="W,2:1"
+        app:layout_constraintStart_toEndOf="@id/imageFrame"
+        app:layout_constraintTop_toTopOf="@id/imageFrame">
+
+        <TextView
+            android:id="@+id/titleItem"
+            android:fontFamily="sans-serif-light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/text_grey"
+            android:textSize="14sp"
+            tools:text="Mr Robot" />
+    </LinearLayout>
+
+
+    <!--Edge dividers-->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/page_bg_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/page_bg_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

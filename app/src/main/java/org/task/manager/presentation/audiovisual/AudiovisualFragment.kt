@@ -80,7 +80,7 @@ class AudiovisualFragment : Fragment(), ViewElements {
 
     private fun observeAudiovisualViewModel() {
         audiovisualViewModel.audiovisuals.observe(viewLifecycleOwner, {
-            adapter = createAdapter(it, audiovisualViewModel, sharedViewModel, dateService)
+            adapter = createAdapter(it, sharedViewModel, dateService)
             buildAudiovisualsList(adapter)
             addRemoveItemEvent(it)
         })
@@ -88,11 +88,10 @@ class AudiovisualFragment : Fragment(), ViewElements {
 
     private fun createAdapter(
         audiovisuals: List<Audiovisual>,
-        audiovisualViewModel: AudiovisualViewModel,
         sharedViewModel: SharedViewModel,
         dateService: DateService
     ) =
-        AudiovisualAdapter(audiovisuals, audiovisualViewModel, sharedViewModel, dateService)
+        AudiovisualAdapter(audiovisuals, sharedViewModel, dateService)
 
     private fun buildAudiovisualsList(adapter: AudiovisualAdapter) {
         binding.audiovisualList.adapter = adapter

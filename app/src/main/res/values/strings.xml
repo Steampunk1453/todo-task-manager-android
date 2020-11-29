@@ -14,9 +14,9 @@
     <string name="prompt_remember">Remember Me</string>
     <string name="action_view_profile">View Profile</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome!"</string>
+    <string name="welcome">"Welcome"</string>
     <string name="home">"This is your home"</string>
-    <string name="user">"You are logged in as user "</string>
+    <string name="user">"You are logged as "</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_button_text">Login</string>

@@ -14,12 +14,12 @@ class SharedViewModel : ViewModel() {
         userData.value = username
     }
 
-    fun sendAudiovisual(obj: Audiovisual) {
-        audiovisual.value = obj
+    fun sendAudiovisual(value: Audiovisual) {
+        audiovisual.value = value
     }
 
-    fun sendBook(obj: Book) {
-        book.value = obj
+    fun sendBook(value: Book) {
+        book.value = value
     }
 
 }
