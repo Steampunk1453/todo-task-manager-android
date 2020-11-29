@@ -20,7 +20,7 @@ import org.task.manager.presentation.shared.ItemType
 import org.task.manager.presentation.shared.SharedViewModel
 
 class HomeAdapter(
-    val calendarItems: MutableList<CalendarItem>,
+    internal val calendarItems: MutableList<CalendarItem>,
     private val viewModel: SharedViewModel,
     private val dateService : DateService
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
@@ -41,9 +41,9 @@ class HomeAdapter(
             val calendarItem = calendarItems[position]
 
             if (itemType == ItemType.AUDIOVISUAL) {
-                calendarItem.audiovisual?.let { aud -> handleAudiovisualItem(aud, holder.itemView) }
+                calendarItem.audiovisual?.let {handleAudiovisualItem(it, holder.itemView) }
             } else if (itemType == ItemType.BOOK) {
-                calendarItem.book?.let { book -> handleBookItem(book, holder.itemView) }
+                calendarItem.book?.let {handleBookItem(it, holder.itemView) }
             }
             return@setOnClickListener
         }
