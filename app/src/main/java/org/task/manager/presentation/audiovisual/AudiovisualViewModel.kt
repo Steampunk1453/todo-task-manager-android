@@ -99,13 +99,6 @@ class AudiovisualViewModel(
         }
     }
 
-    fun getAudiovisual(id: Long) {
-        coroutineScope.launch {
-            val audiovisualResult = getAudiovisual.execute(id)
-            audiovisual.postValue(audiovisualResult)
-        }
-    }
-
     fun deleteAudiovisual(id: Long) {
         coroutineScope.launch {
             val deleteResult = deleteAudiovisual.execute(id)

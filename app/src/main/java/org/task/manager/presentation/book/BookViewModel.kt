@@ -119,13 +119,6 @@ class BookViewModel(
         }
     }
 
-    fun getBook(id: Long) {
-        coroutineScope.launch {
-            val bookResult = getBook.execute(id)
-            book.postValue(bookResult)
-        }
-    }
-
     fun deleteBook(id: Long) {
         coroutineScope.launch {
             val deleteResult = deleteBook.execute(id)
