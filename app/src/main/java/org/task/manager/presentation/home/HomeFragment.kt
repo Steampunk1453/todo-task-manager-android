@@ -42,6 +42,7 @@ import org.task.manager.presentation.shared.SharedViewModel
 import org.task.manager.presentation.shared.toCalendar
 import org.task.manager.presentation.view.SimpleDividerItemDecoration
 import org.task.manager.shared.Constants.FALSE
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -53,11 +54,10 @@ class HomeFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var adapter: HomeAdapter
     private lateinit var sharedViewModel: SharedViewModel
-    private var calendarItems: List<CalendarItem> = listOf()
-    private var calendarItemsMap: Map<LocalDate, List<CalendarItem>> = mapOf()
-    private var selectedDate: LocalDate? = null
     private val homeViewModel: HomeViewModel by viewModel()
     private val dateService: DateService by inject()
+    private var calendarItemsMap: Map<LocalDate, List<CalendarItem>> = mapOf()
+    private var selectedDate: LocalDate? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -77,25 +77,59 @@ class HomeFragment : Fragment() {
         homeViewModel.getBooks()
 
         observeHomeViewModel()
+        observeSharedViewModel()
 
         val daysOfWeek = daysOfWeekFromLocale()
-        val currentMonth = YearMonth.now()
-        calendarView.setup(currentMonth.minusMonths(12), currentMonth.plusMonths(12), daysOfWeek.first())
-        calendarView.scrollToMonth(currentMonth)
+        configCalendarView(daysOfWeek)
+
+        handleCalendarDayView(view)
+        handleCalendarMonthView(daysOfWeek)
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             navController.navigate(R.id.fragment_main)
         }
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun observeHomeViewModel() {
+        homeViewModel.audiovisuals.observe(viewLifecycleOwner, { audiovisuals ->
+            homeViewModel.books.observe(viewLifecycleOwner, { books ->
+                val calendarItems = getCalendarItems(audiovisuals, books)
+                calendarItemsMap = calendarItems.groupBy { dateService.getLocalDate(it.startDate) }
+                adapter = createAdapter(calendarItems, sharedViewModel, dateService)
+            })
+        })
+    }
+
+    private fun createAdapter(
+        calendarItems: MutableList<CalendarItem>,
+        viewModel: SharedViewModel,
+        dateService: DateService
+    ) = HomeAdapter(calendarItems, viewModel, dateService)
+
+    private fun configCalendarView(daysOfWeek: Array<DayOfWeek>) {
+        val currentMonth = YearMonth.now()
+        calendarView.setup(
+            currentMonth.minusMonths(12),
+            currentMonth.plusMonths(12),
+            daysOfWeek.first()
+        )
+        calendarView.scrollToMonth(currentMonth)
+    }
+
+    private fun observeSharedViewModel() {
         sharedViewModel.userData.observe(viewLifecycleOwner, {
-            if(it != null) {
+            if (it != null) {
                 val prefix = welcome.text
                 val username = it
                 val message = "$prefix $username"
                 welcome.text = message
             }
         })
+    }
 
+    private fun handleCalendarDayView(view: View) {
         class DayViewContainer(view: View) : ViewContainer(view) {
             lateinit var day: CalendarDay
             val binding = LayoutCalendarDayBinding.bind(view)
@@ -109,8 +143,12 @@ class HomeFragment : Fragment() {
                             binding.calendarView.notifyDateChanged(day.date)
                             oldDate?.let { binding.calendarView.notifyDateChanged(it) }
                             binding.homeRecyclerView.adapter = adapter
-                            binding.homeRecyclerView.addItemDecoration(SimpleDividerItemDecoration(binding.root.context))
-                            updateAdapterForDate(day.date)
+                            binding.homeRecyclerView.addItemDecoration(
+                                SimpleDividerItemDecoration(
+                                    binding.root.context
+                                )
+                            )
+                            this@HomeFragment.updateAdapterForDate(day.date)
                         }
                     }
                 }
@@ -118,15 +156,17 @@ class HomeFragment : Fragment() {
         }
 
         calendarView.dayBinder = object : DayBinder<DayViewContainer> {
-            // Called only when a new container is needed.
+            // Called only when a new container is needed
             override fun create(view: View) = DayViewContainer(view)
-            // Called every time we need to reuse a container.
+            // Called every time we need to reuse a container
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 val today = LocalDate.now()
                 homeViewModel.audiovisuals.observe(viewLifecycleOwner, { audiovisuals ->
                     homeViewModel.books.observe(viewLifecycleOwner, { books ->
-                        calendarItems = getCalendarItems(audiovisuals, books)
-                        calendarItemsMap = calendarItems.groupBy { dateService.getLocalDate(it.startDate) }
+                        val calendarItems = getCalendarItems(audiovisuals, books)
+                        calendarItemsMap =
+                            calendarItems.groupBy { dateService.getLocalDate(it.startDate) }
 
                         container.day = day
                         val textView = container.binding.dayText
@@ -145,7 +185,8 @@ class HomeFragment : Fragment() {
                                     today -> R.drawable.today_bg
                                     selectedDate -> R.drawable.selected_bg
                                     else -> 0
-                            })
+                                }
+                            )
 
                             val items = calendarItemsMap[day.date]
                             if (items != null) {
@@ -160,13 +201,13 @@ class HomeFragment : Fragment() {
                             textView.setTextColorRes(R.color.text_grey_light)
                             layout.background = null
                         }
-
                     })
                 })
-
             }
         }
+    }
 
+    private fun handleCalendarMonthView(daysOfWeek: Array<DayOfWeek>) {
         class MonthViewContainer(view: View) : ViewContainer(view) {
             val monthLayout = LayoutCalendarHeaderBinding.bind(view).calendarHeader.root
         }
@@ -174,15 +215,17 @@ class HomeFragment : Fragment() {
         calendarView.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthViewContainer> {
             override fun create(view: View) = MonthViewContainer(view)
             override fun bind(container: MonthViewContainer, month: CalendarMonth) {
-                // Setup each header day text if we have not done that already.
+                // Setup each header day text if we have not done that already
                 if (container.monthLayout.tag == null) {
                     container.monthLayout.tag = month.yearMonth
-                    container.monthLayout.children.map { it as TextView }.forEachIndexed { index, tv ->
-                        tv.text = daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
-                            .toUpperCase(Locale.ENGLISH)
-                        tv.setTextColorRes(R.color.black)
-                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-                    }
+                    container.monthLayout.children.map { it as TextView }
+                        .forEachIndexed { index, tv ->
+                            tv.text =
+                                daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
+                                    .toUpperCase(Locale.ENGLISH)
+                            tv.setTextColorRes(R.color.black)
+                            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                        }
                     month.yearMonth
                 }
             }
@@ -193,10 +236,10 @@ class HomeFragment : Fragment() {
             binding.monthYear.text = title
 
             selectedDate?.let {
-                // Clear selection if we scroll to a new month.
+                // Clear selection if we scroll to a new month
                 selectedDate = null
                 calendarView.notifyDateChanged(it)
-                updateAdapterForDate(null)
+                this.updateAdapterForDate(null)
             }
         }
 
@@ -211,26 +254,8 @@ class HomeFragment : Fragment() {
                 calendarView.smoothScrollToMonth(it.yearMonth.previous)
             }
         }
-
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun observeHomeViewModel() {
-        homeViewModel.audiovisuals.observe(viewLifecycleOwner, { audiovisuals ->
-            homeViewModel.books.observe(viewLifecycleOwner, { books ->
-                val calendarItems = getCalendarItems(audiovisuals, books)
-                calendarItemsMap = calendarItems.groupBy { dateService.getLocalDate(it.startDate) }
-
-                adapter = createAdapter(calendarItems, sharedViewModel, dateService)
-            })
-        })
-    }
-
-    private fun createAdapter(
-        calendarItems: MutableList<CalendarItem>,
-        viewModel: SharedViewModel,
-        dateService: DateService
-    ) = HomeAdapter(calendarItems, viewModel, dateService)
 
     private fun getCalendarItems(audiovisuals: List<Audiovisual>, books: List<Book>) : MutableList<CalendarItem> {
         val calendarItems = mutableListOf<CalendarItem>()
@@ -251,6 +276,7 @@ class HomeFragment : Fragment() {
         adapter.calendarItems.addAll(calendarItemsMap[date].orEmpty())
         adapter.notifyDataSetChanged()
     }
+
 }
 
 
