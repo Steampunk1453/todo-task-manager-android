@@ -3,6 +3,7 @@ package org.task.manager.presentation
 import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,6 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -56,9 +56,7 @@ class MainActivity : AppCompatActivity(), ViewElements {
         navView = findViewById(R.id.nav_view)
         navController = findNavController(R.id.nav_host_fragment)
 
-        val appBarConfiguration = buildBarConfiguration()
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController)
         navView.setupWithNavController(navController)
 
         handleBottomNavigationView()
@@ -66,6 +64,13 @@ class MainActivity : AppCompatActivity(), ViewElements {
         handleNavigationController()
 
         handleIntentData()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> onBackPressed().let { true }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun showMessage(message: String) {
@@ -78,25 +83,6 @@ class MainActivity : AppCompatActivity(), ViewElements {
 
     override fun hideProgress() {
         progressBar.hide()
-    }
-
-    private fun buildBarConfiguration(): AppBarConfiguration {
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations
-        return AppBarConfiguration
-            .Builder(
-                R.id.fragment_main,
-                R.id.fragment_login,
-                R.id.fragment_registration,
-                R.id.fragment_home,
-                R.id.fragment_audiovisual,
-                R.id.fragment_book,
-                R.id.fragment_settings,
-                R.id.fragment_password,
-                R.id.fragment_reset_init_password,
-                R.id.fragment_reset_finish_password,
-            )
-            .build()
     }
 
     private fun handleBottomNavigationView() {

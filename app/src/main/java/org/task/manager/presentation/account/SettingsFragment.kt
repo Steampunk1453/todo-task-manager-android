@@ -37,7 +37,7 @@ class SettingsFragment : Fragment(), ViewElements {
     private val validatorService: ValidatorService by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
         navController = findNavController()
 
