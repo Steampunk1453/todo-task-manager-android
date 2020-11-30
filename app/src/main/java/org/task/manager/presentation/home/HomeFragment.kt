@@ -86,7 +86,7 @@ class HomeFragment : Fragment() {
         handleCalendarMonthView(daysOfWeek)
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            navController.navigate(R.id.fragment_main)
+            requireActivity().finish()
         }
 
     }
