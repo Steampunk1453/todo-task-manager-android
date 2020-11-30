@@ -95,8 +95,4 @@
             android:id="@+id/action_fragment_reset_finish_password_to_fragment_main"
             app:destination="@id/fragment_main" />
     </fragment>
-    <fragment
-        android:id="@+id/fragment_example"
-        android:name="org.task.manager.presentation.calendar.Example5Fragment"
-        android:label="Example" />
 </navigation>
