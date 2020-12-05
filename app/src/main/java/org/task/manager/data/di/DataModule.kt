@@ -37,6 +37,7 @@ val networkModule = module {
     single {
         val serviceFactory: ServiceFactory = NetworkServiceFactory(
             get(),
+            get(),
             get()
         )
         serviceFactory

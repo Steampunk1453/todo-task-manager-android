@@ -1,5 +1,7 @@
 package org.task.manager.data.network
 
+import android.content.Context
+import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,7 +15,8 @@ import java.util.concurrent.TimeUnit
 
 abstract class ServiceFactory(
     private val logLevel: HttpLoggingInterceptor.Level,
-    private val sessionManagerService: SessionManagerService
+    private val sessionManagerService: SessionManagerService,
+    private val context: Context
 ) {
 
     fun <T> create(serviceType: Class<T>): T {
@@ -44,13 +47,17 @@ abstract class ServiceFactory(
 
     private fun getHttpClient(): OkHttpClient {
         val builder = OkHttpClient.Builder()
-        interceptors(sessionManagerService).forEach { interceptor -> builder.addInterceptor(interceptor) }
-        builder.addInterceptor(HttpLoggingInterceptor().apply { level = logLevel })
+        val cacheSize = (5 * 1024 * 1024).toLong()
+        val cacheConfig = Cache(context.cacheDir, cacheSize)
+        interceptors(sessionManagerService, context).forEach { interceptor -> builder.addInterceptor(interceptor) }
+        builder
+            .cache(cacheConfig)
+            .addInterceptor(HttpLoggingInterceptor().apply { level = logLevel })
             .connectTimeout(120, TimeUnit.SECONDS)
             .writeTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
         return builder.build()
     }
 
-    abstract fun interceptors(sessionManagerService: SessionManagerService): List<Interceptor>
+    abstract fun interceptors(sessionManagerService: SessionManagerService, context: Context): List<Interceptor>
 }
