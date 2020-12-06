@@ -19,7 +19,6 @@ import org.task.manager.domain.model.Title
 import org.task.manager.domain.model.state.DeleteState
 import org.task.manager.domain.usecase.audiovisual.CreateAudiovisual
 import org.task.manager.domain.usecase.audiovisual.DeleteAudiovisual
-import org.task.manager.domain.usecase.audiovisual.GetAudiovisual
 import org.task.manager.domain.usecase.audiovisual.GetAudiovisuals
 import org.task.manager.domain.usecase.audiovisual.GetPlatforms
 import org.task.manager.domain.usecase.audiovisual.GetTitles
@@ -34,7 +33,6 @@ class AudiovisualViewModel(
     private val createAudiovisual: CreateAudiovisual,
     private val updateAudiovisual: UpdateAudiovisual,
     private val deleteAudiovisual: DeleteAudiovisual,
-    private val getAudiovisual: GetAudiovisual,
     private val getTitles: GetTitles,
     private val getGenres: GetGenres,
     private val getPlatforms: GetPlatforms,

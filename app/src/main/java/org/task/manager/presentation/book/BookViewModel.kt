@@ -19,7 +19,6 @@ import org.task.manager.domain.model.Genre
 import org.task.manager.domain.model.state.DeleteState
 import org.task.manager.domain.usecase.book.CreateBook
 import org.task.manager.domain.usecase.book.DeleteBook
-import org.task.manager.domain.usecase.book.GetBook
 import org.task.manager.domain.usecase.book.GetBooks
 import org.task.manager.domain.usecase.book.GetBookshops
 import org.task.manager.domain.usecase.book.GetEditorials
@@ -34,7 +33,6 @@ class BookViewModel(
     private val createBook: CreateBook,
     private val updateBook: UpdateBook,
     private val deleteBook: DeleteBook,
-    private val getBook: GetBook,
     private val getGenres: GetGenres,
     private val getBookshops: GetBookshops,
     private val getEditorials: GetEditorials,
