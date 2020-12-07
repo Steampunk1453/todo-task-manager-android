@@ -29,15 +29,15 @@ data class AudiovisualResponse(
     val check: Int,
 
     @SerializedName("user")
-    val userResponse: UserResponse?
+    val userResponse: UserResponse
 )
 
 fun AudiovisualResponse.toDomain(): Audiovisual = Audiovisual(id, title, genre, platform, platformUrl,
-    startDate, deadline, check, userResponse?.toDomain()
+    startDate, deadline, check, userResponse.toDomain()
 )
 
 fun Audiovisual.toResponse(): AudiovisualResponse = AudiovisualResponse(id, title, genre, platform, platformUrl,
-    startDate, deadline, check, user?.toResponse()
+    startDate, deadline, check, user.toResponse()
 )
 
 

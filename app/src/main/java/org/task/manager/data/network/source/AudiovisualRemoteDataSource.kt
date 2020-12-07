@@ -8,7 +8,7 @@ import org.task.manager.shared.Constants.ILLEGAL_STATE_EXCEPTION_CAUSE
 import retrofit2.Response
 import java.io.IOException
 
-class AudiovisualDataSource(private val dataSourceProvider: DataSourceProvider) {
+class AudiovisualRemoteDataSource(private val dataSourceProvider: DataSourceProvider) {
 
     suspend fun create(audiovisualRequest: AudiovisualRequest): AudiovisualResponse {
         val audiovisualApi = dataSourceProvider.getAudiovisualDataSource()
@@ -24,7 +24,7 @@ class AudiovisualDataSource(private val dataSourceProvider: DataSourceProvider) 
         return checkAudiovisualResponse(response)
     }
 
-    suspend fun getAll(): List<AudiovisualResponse>{
+    suspend fun findAll(): List<AudiovisualResponse>{
         val audiovisualApi = dataSourceProvider.getAudiovisualDataSource()
         val response = audiovisualApi.getAllAudiovisuals()
 
@@ -33,7 +33,7 @@ class AudiovisualDataSource(private val dataSourceProvider: DataSourceProvider) 
         return response.body() ?: throw IllegalStateException(ILLEGAL_STATE_EXCEPTION_CAUSE)
     }
 
-    suspend fun get(id: Long): AudiovisualResponse {
+    suspend fun findById(id: Long): AudiovisualResponse {
         val audiovisualApi = dataSourceProvider.getAudiovisualDataSource()
         val response = audiovisualApi.getAudiovisual(id)
 

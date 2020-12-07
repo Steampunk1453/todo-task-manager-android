@@ -27,7 +27,7 @@ import kotlin.test.assertFailsWith
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi
-internal class BookDataSourceTest {
+internal class BookRemoteDataSourceTest {
 
     @MockK
     private lateinit var provider: DataSourceProvider
@@ -36,7 +36,7 @@ internal class BookDataSourceTest {
     private lateinit var bookApi: BookApi
 
     @InjectMockKs
-    private lateinit var bookDataSource: BookDataSource
+    private lateinit var bookRemoteDataSource: BookRemoteDataSource
 
     @Test
     fun `should return successful book response when create`() =
@@ -47,7 +47,7 @@ internal class BookDataSourceTest {
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.createBook(any()) } returns success(bookResponse)
             // When
-            val response = bookDataSource.create(bookRequest)
+            val response = bookRemoteDataSource.create(bookRequest)
             // Then
             response shouldNotBe {null}
             response shouldBe bookResponse
@@ -74,7 +74,7 @@ internal class BookDataSourceTest {
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.updateBook(any()) } returns success(bookResponse)
             // When
-            val response = bookDataSource.update(bookRequest)
+            val response = bookRemoteDataSource.update(bookRequest)
             // Then
             response shouldNotBe {null}
             response shouldBe bookResponse
@@ -103,7 +103,7 @@ internal class BookDataSourceTest {
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.getAllBooks() } returns success(books)
             // When
-            val response = bookDataSource.getAll()
+            val response = bookRemoteDataSource.findAll()
             // Then
             response shouldNotBe {null}
             response[0] shouldBe bookResponse
@@ -133,7 +133,7 @@ internal class BookDataSourceTest {
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.getBook(any()) } returns success(bookResponse)
             // When
-            val response = bookDataSource.get(id)
+            val response = bookRemoteDataSource.findById(id)
             // Then
             response shouldNotBe {null}
             response shouldNotBe {null}
@@ -160,7 +160,7 @@ internal class BookDataSourceTest {
             val id = Random.nextLong(1, 5000)
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.deleteBook(any()) } returns success(null)
-            bookDataSource.delete(id)
+            bookRemoteDataSource.delete(id)
             // Then
             coVerify(atLeast = 1) {  bookApi.deleteBook(id) }
         }
@@ -177,7 +177,7 @@ internal class BookDataSourceTest {
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.getAllEditorials() } returns success(editorials)
             // When
-            val response = bookDataSource.getAllEditorials()
+            val response = bookRemoteDataSource.findAllEditorials()
             // Then
             response shouldNotBe {null}
             response[0] shouldBe editorialResponse
@@ -199,7 +199,7 @@ internal class BookDataSourceTest {
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.getAllBookshops() } returns success(books)
             // When
-            val response = bookDataSource.getAllBookshops()
+            val response = bookRemoteDataSource.findAllBookshops()
             // Then
             response shouldNotBe {null}
             response[0] shouldBe bookshopResponse
@@ -221,7 +221,7 @@ internal class BookDataSourceTest {
         coEvery { bookApi.createBook(any()) } returns success(null)
         // When & Then
         assertFailsWith<IllegalStateException>("Empty response body") {
-            bookDataSource.create(bookRequest)
+            bookRemoteDataSource.create(bookRequest)
         }
     }
 
@@ -236,7 +236,7 @@ internal class BookDataSourceTest {
         )
         // When & Then
         assertFailsWith<IOException>("Unsuccessful response") {
-            bookDataSource.create(bookRequest)
+            bookRemoteDataSource.create(bookRequest)
         }
     }
 

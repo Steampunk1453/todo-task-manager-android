@@ -36,7 +36,7 @@ internal class AudiovisualDataSourceTest {
     private lateinit var audiovisualApi: AudiovisualApi
 
     @InjectMockKs
-    private lateinit var audiovisualDataSource: AudiovisualDataSource
+    private lateinit var audiovisualDataSource: AudiovisualRemoteDataSource
 
     @Test
     fun `should return successful audiovisual response when create`() =
@@ -97,7 +97,7 @@ internal class AudiovisualDataSourceTest {
             coEvery { provider.getAudiovisualDataSource() } returns audiovisualApi
             coEvery { audiovisualApi.getAllAudiovisuals() } returns success(audiovisuals)
             // When
-            val response = audiovisualDataSource.getAll()
+            val response = audiovisualDataSource.findAll()
             // Then
             response shouldNotBe {null}
             response[0] shouldBe audiovisualResponse
@@ -124,7 +124,7 @@ internal class AudiovisualDataSourceTest {
             coEvery { provider.getAudiovisualDataSource() } returns audiovisualApi
             coEvery { audiovisualApi.getAudiovisual(any()) } returns success(audiovisualResponse)
             // When
-            val response = audiovisualDataSource.get(id)
+            val response = audiovisualDataSource.findById(id)
             // Then
             response shouldNotBe {null}
             response shouldBe audiovisualResponse

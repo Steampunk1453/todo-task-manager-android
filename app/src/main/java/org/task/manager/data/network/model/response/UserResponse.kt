@@ -8,10 +8,10 @@ data class UserResponse(
     val id: Long,
 
     @SerializedName("login")
-    val username: String,
+    val username: String?,
 
     @SerializedName("email")
-    val email: String,
+    val email: String?,
 
     @SerializedName("firstName")
     val firstName: String?,

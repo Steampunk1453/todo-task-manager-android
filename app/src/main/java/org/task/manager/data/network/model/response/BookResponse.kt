@@ -38,13 +38,13 @@ data class BookResponse(
     val check: Int,
 
     @SerializedName("user")
-    val userResponse: UserResponse?
+    val userResponse: UserResponse
 )
 
 fun BookResponse.toDomain(): Book = Book(id, title, author, genre, editorial, editorialUrl,
-    bookshop, bookshopUrl, startDate, deadline, check, userResponse?.toDomain()
+    bookshop, bookshopUrl, startDate, deadline, check, userResponse.toDomain()
 )
 
 fun Book.toResponse(): BookResponse = BookResponse(id, title, author, genre, editorial, editorialUrl,
-    bookshop, bookshopUrl, startDate, deadline, check, user?.toResponse()
+    bookshop, bookshopUrl, startDate, deadline, check, user.toResponse()
 )

@@ -8,7 +8,7 @@ import org.task.manager.shared.Constants.ILLEGAL_STATE_EXCEPTION_CAUSE
 import retrofit2.Response
 import java.io.IOException
 
-class BookDataSource(private val dataSourceProvider: DataSourceProvider) {
+class BookRemoteDataSource(private val dataSourceProvider: DataSourceProvider) {
 
     suspend fun create(bookRequest: BookRequest): BookResponse {
         val bookApi = dataSourceProvider.getBookDataSource()
@@ -24,7 +24,7 @@ class BookDataSource(private val dataSourceProvider: DataSourceProvider) {
         return checkAudiovisualResponse(response)
     }
 
-    suspend fun getAll(): List<BookResponse>{
+    suspend fun findAll(): List<BookResponse>{
         val bookApi = dataSourceProvider.getBookDataSource()
         val response = bookApi.getAllBooks()
 
@@ -33,7 +33,7 @@ class BookDataSource(private val dataSourceProvider: DataSourceProvider) {
         return response.body() ?: throw IllegalStateException(ILLEGAL_STATE_EXCEPTION_CAUSE)
     }
 
-    suspend fun get(id: Long): BookResponse {
+    suspend fun findById(id: Long): BookResponse {
         val bookApi = dataSourceProvider.getBookDataSource()
         val response = bookApi.getBook(id)
 
@@ -45,7 +45,7 @@ class BookDataSource(private val dataSourceProvider: DataSourceProvider) {
         bookApi.deleteBook(id)
     }
 
-    suspend fun getAllBookshops(): List<BookshopResponse>{
+    suspend fun findAllBookshops(): List<BookshopResponse>{
         val bookApi = dataSourceProvider.getBookDataSource()
         val response = bookApi.getAllBookshops()
 
@@ -54,7 +54,7 @@ class BookDataSource(private val dataSourceProvider: DataSourceProvider) {
         return response.body() ?: throw IllegalStateException(ILLEGAL_STATE_EXCEPTION_CAUSE)
     }
 
-    suspend fun getAllEditorials(): List<EditorialResponse>{
+    suspend fun findAllEditorials(): List<EditorialResponse>{
         val bookApi = dataSourceProvider.getBookDataSource()
         val response = bookApi.getAllEditorials()
 

@@ -10,6 +10,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.task.manager.data.local.source.RemoveLocalDataSource
 import org.task.manager.data.network.source.LoginDataSource
 import org.task.manager.domain.Result
 import org.task.manager.shared.Constants.ILLEGAL_STATE_EXCEPTION_CAUSE
@@ -21,14 +22,17 @@ import org.task.manager.stub.LoginResponseStub
 internal class DefaultLoginRepositoryTest {
 
     @MockK(relaxed = true)
-    private lateinit var dataSource: LoginDataSource
+    private lateinit var loginDataSource: LoginDataSource
+
+    @MockK(relaxed = true)
+    private lateinit var removeLocalDataSource: RemoveLocalDataSource
 
     @InjectMockKs
     private lateinit var loginRepository: DefaultLoginRepository
 
     @BeforeEach
     fun setup() {
-        loginRepository = DefaultLoginRepository(dataSource)
+        loginRepository = DefaultLoginRepository(loginDataSource, removeLocalDataSource)
     }
 
 
@@ -38,7 +42,7 @@ internal class DefaultLoginRepositoryTest {
         val request = LoginRequestStub.random()
         val response = LoginResponseStub.random()
         val expected = Result.Success(response)
-        coEvery { dataSource.login(any()) } returns response
+        coEvery { loginDataSource.login(any()) } returns response
         // When
         val result = loginRepository.login(request)
         // Then
@@ -54,7 +58,7 @@ internal class DefaultLoginRepositoryTest {
         val request = LoginRequestStub.random()
         val error = Throwable(ILLEGAL_STATE_EXCEPTION_CAUSE)
         val expected = Result.Error(error)
-        coEvery { dataSource.login(any()) } throws error
+        coEvery { loginDataSource.login(any()) } throws error
         // When
         val result = loginRepository.login(request)
         // Then
