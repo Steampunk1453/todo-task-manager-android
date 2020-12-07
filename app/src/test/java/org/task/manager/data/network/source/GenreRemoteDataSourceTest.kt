@@ -16,7 +16,7 @@ import retrofit2.Response
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi
-internal class GenreDataSourceTest {
+internal class GenreRemoteDataSourceTest {
 
     @MockK
     private lateinit var provider: DataSourceProvider
@@ -25,7 +25,7 @@ internal class GenreDataSourceTest {
     private lateinit var genreApi: GenreApi
 
     @InjectMockKs
-    private lateinit var genreDataSource: GenreDataSource
+    private lateinit var genreRemoteDataSource: GenreRemoteDataSource
 
     @Test
     fun `should return successful response with genres when get all`() {
@@ -37,7 +37,7 @@ internal class GenreDataSourceTest {
             coEvery { provider.getGenreDataSource() } returns genreApi
             coEvery { genreApi.getGenres() } returns Response.success(genres)
             // When
-            val response = genreDataSource.getAll()
+            val response = genreRemoteDataSource.getAll()
             // Then
             response shouldNotBe {null}
             response[0] shouldBe genreResponse

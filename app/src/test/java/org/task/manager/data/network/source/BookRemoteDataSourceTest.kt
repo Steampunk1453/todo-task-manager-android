@@ -177,7 +177,7 @@ internal class BookRemoteDataSourceTest {
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.getAllEditorials() } returns success(editorials)
             // When
-            val response = bookRemoteDataSource.getAllEditorials()
+            val response = bookRemoteDataSource.findAllEditorials()
             // Then
             response shouldNotBe {null}
             response[0] shouldBe editorialResponse
@@ -199,7 +199,7 @@ internal class BookRemoteDataSourceTest {
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.getAllBookshops() } returns success(books)
             // When
-            val response = bookRemoteDataSource.getAllBookshops()
+            val response = bookRemoteDataSource.findAllBookshops()
             // Then
             response shouldNotBe {null}
             response[0] shouldBe bookshopResponse
