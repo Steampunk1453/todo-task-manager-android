@@ -1,7 +1,10 @@
 package org.task.manager.data.di
 
+import androidx.room.Room
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
+import org.task.manager.data.local.AppDatabase
+import org.task.manager.data.local.AudiovisualLocalDataSource
 import org.task.manager.data.network.NetworkServiceFactory
 import org.task.manager.data.network.ServiceFactory
 import org.task.manager.data.network.api.AccountApi
@@ -10,7 +13,7 @@ import org.task.manager.data.network.api.BookApi
 import org.task.manager.data.network.api.GenreApi
 import org.task.manager.data.network.api.LoginApi
 import org.task.manager.data.network.source.AccountDataSource
-import org.task.manager.data.network.source.AudiovisualDataSource
+import org.task.manager.data.network.source.AudiovisualRemoteDataSource
 import org.task.manager.data.network.source.BookDataSource
 import org.task.manager.data.network.source.CalendarDataSource
 import org.task.manager.data.network.source.DataSourceProvider
@@ -31,7 +34,6 @@ import org.task.manager.domain.repository.LoginRepository
 import retrofit2.Retrofit
 
 val networkModule = module {
-
     factory { HttpLoggingInterceptor.Level.BODY }
 
     single {
@@ -42,8 +44,24 @@ val networkModule = module {
         serviceFactory
     }
 
+    single { get<Retrofit>().create(LoginApi::class.java) }
+    single { get<Retrofit>().create(AccountApi::class.java) }
+    single { get<Retrofit>().create(AudiovisualApi::class.java) }
+    single { get<Retrofit>().create(GenreApi::class.java) }
+    single { get<Retrofit>().create(BookApi::class.java) }
+}
+
+val databaseModule = module {
+    single {
+        Room.databaseBuilder(get(), AppDatabase::class.java, AppDatabase.DATABASE_NAME)
+            .build()
+    }
+    single { get<AppDatabase>().audiovisualDao() }
+}
+
+val repositoryModule = module {
     factory {
-        val dataSourceProvider: DataSourceProvider = DataSourceProvider(get())
+        val dataSourceProvider = DataSourceProvider(get())
         dataSourceProvider
     }
 
@@ -56,7 +74,7 @@ val networkModule = module {
     }
 
     single {
-        AudiovisualDataSource(get())
+        AudiovisualRemoteDataSource(get())
     }
 
     single {
@@ -95,11 +113,10 @@ val networkModule = module {
         DefaultCalendarRepository(get())
     }
 
-    single { get<Retrofit>().create(LoginApi::class.java) }
-    single { get<Retrofit>().create(AccountApi::class.java) }
-    single { get<Retrofit>().create(AudiovisualApi::class.java) }
-    single { get<Retrofit>().create(GenreApi::class.java) }
-    single { get<Retrofit>().create(BookApi::class.java) }
+    single {
+        AudiovisualLocalDataSource(get())
+    }
+
 }
 
-val dataModules = networkModule
+val dataModules = networkModule + databaseModule + repositoryModule
