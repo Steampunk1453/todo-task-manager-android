@@ -12,6 +12,6 @@ data class Book(
     val startDate: String,
     val deadline: String,
     val check: Int,
-    val user: User?
+    val user: User
 )
 
