@@ -4,7 +4,8 @@ import androidx.room.Room
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import org.task.manager.data.local.AppDatabase
-import org.task.manager.data.local.AudiovisualLocalDataSource
+import org.task.manager.data.local.source.AudiovisualLocalDataSource
+import org.task.manager.data.local.source.RemoveLocalDataSource
 import org.task.manager.data.network.NetworkServiceFactory
 import org.task.manager.data.network.ServiceFactory
 import org.task.manager.data.network.api.AccountApi
@@ -72,10 +73,11 @@ val repositoryModule = module {
     single { GenreDataSource(get()) }
     single { BookDataSource(get()) }
     single { CalendarDataSource() }
+    single { RemoveLocalDataSource(get()) }
 
-    single<LoginRepository> { DefaultLoginRepository(get()) }
+    single<LoginRepository> { DefaultLoginRepository(get(), get()) }
     single<AccountRepository> { DefaultAccountRepository(get()) }
-    single<AudiovisualRepository> { DefaultAudiovisualRepository(get()) }
+    single<AudiovisualRepository> { DefaultAudiovisualRepository(get(), get()) }
     single<GenreRepository> { DefaultGenreRepository(get()) }
     single<BookRepository> { DefaultBookRepository(get()) }
     single<CalendarRepository> { DefaultCalendarRepository(get()) }
