@@ -29,7 +29,6 @@ import org.task.manager.domain.usecase.user.password.UpdatePassword
 import org.task.manager.shared.service.SessionManagerService
 
 val modules = module {
-
     single { LoginUser(get(), get()) }
     single { LogoutUser(get()) }
     single { RegisterUser(get()) }
@@ -61,8 +60,6 @@ val modules = module {
     single { GetGenres(get()) }
 
     single { CreateCalendarEvent(get()) }
-
-
 }
 
 val domainModules = listOf(modules)

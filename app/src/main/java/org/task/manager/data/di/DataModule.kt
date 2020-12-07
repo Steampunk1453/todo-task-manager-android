@@ -65,58 +65,20 @@ val repositoryModule = module {
         dataSourceProvider
     }
 
-    single {
-        LoginDataSource(get())
-    }
+    single { LoginDataSource(get()) }
+    single { AccountDataSource(get()) }
+    single { AudiovisualRemoteDataSource(get()) }
+    single { AudiovisualLocalDataSource(get()) }
+    single { GenreDataSource(get()) }
+    single { BookDataSource(get()) }
+    single { CalendarDataSource() }
 
-    single {
-        AccountDataSource(get())
-    }
-
-    single {
-        AudiovisualRemoteDataSource(get())
-    }
-
-    single {
-        GenreDataSource(get())
-    }
-
-    single {
-        BookDataSource(get())
-    }
-
-    single {
-        CalendarDataSource()
-    }
-
-    single<LoginRepository> {
-        DefaultLoginRepository(get())
-    }
-
-    single<AccountRepository> {
-        DefaultAccountRepository(get())
-    }
-
-    single<AudiovisualRepository> {
-        DefaultAudiovisualRepository(get())
-    }
-
-    single<GenreRepository> {
-        DefaultGenreRepository(get())
-    }
-
-    single<BookRepository> {
-        DefaultBookRepository(get())
-    }
-
-    single<CalendarRepository> {
-        DefaultCalendarRepository(get())
-    }
-
-    single {
-        AudiovisualLocalDataSource(get())
-    }
-
+    single<LoginRepository> { DefaultLoginRepository(get()) }
+    single<AccountRepository> { DefaultAccountRepository(get()) }
+    single<AudiovisualRepository> { DefaultAudiovisualRepository(get()) }
+    single<GenreRepository> { DefaultGenreRepository(get()) }
+    single<BookRepository> { DefaultBookRepository(get()) }
+    single<CalendarRepository> { DefaultCalendarRepository(get()) }
 }
 
 val dataModules = networkModule + databaseModule + repositoryModule

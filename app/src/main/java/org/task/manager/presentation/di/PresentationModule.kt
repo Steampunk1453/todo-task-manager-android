@@ -15,7 +15,6 @@ import org.task.manager.presentation.user.login.LoginViewModel
 import org.task.manager.presentation.user.registration.RegistrationViewModel
 
 val module: Module = module {
-
     viewModel { LoginViewModel(get(), get()) }
     viewModel { RegistrationViewModel(get(), get()) }
     viewModel { AudiovisualViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
@@ -23,10 +22,10 @@ val module: Module = module {
     viewModel { SettingsViewModel(get(), get()) }
     viewModel { PasswordViewModel(get(), get(), get()) }
     viewModel { HomeViewModel(get(), get()) }
+
     single { DateService() }
     single { ValidatorService() }
     single { SharedViewModel() }
-
 }
 
 val presentationModules = listOf(module)
