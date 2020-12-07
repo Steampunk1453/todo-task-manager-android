@@ -6,6 +6,7 @@ import org.koin.dsl.module
 import org.task.manager.data.local.AppDatabase
 import org.task.manager.data.local.source.AudiovisualLocalDataSource
 import org.task.manager.data.local.source.BookLocalDataSource
+import org.task.manager.data.local.source.GenreLocalDataSource
 import org.task.manager.data.local.source.RemoveLocalDataSource
 import org.task.manager.data.network.NetworkServiceFactory
 import org.task.manager.data.network.ServiceFactory
@@ -19,7 +20,7 @@ import org.task.manager.data.network.source.AudiovisualRemoteDataSource
 import org.task.manager.data.network.source.BookRemoteDataSource
 import org.task.manager.data.network.source.CalendarDataSource
 import org.task.manager.data.network.source.DataSourceProvider
-import org.task.manager.data.network.source.GenreDataSource
+import org.task.manager.data.network.source.GenreRemoteDataSource
 import org.task.manager.data.network.source.LoginDataSource
 import org.task.manager.data.repository.DefaultAccountRepository
 import org.task.manager.data.repository.DefaultAudiovisualRepository
@@ -59,7 +60,12 @@ val databaseModule = module {
             .build()
     }
     single { get<AppDatabase>().audiovisualDao() }
+    single { get<AppDatabase>().titleDao() }
+    single { get<AppDatabase>().platformDao() }
     single { get<AppDatabase>().bookDao() }
+    single { get<AppDatabase>().editorialDao() }
+    single { get<AppDatabase>().bookshopDao() }
+    single { get<AppDatabase>().genreDao() }
 }
 
 val repositoryModule = module {
@@ -71,17 +77,18 @@ val repositoryModule = module {
     single { LoginDataSource(get()) }
     single { AccountDataSource(get()) }
     single { AudiovisualRemoteDataSource(get()) }
-    single { AudiovisualLocalDataSource(get()) }
-    single { GenreDataSource(get()) }
+    single { AudiovisualLocalDataSource(get(), get(), get()) }
     single { BookRemoteDataSource(get()) }
-    single { BookLocalDataSource(get()) }
+    single { BookLocalDataSource(get(), get(), get()) }
+    single { GenreRemoteDataSource(get()) }
+    single { GenreLocalDataSource(get()) }
     single { CalendarDataSource() }
-    single { RemoveLocalDataSource(get(), get()) }
+    single { RemoveLocalDataSource(get(), get(), get(), get(), get(), get(), get()) }
 
     single<LoginRepository> { DefaultLoginRepository(get(), get()) }
     single<AccountRepository> { DefaultAccountRepository(get()) }
     single<AudiovisualRepository> { DefaultAudiovisualRepository(get(), get()) }
-    single<GenreRepository> { DefaultGenreRepository(get()) }
+    single<GenreRepository> { DefaultGenreRepository(get(), get()) }
     single<BookRepository> { DefaultBookRepository(get(), get()) }
     single<CalendarRepository> { DefaultCalendarRepository(get()) }
 }

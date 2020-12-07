@@ -4,7 +4,7 @@ import org.task.manager.data.network.model.response.GenreResponse
 import org.task.manager.shared.Constants.ILLEGAL_STATE_EXCEPTION_CAUSE
 import java.io.IOException
 
-class GenreDataSource(private val dataSourceProvider: DataSourceProvider) {
+class GenreRemoteDataSource(private val dataSourceProvider: DataSourceProvider) {
 
     suspend fun getAll(): List<GenreResponse>{
         val genreApi = dataSourceProvider.getGenreDataSource()

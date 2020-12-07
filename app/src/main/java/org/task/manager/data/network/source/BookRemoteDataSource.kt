@@ -45,7 +45,7 @@ class BookRemoteDataSource(private val dataSourceProvider: DataSourceProvider) {
         bookApi.deleteBook(id)
     }
 
-    suspend fun getAllBookshops(): List<BookshopResponse>{
+    suspend fun findAllBookshops(): List<BookshopResponse>{
         val bookApi = dataSourceProvider.getBookDataSource()
         val response = bookApi.getAllBookshops()
 
@@ -54,7 +54,7 @@ class BookRemoteDataSource(private val dataSourceProvider: DataSourceProvider) {
         return response.body() ?: throw IllegalStateException(ILLEGAL_STATE_EXCEPTION_CAUSE)
     }
 
-    suspend fun getAllEditorials(): List<EditorialResponse>{
+    suspend fun findAllEditorials(): List<EditorialResponse>{
         val bookApi = dataSourceProvider.getBookDataSource()
         val response = bookApi.getAllEditorials()
 

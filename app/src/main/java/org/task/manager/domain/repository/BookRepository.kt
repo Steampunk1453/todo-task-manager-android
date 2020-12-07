@@ -11,6 +11,6 @@ interface BookRepository {
     suspend fun getAll(): List<Book>
     suspend fun get(id: Long): Book
     suspend fun remove(id: Long)
-    suspend fun getAllBookshops(): List<Bookshop>
     suspend fun getAllEditorials(): List<Editorial>
+    suspend fun getAllBookshops(): List<Bookshop>
 }
