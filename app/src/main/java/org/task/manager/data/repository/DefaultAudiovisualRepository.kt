@@ -50,11 +50,23 @@ class DefaultAudiovisualRepository(private val remoteDataSource: AudiovisualRemo
     }
 
     override suspend fun getAllTitles(): List<Title> {
-        return remoteDataSource.getAllTitles().map { it.toDomain() }
+        val titles = localDataSource.findAllTitles().map { it.toDomain() }
+        if (titles.isEmpty()) {
+            val newTitles = remoteDataSource.getAllTitles().map { it.toDomain() }
+            localDataSource.saveAllTitles(newTitles.map { it.toEntity() })
+            return newTitles
+        }
+        return titles
     }
 
     override suspend fun getAllPlatforms(): List<Platform> {
-        return remoteDataSource.getAllPlatforms().map { it.toDomain() }
+        val platforms = localDataSource.findAllPlatforms().map { it.toDomain() }
+        if (platforms.isEmpty()) {
+            val newPlatforms = remoteDataSource.getAllPlatforms().map { it.toDomain() }
+            localDataSource.saveAllPlatforms(newPlatforms.map { it.toEntity() })
+            return newPlatforms
+        }
+        return platforms
     }
 
 }

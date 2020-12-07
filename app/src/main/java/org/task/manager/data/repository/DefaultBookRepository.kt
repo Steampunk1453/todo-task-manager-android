@@ -49,16 +49,24 @@ class DefaultBookRepository(private val remoteDataSource: BookRemoteDataSource,
         localDataSource.delete(id)
     }
 
-    override suspend fun getAllBookshops(): List<Bookshop> {
-        return remoteDataSource.getAllBookshops().map {
-            it.toDomain()
+    override suspend fun getAllEditorials(): List<Editorial> {
+        val editorials = localDataSource.findAllEditorials().map { it.toDomain() }
+        if (editorials.isEmpty()) {
+            val newEditorials = remoteDataSource.findAllEditorials().map { it.toDomain() }
+            localDataSource.saveAllEditorials(newEditorials.map { it.toEntity() })
+            return newEditorials
         }
+        return editorials
     }
 
-    override suspend fun getAllEditorials(): List<Editorial> {
-        return remoteDataSource.getAllEditorials().map {
-            it.toDomain()
+    override suspend fun getAllBookshops(): List<Bookshop> {
+        val bookshops = localDataSource.findAllBookshops().map { it.toDomain() }
+        if (bookshops.isEmpty()) {
+            val newBookshops = remoteDataSource.findAllBookshops().map { it.toDomain() }
+            localDataSource.saveAllBookshops(newBookshops.map { it.toEntity() })
+            return newBookshops
         }
+        return bookshops
     }
 
 }
