@@ -1,15 +1,15 @@
 package org.task.manager.domain.usecase.user
 
-import org.task.manager.data.network.model.request.RegisterRequest
 import org.task.manager.domain.Result
+import org.task.manager.domain.model.User
 import org.task.manager.domain.model.state.RegistrationState
 import org.task.manager.domain.repository.AccountRepository
 import timber.log.Timber
 
 class RegisterUser(private val repository: AccountRepository) {
 
-    suspend fun execute(request: RegisterRequest): RegistrationState?  {
-       return when (val result = repository.register(request)) {
+    suspend fun execute(user: User): RegistrationState?  {
+       return when (val result = repository.register(user)) {
             is Result.Success -> manageSuccessResponse(result.data)
             is Result.Error -> result.throwable.message?.let {
                 manageFailedResponse(it)

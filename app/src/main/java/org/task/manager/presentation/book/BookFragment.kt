@@ -102,7 +102,7 @@ class BookFragment : Fragment(), ViewElements {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val id = books[position].id
-                bookViewModel.deleteBook(id)
+                id?.let { bookViewModel.deleteBook(it) }
                 handleDeleteBook(position)
             }
         }

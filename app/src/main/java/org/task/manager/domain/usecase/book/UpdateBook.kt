@@ -1,13 +1,12 @@
 package org.task.manager.domain.usecase.book
 
-import org.task.manager.data.network.model.request.BookRequest
 import org.task.manager.domain.model.Book
 import org.task.manager.domain.repository.BookRepository
 
 class UpdateBook(private val repository: BookRepository) {
 
-    suspend fun execute(bookRequest: BookRequest): Book {
-       return repository.update(bookRequest)
+    suspend fun execute(book: Book): Book {
+       return repository.update(book)
     }
 
 }

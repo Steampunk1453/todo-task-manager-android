@@ -33,13 +33,6 @@ class AudiovisualRemoteDataSource(private val dataSourceProvider: DataSourceProv
         return response.body() ?: throw IllegalStateException(ILLEGAL_STATE_EXCEPTION_CAUSE)
     }
 
-    suspend fun findById(id: Long): AudiovisualResponse {
-        val audiovisualApi = dataSourceProvider.getAudiovisualDataSource()
-        val response = audiovisualApi.getAudiovisual(id)
-
-        return checkAudiovisualResponse(response)
-    }
-
     suspend fun delete(id: Long) {
         val audiovisualApi = dataSourceProvider.getAudiovisualDataSource()
         audiovisualApi.deleteAudiovisual(id)

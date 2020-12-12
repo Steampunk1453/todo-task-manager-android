@@ -8,7 +8,7 @@ import org.task.manager.domain.model.User
 @Entity(tableName = "Book")
 data class BookEntity(
     @PrimaryKey
-    val id: Long,
+    val id: Long?,
     val title: String,
     val author: String,
     val genre: String,
@@ -19,18 +19,18 @@ data class BookEntity(
     val startDate: String,
     val deadline: String,
     val check: Int,
-    val userId: Long
+    val userId: Long?
 )
 
-fun BookEntity.toDomain(): Book = Book(id, title, author, genre, editorial, editorialUrl,
+fun BookEntity.toDomain(): Book = Book(
+    id, title, author, genre, editorial, editorialUrl,
     bookshop, bookshopUrl, startDate, deadline, check, toUserDomain()
 )
 
-fun BookEntity.toUserDomain(): User = User(userId, null, null, null,
-    null
-)
+fun BookEntity.toUserDomain(): User = User(userId)
 
-fun Book.toEntity(): BookEntity = BookEntity(id, title, author, genre, editorial, editorialUrl,
-    bookshop, bookshopUrl, startDate, deadline, check, user.id
+fun Book.toEntity(): BookEntity = BookEntity(
+    id, title, author, genre, editorial, editorialUrl,
+    bookshop, bookshopUrl, startDate, deadline, check, user?.id
 )
 

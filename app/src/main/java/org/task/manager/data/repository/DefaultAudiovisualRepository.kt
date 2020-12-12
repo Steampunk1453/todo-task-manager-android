@@ -3,7 +3,7 @@ package org.task.manager.data.repository
 import org.task.manager.data.local.model.toDomain
 import org.task.manager.data.local.model.toEntity
 import org.task.manager.data.local.source.AudiovisualLocalDataSource
-import org.task.manager.data.network.model.request.AudiovisualRequest
+import org.task.manager.data.network.model.request.toRequest
 import org.task.manager.data.network.model.response.toDomain
 import org.task.manager.data.network.source.AudiovisualRemoteDataSource
 import org.task.manager.domain.model.Audiovisual
@@ -15,18 +15,18 @@ class DefaultAudiovisualRepository(private val remoteDataSource: AudiovisualRemo
                                    private val localDataSource: AudiovisualLocalDataSource
 ) : AudiovisualRepository {
 
-    override suspend fun save(audiovisualRequest: AudiovisualRequest): Audiovisual {
-        val audiovisualResponse = remoteDataSource.create(audiovisualRequest)
-        val audiovisual = audiovisualResponse.toDomain()
-        localDataSource.save(audiovisual.toEntity())
-        return audiovisual
+    override suspend fun save(audiovisual: Audiovisual): Audiovisual {
+        val audiovisualResponse = remoteDataSource.create(audiovisual.toRequest())
+        val newAudiovisual = audiovisualResponse.toDomain()
+        localDataSource.save(newAudiovisual.toEntity())
+        return newAudiovisual
     }
 
-    override suspend fun update(audiovisualRequest: AudiovisualRequest): Audiovisual {
-        val audiovisualResponse = remoteDataSource.update(audiovisualRequest)
-        val audiovisual = audiovisualResponse.toDomain()
-        localDataSource.update(audiovisual.toEntity())
-        return audiovisual
+    override suspend fun update(audiovisual: Audiovisual): Audiovisual {
+        val audiovisualResponse = remoteDataSource.update(audiovisual.toRequest())
+        val updatedAudiovisual = audiovisualResponse.toDomain()
+        localDataSource.update(updatedAudiovisual.toEntity())
+        return updatedAudiovisual
     }
 
     override suspend fun getAll(): List<Audiovisual> {
@@ -37,11 +37,6 @@ class DefaultAudiovisualRepository(private val remoteDataSource: AudiovisualRemo
             return newAudiovisuals
         }
        return audiovisuals
-    }
-
-    override suspend fun get(id: Long): Audiovisual {
-        val audiovisualResponse = remoteDataSource.findById(id)
-        return audiovisualResponse.toDomain()
     }
 
     override suspend fun remove(id: Long) {

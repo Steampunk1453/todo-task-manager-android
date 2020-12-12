@@ -116,31 +116,6 @@ internal class AudiovisualDataSourceTest {
     }
 
     @Test
-    fun `should return successful response with audiovisual when found by id`() {
-        runBlockingTest {
-            // Given
-            val audiovisualResponse = AudiovisualStub.random().toResponse()
-            val id = audiovisualResponse.id
-            coEvery { provider.getAudiovisualDataSource() } returns audiovisualApi
-            coEvery { audiovisualApi.getAudiovisual(any()) } returns success(audiovisualResponse)
-            // When
-            val response = audiovisualDataSource.findById(id)
-            // Then
-            response shouldNotBe {null}
-            response shouldBe audiovisualResponse
-            response.id shouldBe audiovisualResponse.id
-            response.title shouldBe audiovisualResponse.title
-            response.genre shouldBe audiovisualResponse.genre
-            response.platform shouldBe audiovisualResponse.platform
-            response.platformUrl shouldBe audiovisualResponse.platformUrl
-            response.startDate shouldBe audiovisualResponse.startDate
-            response.deadline shouldBe audiovisualResponse.deadline
-            response.check shouldBe audiovisualResponse.check
-            response.userResponse?.id shouldBe audiovisualResponse.userResponse?.id
-        }
-    }
-
-    @Test
     fun `should delete a audiovisual found by id`() {
         runBlockingTest {
             // Given

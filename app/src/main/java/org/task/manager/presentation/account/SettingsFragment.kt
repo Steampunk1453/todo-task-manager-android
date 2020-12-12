@@ -55,9 +55,9 @@ class SettingsFragment : Fragment(), ViewElements {
                 showProgress()
                 viewModel.updateAccount(
                     username.text.toString(),
+                    email.text.toString(),
                     firstName.text.toString(),
                     lastName.text.toString(),
-                    email.text.toString(),
                 )
             } else {
                 showMessage(error)

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.task.manager.data.network.source.AccountDataSource
 import org.task.manager.domain.Result
 import org.task.manager.shared.Constants
-import org.task.manager.stub.RegisterRequestStub
+import org.task.manager.stub.UserStub
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi
@@ -36,13 +36,13 @@ internal class DefaultAccountRepositoryTest {
     @Test
     fun `should return successful result when register a user`() = runBlockingTest {
         // Given
-        val request = RegisterRequestStub.random()
+        val user = UserStub.random()
         val expected = Result.Success("OK")
         coEvery { dataSource.register(any()) } just Runs
         // When
-        val result = accountRepository.register(request)
+        val result = accountRepository.register(user)
         // Then
-        coVerify { accountRepository.register(request) }
+        coVerify { accountRepository.register(user) }
 
         result shouldBe expected
         result as Result.Success
@@ -52,14 +52,14 @@ internal class DefaultAccountRepositoryTest {
     @Test
     fun `should return result with error message when register a user`() = runBlockingTest {
         // Given
-        val request = RegisterRequestStub.random()
+        val user = UserStub.random()
         val error = Throwable(Constants.ILLEGAL_STATE_EXCEPTION_CAUSE)
         val expected = Result.Error(error)
         coEvery { dataSource.register(any()) } throws error
         // When
-        val result = accountRepository.register(request)
+        val result = accountRepository.register(user)
         // Then
-        coVerify { accountRepository.register(request) }
+        coVerify { accountRepository.register(user) }
 
         result shouldBe expected
         result as Result.Error

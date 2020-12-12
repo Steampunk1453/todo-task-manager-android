@@ -1,7 +1,7 @@
 package org.task.manager.domain.model
 
 data class Audiovisual(
-    val id: Long,
+    val id: Long?,
     val title: String,
     val genre: String,
     val platform: String,
@@ -9,6 +9,6 @@ data class Audiovisual(
     val startDate: String,
     val deadline: String,
     val check: Int,
-    val user: User
+    val user: User?
 )
 

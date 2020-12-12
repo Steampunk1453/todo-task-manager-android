@@ -5,7 +5,7 @@ import org.task.manager.domain.model.User
 
 data class UserIdRequest(
     @SerializedName("id")
-    val id: Long
+    val id: Long?
 )
 
-fun User.toRequest(): UserIdRequest = UserIdRequest(id)
+fun User.toUserIdRequest(): UserIdRequest = UserIdRequest(id)

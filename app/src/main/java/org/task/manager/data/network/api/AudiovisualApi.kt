@@ -24,9 +24,6 @@ interface AudiovisualApi {
     @GET(Constants.AUDIOVISUAL_URL)
     suspend fun getAllAudiovisuals(): Response<List<AudiovisualResponse>>
 
-    @GET(Constants.AUDIOVISUAL_URL + Constants.ID)
-    suspend fun getAudiovisual(@Path("id") id: Long): Response<AudiovisualResponse>
-
     @DELETE(Constants.AUDIOVISUAL_URL + Constants.ID)
     suspend fun deleteAudiovisual(@Path("id") id: Long): Response<Void>
 

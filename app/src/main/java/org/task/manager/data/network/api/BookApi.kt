@@ -24,9 +24,6 @@ interface BookApi {
     @GET(Constants.BOOK_URL)
     suspend fun getAllBooks(): Response<List<BookResponse>>
 
-    @GET(Constants.BOOK_URL + Constants.ID)
-    suspend fun getBook(@Path("id") id: Long): Response<BookResponse>
-
     @DELETE(Constants.BOOK_URL + Constants.ID)
     suspend fun deleteBook(@Path("id") id: Long): Response<Void>
 

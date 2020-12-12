@@ -33,13 +33,6 @@ class BookRemoteDataSource(private val dataSourceProvider: DataSourceProvider) {
         return response.body() ?: throw IllegalStateException(ILLEGAL_STATE_EXCEPTION_CAUSE)
     }
 
-    suspend fun findById(id: Long): BookResponse {
-        val bookApi = dataSourceProvider.getBookDataSource()
-        val response = bookApi.getBook(id)
-
-        return checkAudiovisualResponse(response)
-    }
-
     suspend fun delete(id: Long) {
         val bookApi = dataSourceProvider.getBookDataSource()
         bookApi.deleteBook(id)
