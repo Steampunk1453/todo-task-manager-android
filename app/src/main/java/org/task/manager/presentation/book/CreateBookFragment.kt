@@ -173,18 +173,16 @@ class CreateBookFragment : DialogFragment() {
             } else {
                 bookViewModel.createBook(
                     BookDto(
-                        null,
-                        titleText.text.toString(),
-                        authorText.text.toString(),
-                        genre,
-                        editorial,
-                        editorialUrl,
-                        bookshop,
-                        bookshopUrl,
-                        dateService.convertToInstant(startDateMilliseconds),
-                        dateService.convertToInstant(deadlineMilliseconds),
-                        if (checkBox.isChecked) TRUE else FALSE,
-                        null
+                        title = titleText.text.toString(),
+                        author = authorText.text.toString(),
+                        genre = genre,
+                        editorial = editorial,
+                        editorialUrl = editorialUrl,
+                        bookshop = bookshop,
+                        bookshopUrl = bookshopUrl,
+                        startDate = dateService.convertToInstant(startDateMilliseconds),
+                        deadline = dateService.convertToInstant(deadlineMilliseconds),
+                        check = if (checkBox.isChecked) TRUE else FALSE,
                     )
                 )
                 bookViewModel.createCalendarEvent(

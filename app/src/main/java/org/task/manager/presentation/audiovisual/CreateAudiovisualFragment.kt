@@ -156,15 +156,13 @@ class CreateAudiovisualFragment : DialogFragment() {
             } else {
                 audiovisualViewModel.createAudiovisual(
                     AudiovisualDto(
-                        null,
-                        titleText.text.toString(),
-                        genre,
-                        platform,
-                        platformUrl,
-                        dateService.convertToInstant(startDateMilliseconds),
-                        dateService.convertToInstant(deadlineMilliseconds),
-                        if (checkBox.isChecked) TRUE else FALSE,
-                        null
+                        title = titleText.text.toString(),
+                        genre = genre,
+                        platform = platform,
+                        platformUrl = platformUrl,
+                        startDate = dateService.convertToInstant(startDateMilliseconds),
+                        deadline = dateService.convertToInstant(deadlineMilliseconds),
+                        check = if (checkBox.isChecked) TRUE else FALSE,
                     )
                 )
                 audiovisualViewModel.createCalendarEvent(
