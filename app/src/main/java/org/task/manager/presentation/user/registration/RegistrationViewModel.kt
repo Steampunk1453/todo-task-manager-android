@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.task.manager.data.network.model.request.RegisterRequest
+import org.task.manager.domain.model.User
 import org.task.manager.domain.model.state.RegistrationState
 import org.task.manager.domain.usecase.user.ActivateUser
 import org.task.manager.domain.usecase.user.RegisterUser
@@ -20,9 +20,11 @@ class RegistrationViewModel(private val registerUser: RegisterUser,
 
     fun createAccount(username: String, email: String, password: String) {
         val langKey = Locale.getDefault().language
-        val registerRequest = RegisterRequest(username, email, password, langKey)
+        val registeredUser = User(username = username, email = email, password = password,
+            langKey = langKey
+        )
         coroutineScope.launch {
-            val registrationResponse = registerUser.execute(registerRequest)
+            val registrationResponse = registerUser.execute(registeredUser)
             registrationState.postValue(registrationResponse)
         }
     }

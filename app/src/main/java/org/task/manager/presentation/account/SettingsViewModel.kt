@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.task.manager.data.network.model.request.UserRequest
 import org.task.manager.domain.model.User
 import org.task.manager.domain.model.state.AccountState
 import org.task.manager.domain.usecase.user.GetUser
@@ -27,11 +26,13 @@ class SettingsViewModel(private val getUser: GetUser,
         }
     }
 
-    fun updateAccount(username: String, firstName: String, lastName: String, email: String) {
+    fun updateAccount(username: String, email: String, firstName: String, lastName: String) {
         val langKey = Locale.getDefault().language
-        val userRequest = UserRequest(username, firstName, lastName, email, langKey)
+        val updatedUser = User(username = username, email = email, langKey = langKey,
+            firstName = firstName, lastName = lastName
+        )
         coroutineScope.launch {
-            val updateAccountResponse = updateUser.execute(userRequest)
+            val updateAccountResponse = updateUser.execute(updatedUser)
             updateAccountState.postValue(updateAccountResponse)
         }
     }
