@@ -16,16 +16,16 @@ data class CalendarItem(
     val startDate: String,
     val endDate: String,
     val itemType: ItemType,
-    val audiovisual: Audiovisual?,
-    val book: Book?,
+    val audiovisual: Audiovisual? = null,
+    val book: Book? = null,
     @ColorRes val color: Int,
     @DrawableRes val icon: Int,
 )
 
 fun Audiovisual.toCalendar(audiovisual: Audiovisual): CalendarItem = CalendarItem(title, startDate,
-    deadline, ItemType.AUDIOVISUAL, audiovisual, null, BLUE_COLOR, VIDEO_ICON
+    deadline, ItemType.AUDIOVISUAL, audiovisual, color = BLUE_COLOR, icon = VIDEO_ICON
 )
 
 fun Book.toCalendar(book: Book): CalendarItem = CalendarItem(title, startDate, deadline,
-    ItemType.BOOK, null, book, TEAL_COLOR, BOOK_ICON
+    ItemType.BOOK, book = book, color = TEAL_COLOR, icon = BOOK_ICON
 )
