@@ -8,4 +8,4 @@ data class UserIdRequest(
     val id: Long?
 )
 
-fun User.toIdRequest(): UserIdRequest = UserIdRequest(id)
+fun User.toUserIdRequest(): UserIdRequest = UserIdRequest(id)
