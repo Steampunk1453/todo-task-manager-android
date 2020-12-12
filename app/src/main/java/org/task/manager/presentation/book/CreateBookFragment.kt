@@ -155,31 +155,37 @@ class CreateBookFragment : DialogFragment() {
 
             if (binding.bookId.tag != null) {
                 bookViewModel.updateBook(
-                    binding.bookId.tag.toString().toLong(),
-                    titleText.text.toString(),
-                    authorText.text.toString(),
-                    genre,
-                    editorial,
-                    editorialUrl,
-                    bookshop,
-                    bookshopUrl,
-                    startDateMilliseconds,
-                    deadlineMilliseconds,
-                    if (checkBox.isChecked) TRUE else FALSE,
-                    binding.userId.tag.toString().toLong()
+                    BookDto(
+                        binding.bookId.tag.toString().toLong(),
+                        titleText.text.toString(),
+                        authorText.text.toString(),
+                        genre,
+                        editorial,
+                        editorialUrl,
+                        bookshop,
+                        bookshopUrl,
+                        dateService.convertToInstant(startDateMilliseconds),
+                        dateService.convertToInstant(deadlineMilliseconds),
+                        if (checkBox.isChecked) TRUE else FALSE,
+                        binding.userId.tag.toString().toLong()
+                    )
                 )
             } else {
                 bookViewModel.createBook(
-                    titleText.text.toString(),
-                    authorText.text.toString(),
-                    genre,
-                    editorial,
-                    editorialUrl,
-                    bookshop,
-                    bookshopUrl,
-                    startDateMilliseconds,
-                    deadlineMilliseconds,
-                    if (checkBox.isChecked) TRUE else FALSE
+                    BookDto(
+                        null,
+                        titleText.text.toString(),
+                        authorText.text.toString(),
+                        genre,
+                        editorial,
+                        editorialUrl,
+                        bookshop,
+                        bookshopUrl,
+                        dateService.convertToInstant(startDateMilliseconds),
+                        dateService.convertToInstant(deadlineMilliseconds),
+                        if (checkBox.isChecked) TRUE else FALSE,
+                        null
+                    )
                 )
                 bookViewModel.createCalendarEvent(
                     startDateMilliseconds,

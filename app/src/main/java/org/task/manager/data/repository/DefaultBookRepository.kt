@@ -3,7 +3,7 @@ package org.task.manager.data.repository
 import org.task.manager.data.local.model.toDomain
 import org.task.manager.data.local.model.toEntity
 import org.task.manager.data.local.source.BookLocalDataSource
-import org.task.manager.data.network.model.request.BookRequest
+import org.task.manager.data.network.model.request.toRequest
 import org.task.manager.data.network.model.response.toDomain
 import org.task.manager.data.network.source.BookRemoteDataSource
 import org.task.manager.domain.model.Book
@@ -15,18 +15,18 @@ class DefaultBookRepository(private val remoteDataSource: BookRemoteDataSource,
                             private val localDataSource: BookLocalDataSource
 ) : BookRepository {
 
-    override suspend fun save(bookRequest: BookRequest): Book {
-        val bookResponse = remoteDataSource.create(bookRequest)
-        val book = bookResponse.toDomain()
-        localDataSource.save(book.toEntity())
+    override suspend fun save(book: Book): Book {
+        val bookResponse = remoteDataSource.create(book.toRequest())
+        val newBook = bookResponse.toDomain()
+        localDataSource.save(newBook.toEntity())
         return book
     }
 
-    override suspend fun update(bookRequest: BookRequest): Book {
-        val bookResponse = remoteDataSource.update(bookRequest)
-        val book = bookResponse.toDomain()
-        localDataSource.update(book.toEntity())
-        return book
+    override suspend fun update(book: Book): Book {
+        val bookResponse = remoteDataSource.update(book.toRequest())
+        val updatedBook = bookResponse.toDomain()
+        localDataSource.update(updatedBook.toEntity())
+        return updatedBook
     }
 
     override suspend fun getAll(): List<Book> {
@@ -37,11 +37,6 @@ class DefaultBookRepository(private val remoteDataSource: BookRemoteDataSource,
             return newBooks
         }
         return books
-    }
-
-    override suspend fun get(id: Long): Book {
-        val bookResponse = remoteDataSource.findById(id)
-        return bookResponse.toDomain()
     }
 
     override suspend fun remove(id: Long) {

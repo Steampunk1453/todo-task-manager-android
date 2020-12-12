@@ -1,7 +1,7 @@
 package org.task.manager.domain.model
 
 data class Book(
-    val id: Long,
+    val id: Long?,
     val title: String,
     val author: String,
     val genre: String,
@@ -12,6 +12,6 @@ data class Book(
     val startDate: String,
     val deadline: String,
     val check: Int,
-    val user: User
+    val user: User?
 )
 

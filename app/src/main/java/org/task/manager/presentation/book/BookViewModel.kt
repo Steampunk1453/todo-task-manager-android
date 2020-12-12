@@ -1,16 +1,12 @@
 package org.task.manager.presentation.book
 
 import android.content.Intent
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import org.task.manager.data.network.model.request.BookRequest
-import org.task.manager.data.network.model.request.UserIdRequest
 import org.task.manager.domain.model.Book
 import org.task.manager.domain.model.Bookshop
 import org.task.manager.domain.model.CalendarEvent
@@ -25,7 +21,6 @@ import org.task.manager.domain.usecase.book.GetEditorials
 import org.task.manager.domain.usecase.book.UpdateBook
 import org.task.manager.domain.usecase.calendar.CreateCalendarEvent
 import org.task.manager.domain.usecase.shared.GetGenres
-import org.task.manager.presentation.shared.DateService
 
 
 class BookViewModel(
@@ -36,7 +31,6 @@ class BookViewModel(
     private val getGenres: GetGenres,
     private val getBookshops: GetBookshops,
     private val getEditorials: GetEditorials,
-    private val dateService: DateService,
     private val createCalendarEvent: CreateCalendarEvent
 ) : ViewModel() {
 
@@ -57,63 +51,19 @@ class BookViewModel(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun createBook(
-        title: String, author: String, genre: String, editorial: String, editorialUrl: String,
-        bookshop: String, bookshopUrl: String, startDate: Long, deadline: Long, check: Int
-    ) {
-        val bookRequest = BookRequest(
-            null,
-            title,
-            author,
-            genre,
-            editorial,
-            editorialUrl,
-            bookshop,
-            bookshopUrl,
-            dateService.convertToInstant(startDate),
-            dateService.convertToInstant(deadline),
-            check,
-            null
-        )
+    fun createBook(bookDto: BookDto) {
+        val newBook = bookDto.toDomain()
         coroutineScope.launch {
-            val bookCreateResult = createBook.execute(bookRequest)
+            val bookCreateResult = createBook.execute(newBook)
             book.postValue(bookCreateResult)
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun updateBook(
-        id: Long,
-        title: String,
-        author: String,
-        genre: String,
-        editorial: String,
-        editorialUrl: String,
-        bookshop: String,
-        bookshopUrl: String,
-        startDate: Long,
-        deadline: Long,
-        check: Int,
-        userId: Long
-    ) {
-        val bookRequest = BookRequest(
-            id,
-            title,
-            author,
-            genre,
-            editorial,
-            editorialUrl,
-            bookshop,
-            bookshopUrl,
-            dateService.convertToInstant(startDate),
-            dateService.convertToInstant(deadline),
-            check,
-            UserIdRequest(userId)
-        )
+    fun updateBook(bookDto: BookDto) {
+        val updatedBook = bookDto.toDomain()
         coroutineScope.launch {
-            val audiovisualUpdateResult = updateBook.execute(bookRequest)
-            book.postValue(audiovisualUpdateResult)
+            val bookUpdatedResult = updateBook.execute(updatedBook)
+            book.postValue(bookUpdatedResult)
         }
     }
 

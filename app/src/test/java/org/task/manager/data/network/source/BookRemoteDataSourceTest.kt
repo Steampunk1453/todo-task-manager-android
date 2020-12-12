@@ -125,35 +125,6 @@ internal class BookRemoteDataSourceTest {
     }
 
     @Test
-    fun `should return successful response with book when found by id`() {
-        runBlockingTest {
-            // Given
-            val bookResponse = BookStub.random().toResponse()
-            val id = bookResponse.id
-            coEvery { provider.getBookDataSource() } returns bookApi
-            coEvery { bookApi.getBook(any()) } returns success(bookResponse)
-            // When
-            val response = bookRemoteDataSource.findById(id)
-            // Then
-            response shouldNotBe {null}
-            response shouldNotBe {null}
-            response shouldBe bookResponse
-            response.id shouldBe bookResponse.id
-            response.title shouldBe bookResponse.title
-            response.author shouldBe bookResponse.author
-            response.genre shouldBe bookResponse.genre
-            response.editorial shouldBe bookResponse.editorial
-            response.editorialUrl shouldBe bookResponse.editorialUrl
-            response.bookshop shouldBe bookResponse.bookshop
-            response.bookshopUrl shouldBe bookResponse.bookshopUrl
-            response.startDate shouldBe bookResponse.startDate
-            response.deadline shouldBe bookResponse.deadline
-            response.check shouldBe bookResponse.check
-            response.userResponse?.id shouldBe bookResponse.userResponse?.id
-        }
-    }
-
-    @Test
     fun `should delete a book found by id`() {
         runBlockingTest {
             // Given
