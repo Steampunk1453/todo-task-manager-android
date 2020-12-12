@@ -8,7 +8,7 @@ import org.task.manager.domain.model.User
 @Entity(tableName = "Audiovisual")
 data class AudiovisualEntity(
     @PrimaryKey
-    val id: Long,
+    val id: Long?,
     val title: String,
     val genre: String,
     val platform: String,
@@ -16,7 +16,7 @@ data class AudiovisualEntity(
     val startDate: String,
     val deadline: String,
     val check: Int,
-    val userId: Long
+    val userId: Long?
 )
 
 fun AudiovisualEntity.toDomain(): Audiovisual = Audiovisual(id, title, genre, platform, platformUrl,
@@ -28,5 +28,5 @@ fun AudiovisualEntity.toUserDomain(): User = User(userId, null, null, null,
 )
 
 fun Audiovisual.toEntity(): AudiovisualEntity = AudiovisualEntity(id, title, genre, platform, platformUrl,
-    startDate, deadline, check, user.id
+    startDate, deadline, check, user?.id
 )

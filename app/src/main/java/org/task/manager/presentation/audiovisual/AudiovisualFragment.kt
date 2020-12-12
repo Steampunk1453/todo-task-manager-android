@@ -103,7 +103,7 @@ class AudiovisualFragment : Fragment(), ViewElements {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val id = audiovisuals[position].id
-                audiovisualViewModel.deleteAudiovisual(id)
+                id?.let { audiovisualViewModel.deleteAudiovisual(it) }
                 handleDeleteAudiovisual(position)
             }
         }

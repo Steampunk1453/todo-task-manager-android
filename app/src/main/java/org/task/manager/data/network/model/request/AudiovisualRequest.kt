@@ -32,7 +32,7 @@ data class AudiovisualRequest(
     val userIdRequest: UserIdRequest?
 )
 
-fun Audiovisual.toRequest(): AudiovisualRequest = AudiovisualRequest(null, title, genre, platform,
+fun Audiovisual.toRequest(): AudiovisualRequest = AudiovisualRequest(id, title, genre, platform,
     platformUrl, startDate, deadline, check, user?.toRequest()
 )
 

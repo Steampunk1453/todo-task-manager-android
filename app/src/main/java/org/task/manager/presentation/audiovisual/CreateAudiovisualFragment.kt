@@ -44,9 +44,12 @@ class CreateAudiovisualFragment : DialogFragment() {
     private lateinit var platform: String
     private lateinit var platformUrl: String
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_audiovisual, container,
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_create_audiovisual, container,
             false
         )
         navController = findNavController()
@@ -138,26 +141,31 @@ class CreateAudiovisualFragment : DialogFragment() {
 
             if (binding.audiovisualId.tag != null) {
                 audiovisualViewModel.updateAudiovisual(
-                    binding.audiovisualId.tag.toString().toLong(),
-                    titleText.text.toString(),
-                    genre,
-                    platform,
-                    platformUrl,
-                    startDateMilliseconds,
-                    deadlineMilliseconds,
-                    if (checkBox.isChecked) TRUE else FALSE,
-                    binding.userId.tag.toString().toLong()
+                    AudiovisualDto(
+                        binding.audiovisualId.tag.toString().toLong(),
+                        titleText.text.toString(),
+                        genre,
+                        platform,
+                        platformUrl,
+                        dateService.convertToInstant(startDateMilliseconds),
+                        dateService.convertToInstant(deadlineMilliseconds),
+                        if (checkBox.isChecked) TRUE else FALSE,
+                        binding.userId.tag.toString().toLong()
+                    )
                 )
-            }
-            else {
+            } else {
                 audiovisualViewModel.createAudiovisual(
-                    titleText.text.toString(),
-                    genre,
-                    platform,
-                    platformUrl,
-                    startDateMilliseconds,
-                    deadlineMilliseconds,
-                    if (checkBox.isChecked) TRUE else FALSE
+                    AudiovisualDto(
+                        null,
+                        titleText.text.toString(),
+                        genre,
+                        platform,
+                        platformUrl,
+                        dateService.convertToInstant(startDateMilliseconds),
+                        dateService.convertToInstant(deadlineMilliseconds),
+                        if (checkBox.isChecked) TRUE else FALSE,
+                        null
+                    )
                 )
                 audiovisualViewModel.createCalendarEvent(
                     startDateMilliseconds,
@@ -272,9 +280,11 @@ class CreateAudiovisualFragment : DialogFragment() {
         return platformsDropdown
     }
 
-    private fun addPlatformsItemSelectEvent(platformsDropdown: AutoCompleteTextView,
-                                            platforms: List<Platform>) {
-        platformsDropdown.setOnItemClickListener { adapterView, _, pos, _  ->
+    private fun addPlatformsItemSelectEvent(
+        platformsDropdown: AutoCompleteTextView,
+        platforms: List<Platform>
+    ) {
+        platformsDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
             platform = adapterView.getItemAtPosition(pos).toString()
             platformUrl = platforms[pos].url
         }
@@ -288,8 +298,10 @@ class CreateAudiovisualFragment : DialogFragment() {
         return builder
     }
 
-    private fun isSaveEnabled(isTitleFilled: Boolean, isStartDateFilled: Boolean,
-                              isDeadlineFilled: Boolean) {
+    private fun isSaveEnabled(
+        isTitleFilled: Boolean, isStartDateFilled: Boolean,
+        isDeadlineFilled: Boolean
+    ) {
         save.isEnabled = isTitleFilled && isStartDateFilled && isDeadlineFilled
     }
 

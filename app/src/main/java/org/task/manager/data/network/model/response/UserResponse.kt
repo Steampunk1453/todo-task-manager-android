@@ -5,7 +5,7 @@ import org.task.manager.domain.model.User
 
 data class UserResponse(
     @SerializedName("id")
-    val id: Long,
+    val id: Long?,
 
     @SerializedName("login")
     val username: String?,
