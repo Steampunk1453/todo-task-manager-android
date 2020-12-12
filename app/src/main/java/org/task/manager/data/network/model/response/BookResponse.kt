@@ -41,10 +41,12 @@ data class BookResponse(
     val userResponse: UserResponse?
 )
 
-fun BookResponse.toDomain(): Book = Book(id, title, author, genre, editorial, editorialUrl,
+fun BookResponse.toDomain(): Book = Book(
+    id, title, author, genre, editorial, editorialUrl,
     bookshop, bookshopUrl, startDate, deadline, check, userResponse?.toDomain()
 )
 
-fun Book.toResponse(): BookResponse = BookResponse(id, title, author, genre, editorial, editorialUrl,
+fun Book.toResponse(): BookResponse = BookResponse(
+    id, title, author, genre, editorial, editorialUrl,
     bookshop, bookshopUrl, startDate, deadline, check, user?.toResponse()
 )

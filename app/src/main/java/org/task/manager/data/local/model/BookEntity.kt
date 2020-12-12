@@ -22,15 +22,15 @@ data class BookEntity(
     val userId: Long?
 )
 
-fun BookEntity.toDomain(): Book = Book(id, title, author, genre, editorial, editorialUrl,
+fun BookEntity.toDomain(): Book = Book(
+    id, title, author, genre, editorial, editorialUrl,
     bookshop, bookshopUrl, startDate, deadline, check, toUserDomain()
 )
 
-fun BookEntity.toUserDomain(): User = User(userId, null, null, null,
-    null
-)
+fun BookEntity.toUserDomain(): User = User(userId)
 
-fun Book.toEntity(): BookEntity = BookEntity(id, title, author, genre, editorial, editorialUrl,
+fun Book.toEntity(): BookEntity = BookEntity(
+    id, title, author, genre, editorial, editorialUrl,
     bookshop, bookshopUrl, startDate, deadline, check, user?.id
 )
 

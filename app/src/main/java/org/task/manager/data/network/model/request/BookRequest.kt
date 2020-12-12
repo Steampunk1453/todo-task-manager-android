@@ -41,6 +41,7 @@ data class BookRequest(
     val userIdRequest: UserIdRequest?
 )
 
-fun Book.toRequest(): BookRequest = BookRequest(id, title, author, genre, editorial,
-    editorialUrl, bookshop, bookshopUrl, startDate, deadline, check, user?.toRequest()
+fun Book.toIdRequest(): BookRequest = BookRequest(
+    id, title, author, genre, editorial,
+    editorialUrl, bookshop, bookshopUrl, startDate, deadline, check, user?.toIdRequest()
 )

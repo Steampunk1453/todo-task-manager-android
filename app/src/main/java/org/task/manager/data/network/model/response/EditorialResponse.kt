@@ -14,7 +14,6 @@ data class EditorialResponse(
     val url: String
 )
 
-
 fun EditorialResponse.toDomain(): Editorial = Editorial(id, name, url)
 
 

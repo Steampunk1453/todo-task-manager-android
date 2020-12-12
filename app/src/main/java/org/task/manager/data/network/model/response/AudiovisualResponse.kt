@@ -32,11 +32,13 @@ data class AudiovisualResponse(
     val userResponse: UserResponse?
 )
 
-fun AudiovisualResponse.toDomain(): Audiovisual = Audiovisual(id, title, genre, platform, platformUrl,
+fun AudiovisualResponse.toDomain(): Audiovisual = Audiovisual(
+    id, title, genre, platform, platformUrl,
     startDate, deadline, check, userResponse?.toDomain()
 )
 
-fun Audiovisual.toResponse(): AudiovisualResponse = AudiovisualResponse(id, title, genre, platform, platformUrl,
+fun Audiovisual.toResponse(): AudiovisualResponse = AudiovisualResponse(
+    id, title, genre, platform, platformUrl,
     startDate, deadline, check, user?.toResponse()
 )
 

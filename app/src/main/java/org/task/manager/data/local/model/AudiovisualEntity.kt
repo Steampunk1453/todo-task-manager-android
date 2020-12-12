@@ -19,14 +19,15 @@ data class AudiovisualEntity(
     val userId: Long?
 )
 
-fun AudiovisualEntity.toDomain(): Audiovisual = Audiovisual(id, title, genre, platform, platformUrl,
+fun AudiovisualEntity.toDomain(): Audiovisual = Audiovisual(
+    id, title, genre, platform, platformUrl,
     startDate, deadline, check, toUserDomain()
 )
 
-fun AudiovisualEntity.toUserDomain(): User = User(userId, null, null, null,
-    null
-)
+fun AudiovisualEntity.toUserDomain(): User = User(userId)
 
-fun Audiovisual.toEntity(): AudiovisualEntity = AudiovisualEntity(id, title, genre, platform, platformUrl,
+
+fun Audiovisual.toEntity(): AudiovisualEntity = AudiovisualEntity(
+    id, title, genre, platform, platformUrl,
     startDate, deadline, check, user?.id
 )
