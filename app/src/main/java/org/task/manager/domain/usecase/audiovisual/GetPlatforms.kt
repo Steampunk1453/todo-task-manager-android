@@ -19,7 +19,7 @@ class GetPlatforms(private val repository: AudiovisualRepository) {
         return result
     }
 
-    private fun handleFailedResult(error: String): List<Platform>? {
+    private fun handleFailedResult(error: String): List<Platform> {
         Timber.e("Invalid get platforms: %s", error)
         return listOf()
     }

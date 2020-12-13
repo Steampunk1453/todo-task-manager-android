@@ -69,7 +69,6 @@ class DefaultAudiovisualRepository(private val remoteDataSource: AudiovisualRemo
         } catch (ex: Throwable) {
             Result.Error(ex)
         }
-
     }
 
     override suspend fun getAllPlatforms(): Result<List<Platform>> {
@@ -84,7 +83,6 @@ class DefaultAudiovisualRepository(private val remoteDataSource: AudiovisualRemo
         } catch (ex: Throwable) {
             Result.Error(ex)
         }
-
     }
 
 }

@@ -19,7 +19,7 @@ class GetTitles(private val repository: AudiovisualRepository) {
         return result
     }
 
-    private fun handleFailedResult(error: String): List<Title>? {
+    private fun handleFailedResult(error: String): List<Title> {
         Timber.e("Invalid get titles: %s", error)
         return listOf()
     }
