@@ -17,14 +17,12 @@ class LoginUser(private val repository: LoginRepository,
 
     suspend fun execute(request: LoginRequest): AuthenticationResult? {
        return when (val result = repository.login(request)) {
-            is Result.Success -> manageSuccessfulResponse(result.data)
-            is Result.Error -> result.throwable.message?.let {
-                manageFailedResponse(it)
-            }
+            is Result.Success -> handleSuccessResponse(result.data)
+            is Result.Error -> result.throwable.message?.let { handleFailedResponse(it) }
         }
     }
 
-    private fun manageSuccessfulResponse(loginResponse: LoginResponse): AuthenticationResult {
+    private fun handleSuccessResponse(loginResponse: LoginResponse): AuthenticationResult {
         saveToken(loginResponse.authToken)
         Timber.d(SUCCESSFUL_AUTHENTICATION)
         return AuthenticationResult(
@@ -32,7 +30,7 @@ class LoginUser(private val repository: LoginRepository,
         )
     }
 
-    private fun manageFailedResponse(error: String): AuthenticationResult {
+    private fun handleFailedResponse(error: String): AuthenticationResult {
         Timber.e("Invalid Authentication: %s", error)
         return AuthenticationResult(
             AuthenticationState.INVALID_AUTHENTICATION, error

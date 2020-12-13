@@ -61,7 +61,7 @@ class LoginFragment : Fragment(), ViewElements {
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showProgress() {

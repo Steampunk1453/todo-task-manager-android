@@ -32,9 +32,13 @@ class DefaultAccountRepository(private val dataSource: AccountDataSource) : Acco
         }
     }
 
-    override suspend fun get(): User {
-        val userResponse = dataSource.get()
-        return userResponse.toDomain()
+    override suspend fun get(): Result<User> {
+        return try {
+            val userResponse = dataSource.get()
+            Result.Success(userResponse.toDomain())
+        }  catch (ex: Throwable) {
+            Result.Error(ex)
+        }
     }
 
     override suspend fun save(user: User): Result<String> {

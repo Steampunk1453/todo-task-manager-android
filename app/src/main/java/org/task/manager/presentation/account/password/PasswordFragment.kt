@@ -1,9 +1,11 @@
 package org.task.manager.presentation.account.password
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
@@ -55,6 +57,7 @@ class PasswordFragment : Fragment(), ViewElements {
             } else {
                 showMessage(error)
             }
+            binding.root.hideKeyboard()
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             navController.navigate(R.id.fragment_home)
@@ -66,7 +69,7 @@ class PasswordFragment : Fragment(), ViewElements {
     private fun observeViewModel() {
         viewModel.updatePasswordState.observe(viewLifecycleOwner, {
             when (it) {
-                AccountState.UPDATE_COMPLETED -> showMessage(CHANGED_PASSWORD_MESSAGE)
+                AccountState.UPDATE_COMPLETED -> manageUpdateComplete()
                 AccountState.INVALID_UPDATE -> showMessage(INCORRECT_PASSWORD_ERROR_MESSAGE)
                 AccountState.UPDATING -> showMessage(UPDATING_PASSWORD_MESSAGE)
             }
@@ -83,6 +86,16 @@ class PasswordFragment : Fragment(), ViewElements {
 
     override fun hideProgress() {
         progressBar.hide()
+    }
+
+    private fun manageUpdateComplete() {
+        showMessage(CHANGED_PASSWORD_MESSAGE)
+        navController.navigate(R.id.fragment_home)
+    }
+
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
 }
