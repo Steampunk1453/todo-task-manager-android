@@ -19,7 +19,7 @@ class GetAudiovisuals(private val repository: AudiovisualRepository) {
         return result
     }
 
-    private fun handleFailedResult(error: String): List<Audiovisual>? {
+    private fun handleFailedResult(error: String): List<Audiovisual> {
         Timber.e("Invalid get all audiovisuals: %s", error)
         return listOf()
     }
