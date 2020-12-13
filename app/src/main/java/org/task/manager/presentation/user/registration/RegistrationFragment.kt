@@ -1,9 +1,11 @@
 package org.task.manager.presentation.user.registration
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
@@ -62,6 +64,7 @@ class RegistrationFragment : Fragment(), ViewElements {
             } else {
                 showMessage(error)
             }
+            binding.root.hideKeyboard()
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -73,7 +76,7 @@ class RegistrationFragment : Fragment(), ViewElements {
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showProgress() {
@@ -109,6 +112,11 @@ class RegistrationFragment : Fragment(), ViewElements {
         if (!isValidPassword) return Pair(isValidPassword, passwordErrorMessage)
 
         return Pair(true, "")
+    }
+
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
 }

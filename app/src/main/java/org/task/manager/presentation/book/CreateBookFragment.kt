@@ -1,11 +1,13 @@
 package org.task.manager.presentation.book
 
+import android.content.Context
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.annotation.RequiresApi
@@ -247,6 +249,7 @@ class CreateBookFragment : DialogFragment() {
     private fun addGenresItemSelectEvent(genresDropdown: AutoCompleteTextView) {
         genresDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
             genre = adapterView.getItemAtPosition(pos).toString()
+            binding.root.hideKeyboard()
         }
     }
 
@@ -280,6 +283,7 @@ class CreateBookFragment : DialogFragment() {
         editorialsDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
             editorial = adapterView.getItemAtPosition(pos).toString()
             editorialUrl = editorials[pos].url
+            binding.root.hideKeyboard()
         }
     }
 
@@ -313,6 +317,7 @@ class CreateBookFragment : DialogFragment() {
         bookshopDropdown.setOnItemClickListener { adapterView, _, pos, _ ->
             bookshop = adapterView.getItemAtPosition(pos).toString()
             bookshopUrl = bookshops[pos].url
+            binding.root.hideKeyboard()
         }
     }
 
@@ -330,5 +335,11 @@ class CreateBookFragment : DialogFragment() {
     ) {
         save.isEnabled = isTitleFilled && isStartDateFilled && isDeadlineFilled
     }
+
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
 
 }
