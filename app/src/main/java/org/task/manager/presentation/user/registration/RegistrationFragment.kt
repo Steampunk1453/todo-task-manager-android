@@ -39,7 +39,7 @@ class RegistrationFragment : Fragment(), ViewElements {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false)
         navController = findNavController()
