@@ -8,18 +8,11 @@ open class LoginResponseStub {
 
         fun random(
             statusCode: Int = 201,
-            authToken: String = getRandomString(36)
+            authToken: String = RandomGenerator.getString(),
         ) = LoginResponse(
             statusCode,
             authToken,
         )
     }
 
-}
-
-private fun getRandomString(length: Int): String {
-    val allowedChars = ('A'..'Z') + ('a'..'z')
-    return (1..length)
-        .map { allowedChars.random() }
-        .joinToString("")
 }
