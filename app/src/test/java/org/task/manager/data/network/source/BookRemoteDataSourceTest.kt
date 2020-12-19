@@ -49,7 +49,7 @@ internal class BookRemoteDataSourceTest {
             // When
             val response = bookRemoteDataSource.create(bookRequest)
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response shouldBe bookResponse
             response.id shouldBe bookResponse.id
             response.title shouldBe bookResponse.title
@@ -76,7 +76,7 @@ internal class BookRemoteDataSourceTest {
             // When
             val response = bookRemoteDataSource.update(bookRequest)
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response shouldBe bookResponse
             response.id shouldBe bookResponse.id
             response.title shouldBe bookResponse.title
@@ -105,7 +105,7 @@ internal class BookRemoteDataSourceTest {
             // When
             val response = bookRemoteDataSource.findAll()
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response[0] shouldBe bookResponse
             response[0].id shouldBe bookResponse.id
             response[0].title shouldBe bookResponse.title
@@ -150,7 +150,7 @@ internal class BookRemoteDataSourceTest {
             // When
             val response = bookRemoteDataSource.findAllEditorials()
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response[0] shouldBe editorialResponse
             response[0].id shouldBe editorialResponse.id
             response[0].name shouldBe editorialResponse.name
@@ -172,7 +172,7 @@ internal class BookRemoteDataSourceTest {
             // When
             val response = bookRemoteDataSource.findAllBookshops()
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response[0] shouldBe bookshopResponse
             response[0].id shouldBe bookshopResponse.id
             response[0].name shouldBe bookshopResponse.name

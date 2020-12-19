@@ -49,7 +49,7 @@ internal class AudiovisualDataSourceTest {
             // When
             val response = audiovisualDataSource.create(audiovisualRequest)
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response shouldBe audiovisualResponse
             response.id shouldBe audiovisualResponse.id
             response.title shouldBe audiovisualResponse.title
@@ -73,7 +73,7 @@ internal class AudiovisualDataSourceTest {
             // When
             val response = audiovisualDataSource.update(audiovisualRequest)
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response shouldBe audiovisualResponse
             response.id shouldBe audiovisualResponse.id
             response.title shouldBe audiovisualResponse.title
@@ -99,7 +99,7 @@ internal class AudiovisualDataSourceTest {
             // When
             val response = audiovisualDataSource.findAll()
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response[0] shouldBe audiovisualResponse
             response[0].id shouldBe audiovisualResponse.id
             response[0].title shouldBe audiovisualResponse.title
@@ -141,7 +141,7 @@ internal class AudiovisualDataSourceTest {
             // When
             val response = audiovisualDataSource.getAllTitles()
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response[0] shouldBe titleResponse
             response[0].id shouldBe titleResponse.id
             response[0].name shouldBe titleResponse.name
@@ -163,7 +163,7 @@ internal class AudiovisualDataSourceTest {
             // When
             val response = audiovisualDataSource.getAllPlatforms()
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response[0] shouldBe platformResponse
             response[0].id shouldBe platformResponse.id
             response[0].name shouldBe platformResponse.name
@@ -176,7 +176,7 @@ internal class AudiovisualDataSourceTest {
     }
 
     @Test
-    fun `should return empty body in response and throws exception when when create audiovisual`() = runBlockingTest {
+    fun `should return empty body in response and throws exception when create audiovisual`() = runBlockingTest {
         // Given
         val audiovisualRequest = AudiovisualStub.random().toRequest()
         every { provider.getAudiovisualDataSource() } returns audiovisualApi
@@ -188,7 +188,7 @@ internal class AudiovisualDataSourceTest {
     }
 
     @Test
-    fun `should return unsuccessful response throws exception when when create audiovisual`() = runBlockingTest {
+    fun `should return unsuccessful response throws exception when create audiovisual`() = runBlockingTest {
         // Given
         val audiovisualRequest = AudiovisualStub.random().toRequest()
         every { provider.getAudiovisualDataSource() } returns audiovisualApi

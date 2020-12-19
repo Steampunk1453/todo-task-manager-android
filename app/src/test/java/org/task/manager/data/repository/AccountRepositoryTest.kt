@@ -13,17 +13,17 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.task.manager.data.network.model.response.toResponse
 import org.task.manager.data.network.source.AccountDataSource
 import org.task.manager.domain.Result
 import org.task.manager.shared.Constants.ILLEGAL_STATE_EXCEPTION_CAUSE
 import org.task.manager.stub.PasswordRequestStub
 import org.task.manager.stub.ResetPasswordRequestStub
-import org.task.manager.stub.UserResponseStub
 import org.task.manager.stub.UserStub
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi
-internal class DefaultAccountRepositoryTest {
+internal class AccountRepositoryTest {
 
     @MockK(relaxed = true)
     private lateinit var dataSource: AccountDataSource
@@ -45,7 +45,7 @@ internal class DefaultAccountRepositoryTest {
         // When
         val result = accountRepository.register(user)
         // Then
-        result shouldNotBe {null}
+        result shouldNotBe null
         result shouldBe expected
         result as Result.Success
         result.data shouldBe "OK"
@@ -74,7 +74,7 @@ internal class DefaultAccountRepositoryTest {
         // When
         val result = accountRepository.activate("key")
         // Then
-        result shouldNotBe {null}
+        result shouldNotBe null
         result shouldBe expected
         result as Result.Success
         result.data shouldBe "OK"
@@ -97,13 +97,13 @@ internal class DefaultAccountRepositoryTest {
     @Test
     fun `should return successful result with user when get account info`() = runBlockingTest {
         // Given
-        val userResponse = UserResponseStub.random()
+        val userResponse = UserStub.random().toResponse()
         val expected = Result.Success(userResponse)
         coEvery { dataSource.get() } returns userResponse
         // When
         val result = accountRepository.get()
         // Then
-        result shouldNotBe {null}
+        result shouldNotBe null
         result as Result.Success
         result.data.id shouldBe expected.data.id
         result.data.username shouldBe expected.data.username
