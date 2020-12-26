@@ -19,7 +19,7 @@ import org.task.manager.stub.LoginResponseStub
 
 @ExtendWith(MockKExtension::class)
 @ExperimentalCoroutinesApi
-internal class DefaultLoginRepositoryTest {
+internal class LoginRepositoryTest {
 
     @MockK(relaxed = true)
     private lateinit var loginDataSource: LoginDataSource

@@ -39,7 +39,7 @@ internal class GenreRemoteDataSourceTest {
             // When
             val response = genreRemoteDataSource.getAll()
             // Then
-            response shouldNotBe {null}
+            response shouldNotBe null
             response[0] shouldBe genreResponse
             response[0].id shouldBe genreResponse.id
             response[0].name shouldBe genreResponse.name

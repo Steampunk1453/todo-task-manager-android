@@ -1,10 +1,10 @@
 package org.task.manager.stub
 
 import io.github.serpro69.kfaker.Faker
-import org.task.manager.domain.model.User
+import org.task.manager.data.network.model.response.UserResponse
 import kotlin.random.Random
 
-open class UserStub {
+open class UserResponseStub {
 
     companion object {
         private val faker = Faker()
@@ -13,14 +13,14 @@ open class UserStub {
             id: Long = Random.nextLong(1, 5000),
             username: String = faker.name.name(),
             email: String = faker.internet.email(),
-            password: String = faker.code.asin(),
-            langKey: String = "en"
-        ) = User(
-            id = id,
-            username = username,
-            email = email,
-            password = password,
-            langKey = langKey
+            firstName: String = faker.name.firstName(),
+            lastName: String = faker.name.lastName(),
+        ) = UserResponse(
+            id,
+            username,
+            email,
+            firstName,
+            lastName
         )
     }
 

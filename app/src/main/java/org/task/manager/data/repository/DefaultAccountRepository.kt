@@ -17,7 +17,7 @@ class DefaultAccountRepository(private val dataSource: AccountDataSource) : Acco
     override suspend fun register(user: User): Result<String> {
         return try {
             dataSource.register(user.toRegisterRequest())
-            Result.Success("OK")
+            Result.Success(SUCCESSFUL_RESPONSE)
         } catch (ex: Throwable) {
             Result.Error(ex)
         }
