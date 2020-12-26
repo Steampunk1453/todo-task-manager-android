@@ -13,9 +13,9 @@ interface BookshopDao {
     fun getAll(): List<BookshopEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(bookshops: List<BookshopEntity>)
+    fun insertAll(bookshops: List<BookshopEntity>)
 
     @Query("DELETE FROM Bookshop")
-    suspend fun deleteAll()
+    fun deleteAll()
 
 }
