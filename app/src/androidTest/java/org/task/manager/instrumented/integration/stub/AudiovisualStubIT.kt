@@ -1,4 +1,4 @@
-package org.task.manager.instrumented.integration
+package org.task.manager.instrumented.integration.stub
 
 import org.task.manager.domain.model.Audiovisual
 import org.task.manager.domain.model.User
