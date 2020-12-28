@@ -16,3 +16,5 @@ data class PlatformResponse(
 
 fun PlatformResponse.toDomain(): Platform = Platform(id, name, url)
 
+fun Platform.toResponse(): PlatformResponse = PlatformResponse(id, name, url)
+

@@ -13,4 +13,6 @@ data class TitleResponse(
 
 fun TitleResponse.toDomain(): Title = Title(id, name)
 
+fun Title.toResponse(): TitleResponse = TitleResponse(id, name)
+
 
