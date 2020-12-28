@@ -25,11 +25,11 @@ class BookLocalDataSource(
 
     fun findAllEditorials(): List<EditorialEntity> = editorialDao.getAll()
 
-    suspend fun saveAllEditorials(editorials: List<EditorialEntity>) =
+    fun saveAllEditorials(editorials: List<EditorialEntity>) =
         editorialDao.insertAll(editorials)
 
     fun findAllBookshops(): List<BookshopEntity> = bookshopDao.getAll()
 
-    suspend fun saveAllBookshops(bookshops: List<BookshopEntity>) = bookshopDao.insertAll(bookshops)
+    fun saveAllBookshops(bookshops: List<BookshopEntity>) = bookshopDao.insertAll(bookshops)
 
 }

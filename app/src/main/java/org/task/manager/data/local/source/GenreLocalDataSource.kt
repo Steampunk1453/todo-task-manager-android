@@ -7,6 +7,6 @@ class GenreLocalDataSource(private val genreDao: GenreDao) {
 
     fun findAll(): List<GenreEntity> = genreDao.getAll()
 
-    suspend fun saveAll(genres: List<GenreEntity>) = genreDao.insertAll(genres)
+    fun saveAll(genres: List<GenreEntity>) = genreDao.insertAll(genres)
 
 }

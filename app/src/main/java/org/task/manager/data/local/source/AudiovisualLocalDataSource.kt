@@ -24,10 +24,10 @@ class AudiovisualLocalDataSource(private val audiovisualDao: AudiovisualDao,
 
     fun findAllTitles(): List<TitleEntity> = titleDao.getAll()
 
-    suspend fun saveAllTitles(titles: List<TitleEntity>) = titleDao.insertAll(titles)
+    fun saveAllTitles(titles: List<TitleEntity>) = titleDao.insertAll(titles)
 
     fun findAllPlatforms(): List<PlatformEntity> = platformDao.getAll()
 
-    suspend fun saveAllPlatforms(platforms: List<PlatformEntity>) = platformDao.insertAll(platforms)
+    fun saveAllPlatforms(platforms: List<PlatformEntity>) = platformDao.insertAll(platforms)
 
 }
