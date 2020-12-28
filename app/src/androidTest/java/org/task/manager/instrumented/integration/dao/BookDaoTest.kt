@@ -1,4 +1,4 @@
-package org.task.manager.instrumented.integration
+package org.task.manager.instrumented.integration.dao
 
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -89,8 +89,8 @@ class BookDaoTest {
     @Throws(Exception::class)
     fun writeAndUpdateBookAndReadInList() {
         val book = BookStubIT.getBook().toEntity()
-
         bookDao.insert(book)
+
         val oldBook = bookDao.getAll()[0]
         val newBook = getNewBook(oldBook.id, oldBook.userId).toEntity()
         bookDao.update(newBook)
@@ -113,7 +113,7 @@ class BookDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun deleteAllBooks() {
+    fun writeAndDeleteAllBooks() {
         val book = BookStubIT.getBook().toEntity()
         bookDao.insert(book)
 
@@ -125,7 +125,7 @@ class BookDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun deleteBookById() {
+    fun writeAndDeleteBookById() {
         val book = BookStubIT.getBook().toEntity()
         bookDao.insert(book)
 

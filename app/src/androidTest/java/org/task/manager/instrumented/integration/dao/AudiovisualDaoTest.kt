@@ -1,4 +1,4 @@
-package org.task.manager.instrumented.integration
+package org.task.manager.instrumented.integration.dao
 
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -83,8 +83,8 @@ class AudiovisualDaoTest {
     @Throws(Exception::class)
     fun writeAndUpdateAudiovisualAndReadInList() {
         val audiovisual = AudiovisualStubIT.getAudiovisual().toEntity()
-
         audiovisualDao.insert(audiovisual)
+
         val oldAudiovisual = audiovisualDao.getAll()[0]
         val newAudiovisual = getNewAudiovisual(oldAudiovisual.id, oldAudiovisual.userId).toEntity()
         audiovisualDao.update(newAudiovisual)
@@ -104,7 +104,7 @@ class AudiovisualDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun deleteAllAudiovisuals() {
+    fun writeAndDeleteAllAudiovisuals() {
         val audiovisual = AudiovisualStubIT.getAudiovisual().toEntity()
         audiovisualDao.insert(audiovisual)
 
@@ -116,7 +116,7 @@ class AudiovisualDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun deleteAudiovisualById() {
+    fun writeAndDeleteAudiovisualById() {
         val audiovisual = AudiovisualStubIT.getAudiovisual().toEntity()
         audiovisualDao.insert(audiovisual)
 

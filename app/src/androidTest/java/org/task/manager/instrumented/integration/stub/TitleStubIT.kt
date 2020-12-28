@@ -1,31 +1,25 @@
 package org.task.manager.instrumented.integration.stub
 
-import org.task.manager.domain.model.Bookshop
+import org.task.manager.domain.model.Title
 import kotlin.random.Random
 
-open class BookshopStubIT {
+open class TitleStubIT {
 
     companion object {
-            fun getBookshop(
+            fun getTitle(
                     id: Long = Random.nextLong(1, 500),
-                    name: String = "name",
-                    url: String = "url"
-
-            ) = Bookshop(
+                    name: String = "name"
+            ) = Title(
                     id,
                     name,
-                    url
             )
 
-            fun getBookshop1(
+            fun getTitle1(
                     id: Long = Random.nextLong(501, 1000),
                     name: String = "name1",
-                    url: String = "url1"
-
-            ) = Bookshop(
+            ) = Title(
                     id,
                     name,
-                    url
             )
     }
 

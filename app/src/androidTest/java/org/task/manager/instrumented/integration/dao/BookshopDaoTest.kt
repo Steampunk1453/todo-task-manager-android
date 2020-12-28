@@ -1,4 +1,4 @@
-package org.task.manager.instrumented.integration
+package org.task.manager.instrumented.integration.dao
 
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -36,7 +36,7 @@ class BookshopDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeBookListAndReadInList() {
+    fun writeBookshopListAndReadInList() {
         val bookshop = BookshopStubIT.getBookshop().toEntity()
         val bookshop1 = BookshopStubIT.getBookshop1().toEntity()
         val bookshops = listOf(bookshop, bookshop1)
@@ -52,7 +52,7 @@ class BookshopDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun deleteAllBooks() {
+    fun writeAndDeleteAllBookshops() {
         val bookshop = BookshopStubIT.getBookshop().toEntity()
         val bookshop1 = BookshopStubIT.getBookshop1().toEntity()
         val bookshops = listOf(bookshop, bookshop1)
