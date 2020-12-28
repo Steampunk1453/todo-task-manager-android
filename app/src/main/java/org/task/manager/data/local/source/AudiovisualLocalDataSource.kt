@@ -14,20 +14,20 @@ class AudiovisualLocalDataSource(private val audiovisualDao: AudiovisualDao,
 
     fun findAll(): List<AudiovisualEntity> = audiovisualDao.getAll()
 
-    suspend fun saveAll(audiovisuals: List<AudiovisualEntity>) = audiovisualDao.insertAll(audiovisuals)
+    fun saveAll(audiovisuals: List<AudiovisualEntity>) = audiovisualDao.insertAll(audiovisuals)
 
-    suspend fun save(audiovisual: AudiovisualEntity) = audiovisualDao.insert(audiovisual)
+    fun save(audiovisual: AudiovisualEntity) = audiovisualDao.insert(audiovisual)
 
-    suspend fun update(audiovisual: AudiovisualEntity) = audiovisualDao.update(audiovisual)
+    fun update(audiovisual: AudiovisualEntity) = audiovisualDao.update(audiovisual)
 
-    suspend fun delete(id: Long) = audiovisualDao.deleteById(id)
+    fun delete(id: Long) = audiovisualDao.deleteById(id)
 
     fun findAllTitles(): List<TitleEntity> = titleDao.getAll()
 
-    suspend fun saveAllTitles(titles: List<TitleEntity>) = titleDao.insertAll(titles)
+    fun saveAllTitles(titles: List<TitleEntity>) = titleDao.insertAll(titles)
 
     fun findAllPlatforms(): List<PlatformEntity> = platformDao.getAll()
 
-    suspend fun saveAllPlatforms(platforms: List<PlatformEntity>) = platformDao.insertAll(platforms)
+    fun saveAllPlatforms(platforms: List<PlatformEntity>) = platformDao.insertAll(platforms)
 
 }
