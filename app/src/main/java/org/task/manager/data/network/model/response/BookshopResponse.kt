@@ -16,3 +16,5 @@ data class BookshopResponse(
 
 fun BookshopResponse.toDomain(): Bookshop = Bookshop(id, name, url)
 
+fun Bookshop.toResponse(): BookshopResponse = BookshopResponse(id, name, url)
+

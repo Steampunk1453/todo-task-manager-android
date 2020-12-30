@@ -16,4 +16,6 @@ data class EditorialResponse(
 
 fun EditorialResponse.toDomain(): Editorial = Editorial(id, name, url)
 
+fun Editorial.toResponse(): EditorialResponse = EditorialResponse(id, name, url)
+
 

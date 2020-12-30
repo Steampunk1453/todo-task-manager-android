@@ -16,3 +16,5 @@ data class GenreResponse(
 
 fun GenreResponse.toDomain(): Genre = Genre(id, name, literary)
 
+fun Genre.toResponse(): GenreResponse = GenreResponse(id, name, isLiterary)
+
