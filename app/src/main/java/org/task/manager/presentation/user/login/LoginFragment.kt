@@ -13,10 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_login.password
-import kotlinx.android.synthetic.main.fragment_login.progressBar
-import kotlinx.android.synthetic.main.fragment_login.rememberMe
-import kotlinx.android.synthetic.main.fragment_login.username
+import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentLoginBinding
@@ -33,7 +30,7 @@ class LoginFragment : Fragment(), ViewElements {
     private lateinit var  navController: NavController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         navController = findNavController()
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
@@ -45,7 +42,7 @@ class LoginFragment : Fragment(), ViewElements {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginButton.setOnClickListener {
-            loginViewModel.authenticate(username.text.toString(), password.text.toString(), rememberMe.isActivated)
+            loginViewModel.authenticate(login_username.text.toString(), login_password.text.toString(), rememberMe.isActivated)
         }
 
         binding.resetButton.setOnClickListener {
@@ -86,7 +83,7 @@ class LoginFragment : Fragment(), ViewElements {
 
     private fun authenticatedUser(message: String) {
         showMessage(message)
-        sharedViewModel.setUserName(username.text.toString())
+        sharedViewModel.setUserName(login_username.text.toString())
         binding.root.hideKeyboard()
         navController.navigate(R.id.fragment_home)
     }
