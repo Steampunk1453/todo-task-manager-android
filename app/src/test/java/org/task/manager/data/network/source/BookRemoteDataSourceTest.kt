@@ -17,8 +17,8 @@ import org.task.manager.data.network.api.BookApi
 import org.task.manager.data.network.model.request.toRequest
 import org.task.manager.data.network.model.response.toResponse
 import org.task.manager.stub.BookStub
-import org.task.manager.stub.BookshopResponseStub
-import org.task.manager.stub.EditorialResponseStub
+import org.task.manager.stub.BookshopStub
+import org.task.manager.stub.EditorialStub
 import retrofit2.Response
 import retrofit2.Response.success
 import java.io.IOException
@@ -142,8 +142,8 @@ internal class BookRemoteDataSourceTest {
     fun `should return successful response with editorials when get all`() {
         runBlockingTest {
             // Given
-            val editorialResponse = EditorialResponseStub.random()
-            val editorialResponse1 = EditorialResponseStub.random()
+            val editorialResponse = EditorialStub.random().toResponse()
+            val editorialResponse1 = EditorialStub.random().toResponse()
             val editorials = listOf(editorialResponse, editorialResponse1)
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.getAllEditorials() } returns success(editorials)
@@ -164,8 +164,8 @@ internal class BookRemoteDataSourceTest {
     fun `should return successful response with bookshops when get all`() {
         runBlockingTest {
             // Given
-            val bookshopResponse = BookshopResponseStub.random()
-            val bookshopResponse1 = BookshopResponseStub.random()
+            val bookshopResponse = BookshopStub.random().toResponse()
+            val bookshopResponse1 = BookshopStub.random().toResponse()
             val books = listOf(bookshopResponse, bookshopResponse1)
             coEvery { provider.getBookDataSource() } returns bookApi
             coEvery { bookApi.getAllBookshops() } returns success(books)

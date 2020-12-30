@@ -26,7 +26,7 @@ internal class GetAudiovisualsTest {
     private lateinit var useCase: GetAudiovisuals
 
     @Test
-    fun `should return audiovisual when execute`() = runBlockingTest  {
+    fun `should return audiovisuals when execute`() = runBlockingTest  {
         // Given
         val audiovisual = AudiovisualStub.random()
         val audiovisuals = listOf(audiovisual)
