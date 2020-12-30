@@ -3,10 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "org.task.manager"
@@ -37,12 +38,12 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    dataBinding {
-        enabled = true
-    }
-
     buildFeatures {
         viewBinding = true
+
+        dataBinding {
+            enabled = true
+        }
     }
 
 }
@@ -59,6 +60,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'com.google.android.material:material:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.4.0-alpha02'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
 
     // Logs
@@ -84,13 +86,15 @@ dependencies {
     implementation 'com.github.kizitonwose:CalendarView:1.0.0'
 
     // Room
-    def room_version = "2.2.5"
+    def room_version = "2.2.6"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
-    // optional - Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-auth:20.0.1'
 
     // ---- Testing ----
 
@@ -124,7 +128,7 @@ dependencies {
     debugImplementation "androidx.test.ext:junit:1.1.2"
 
     // MockK
-    def mockk_version = '1.10.0'
+    def mockk_version = '1.10.2'
     testImplementation "io.mockk:mockk:$mockk_version"
     androidTestImplementation "io.mockk:mockk-android:$mockk_version"
 
@@ -139,5 +143,8 @@ dependencies {
     // Fake data
     def kotlin_faker_version = '1.5.0'
     testImplementation "io.github.serpro69:kotlin-faker:$kotlin_faker_version"
+
+    // Room
+    testImplementation "androidx.room:room-testing:$room_version"
 
 }
