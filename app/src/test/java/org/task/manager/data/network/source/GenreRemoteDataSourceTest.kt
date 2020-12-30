@@ -11,7 +11,8 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.task.manager.data.network.api.GenreApi
-import org.task.manager.stub.GenreResponseStub
+import org.task.manager.data.network.model.response.toResponse
+import org.task.manager.stub.GenreStub
 import retrofit2.Response
 
 @ExtendWith(MockKExtension::class)
@@ -31,8 +32,8 @@ internal class GenreRemoteDataSourceTest {
     fun `should return successful response with genres when get all`() {
         runBlockingTest {
             // Given
-            val genreResponse = GenreResponseStub.random()
-            val genreResponse1 = GenreResponseStub.random()
+            val genreResponse = GenreStub.random().toResponse()
+            val genreResponse1 = GenreStub.random().toResponse()
             val genres = listOf(genreResponse, genreResponse1)
             coEvery { provider.getGenreDataSource() } returns genreApi
             coEvery { genreApi.getGenres() } returns Response.success(genres)

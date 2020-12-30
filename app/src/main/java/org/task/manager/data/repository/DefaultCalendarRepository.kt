@@ -7,6 +7,6 @@ import org.task.manager.domain.repository.CalendarRepository
 
 class DefaultCalendarRepository(private val dataSource: CalendarDataSource) : CalendarRepository {
     override suspend fun createEvent(calendarEvent: CalendarEvent): Intent {
-        return  dataSource.buildInsertEvent(calendarEvent)
+        return dataSource.buildInsertEvent(calendarEvent)
     }
 }

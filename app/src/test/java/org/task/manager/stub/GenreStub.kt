@@ -1,10 +1,10 @@
 package org.task.manager.stub
 
 import io.github.serpro69.kfaker.Faker
-import org.task.manager.data.network.model.response.GenreResponse
+import org.task.manager.domain.model.Genre
 import kotlin.random.Random
 
-open class GenreResponseStub {
+open class GenreStub {
 
     companion object {
         private val faker = Faker()
@@ -13,7 +13,7 @@ open class GenreResponseStub {
             id: Long = Random.nextLong(1, 5000),
             name: String = faker.book.genre(),
             literary: Int = Random.nextInt(0, 1)
-        ) = GenreResponse(
+        ) = Genre(
             id,
             name,
             literary

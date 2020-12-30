@@ -1,10 +1,10 @@
 package org.task.manager.stub
 
 import io.github.serpro69.kfaker.Faker
-import org.task.manager.data.network.model.response.EditorialResponse
+import org.task.manager.domain.model.Editorial
 import kotlin.random.Random
 
-open class EditorialResponseStub {
+open class EditorialStub {
 
     companion object {
         private val faker = Faker()
@@ -13,7 +13,7 @@ open class EditorialResponseStub {
             id: Long = Random.nextLong(1, 5000),
             name: String = faker.book.publisher(),
             url: String = faker.internet.domain(),
-        ) = EditorialResponse(
+        ) = Editorial(
             id,
             name,
             url,

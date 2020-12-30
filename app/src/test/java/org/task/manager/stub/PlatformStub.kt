@@ -1,19 +1,19 @@
 package org.task.manager.stub
 
 import io.github.serpro69.kfaker.Faker
-import org.task.manager.data.network.model.response.BookshopResponse
+import org.task.manager.domain.model.Platform
 import kotlin.random.Random
 
-open class BookshopResponseStub {
+open class PlatformStub {
 
     companion object {
         private val faker = Faker()
 
         fun random(
             id: Long = Random.nextLong(1, 5000),
-            name: String = faker.company.name(),
+            name: String = faker.siliconValley.companies(),
             url: String = faker.internet.domain(),
-        ) = BookshopResponse(
+        ) = Platform(
             id,
             name,
             url,

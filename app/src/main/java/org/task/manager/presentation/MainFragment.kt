@@ -27,7 +27,7 @@ class MainFragment : Fragment() {
             requireActivity().finish()
         }
 
-        binding.loginButton.setOnClickListener {
+        binding.registerLoginButton.setOnClickListener {
             val action =
                 MainFragmentDirections.actionMainFragmentToLoginFragment()
             findNavController().navigate(action)
