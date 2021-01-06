@@ -2,7 +2,7 @@ package org.task.manager.presentation
 
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
+import android.view.Gravity.RIGHT
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -14,7 +14,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.fragment_login.progressBar
+import kotlinx.android.synthetic.main.fragment_login.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.BuildConfig
@@ -36,6 +36,8 @@ private const val SUCCESSFUL_LOGOUT_MESSAGE = "Successful logout"
 private const val ERROR_LOGOUT_MESSAGE = "Invalid logout, try again"
 private const val ACTIVATE_ACCOUNT_PATH = "account"
 private const val RESET_ACCOUNT_PATH = "reset"
+
+private const val PARAMETER_NAME = "key"
 
 class MainActivity : AppCompatActivity(), ViewElements {
 
@@ -127,7 +129,7 @@ class MainActivity : AppCompatActivity(), ViewElements {
 
         if (data != null && data.isHierarchical) {
             val uri = this.intent.dataString
-            val activateKey = this.intent.dataString?.toHttpUrlOrNull()?.queryParameter("key")
+            val activateKey = this.intent.dataString?.toHttpUrlOrNull()?.queryParameter(PARAMETER_NAME)
             val secondPath = this.intent.dataString?.toHttpUrlOrNull()?.pathSegments?.get(1)
 
             Timber.i("Deep link clicked: $uri")
@@ -163,7 +165,7 @@ class MainActivity : AppCompatActivity(), ViewElements {
     private fun showUserAccountPopup(view: View) {
         val popup = PopupMenu(this, view)
         popup.inflate(R.menu.menu_account)
-        popup.gravity = Gravity.RIGHT
+        popup.gravity = RIGHT
 
         popup.show()
 
