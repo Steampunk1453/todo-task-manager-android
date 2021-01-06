@@ -39,8 +39,7 @@ internal class LoginUserTest {
         // Given
         val loginRequest = LoginRequestStub.random()
         val loginResponse = LoginResponseStub.random()
-        val expectedState = AuthenticationState.AUTHENTICATED
-        val expectedMessage = "Successful authentication"
+        val expected = AuthenticationState.AUTHENTICATED
         coEvery { repository.login(any()) } returns Result.Success(loginResponse)
         coEvery { sessionManager.saveAuthToken(any()) } just Runs
         // When
@@ -48,24 +47,21 @@ internal class LoginUserTest {
         // Then
         coVerify { sessionManager.saveAuthToken(any()) }
         result shouldNotBe null
-        result?.state shouldBe expectedState
-        result?.message shouldBe expectedMessage
+        result shouldBe expected
     }
 
     @Test
     fun `should return INVALID_AUTHENTICATION state with error message when execute with login request`() = runBlockingTest  {
         // Given
         val loginRequest = LoginRequestStub.random()
-        val expectedState = AuthenticationState.INVALID_AUTHENTICATION
-        val expectedMessage = "Empty response body"
+        val expected = AuthenticationState.INVALID_AUTHENTICATION
         val error = Throwable(Constants.ILLEGAL_STATE_EXCEPTION_CAUSE)
         coEvery { repository.login(any()) } returns Result.Error(error)
         // When
         val result = useCase.execute(loginRequest)
         // Then
         result shouldNotBe null
-        result?.state shouldBe expectedState
-        result?.message shouldBe expectedMessage
+        result shouldBe expected
     }
 
 }

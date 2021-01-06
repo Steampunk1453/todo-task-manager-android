@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.task.manager.data.network.model.request.LoginRequest
-import org.task.manager.domain.model.AuthenticationResult
 import org.task.manager.domain.model.state.AuthenticationState
 import org.task.manager.domain.usecase.user.LoginUser
 import org.task.manager.domain.usecase.user.LogoutUser
@@ -19,23 +18,18 @@ class LoginViewModel(
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-    val authenticationResult = MutableLiveData<AuthenticationResult>()
+    val authenticationState = MutableLiveData<AuthenticationState>()
     val logoutState = MutableLiveData<LogoutState>()
 
-    init {
-        // In this case, the user is always unauthenticated when MainActivity is launched
-        authenticationResult.value?.state = AuthenticationState.UNAUTHENTICATED
-    }
-
     fun refuseAuthentication() {
-        authenticationResult.value?.state = AuthenticationState.UNAUTHENTICATED
+        authenticationState.postValue(AuthenticationState.UNAUTHENTICATED)
     }
 
     fun authenticate(username: String, password: String, isRemember: Boolean) {
         val loginRequest = LoginRequest(username, password, isRemember)
         coroutineScope.launch {
             val authenticationResponse = loginUser.execute(loginRequest)
-            authenticationResult.postValue(authenticationResponse)
+            authenticationState.postValue(authenticationResponse)
         }
     }
 
