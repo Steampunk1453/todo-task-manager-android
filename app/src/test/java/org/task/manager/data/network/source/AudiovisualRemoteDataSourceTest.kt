@@ -10,7 +10,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.task.manager.data.network.api.AudiovisualApi
@@ -192,7 +192,7 @@ internal class AudiovisualRemoteDataSourceTest {
                 every { provider.getAudiovisualDataSource() } returns audiovisualApi
                 coEvery { audiovisualApi.createAudiovisual(any()) } returns Response.error(
                         400,
-                        ResponseBody.create(null, ByteArray(0))
+                    ByteArray(0).toResponseBody(null)
                 )
                 // When & Then
                 assertFailsWith<IOException>("Unsuccessful response") {
