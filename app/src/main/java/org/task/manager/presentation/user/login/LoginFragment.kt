@@ -57,7 +57,7 @@ class LoginFragment : Fragment(), ViewElements {
         observeViewModel()
     }
 
-    override fun showMessage(message: String) {
+    override fun showMessage(message: Int) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -71,17 +71,18 @@ class LoginFragment : Fragment(), ViewElements {
 
     private fun observeViewModel() {
         showProgress()
-        loginViewModel.authenticationResult.observe(viewLifecycleOwner, { authenticationResult ->
-            when (authenticationResult.state) {
-                AuthenticationState.AUTHENTICATED -> authenticatedUser(authenticationResult.message)
-                AuthenticationState.INVALID_AUTHENTICATION -> showMessage(authenticationResult.message)
+        loginViewModel.authenticationState.observe(viewLifecycleOwner, { state ->
+            when (state) {
+                AuthenticationState.AUTHENTICATED -> authenticatedUser(R.string.successful_authentication)
+                AuthenticationState.INVALID_AUTHENTICATION -> showMessage(R.string.invalid_authentication)
                 AuthenticationState.UNAUTHENTICATED -> navController.popBackStack()
+                else ->  AuthenticationState.UNAUTHENTICATED
             }
         })
         hideProgress()
     }
 
-    private fun authenticatedUser(message: String) {
+    private fun authenticatedUser(message: Int) {
         showMessage(message)
         sharedViewModel.setUserName(binding.loginUsername.text.toString())
         binding.root.hideKeyboard()

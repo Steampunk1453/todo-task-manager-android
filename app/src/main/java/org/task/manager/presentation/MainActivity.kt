@@ -29,14 +29,8 @@ import org.task.manager.show
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-private const val USER_ACCOUNT_ACTIVATE_MESSAGE = "Your user account has been activated"
-private const val USER_ACCOUNT_ERROR_MESSAGE = "Your user could not be activated." +
-        "Please use the registration form to sign up"
-private const val SUCCESSFUL_LOGOUT_MESSAGE = "Successful logout"
-private const val ERROR_LOGOUT_MESSAGE = "Invalid logout, try again"
 private const val ACTIVATE_ACCOUNT_PATH = "account"
 private const val RESET_ACCOUNT_PATH = "reset"
-
 private const val PARAMETER_NAME = "key"
 
 class MainActivity : AppCompatActivity(), ViewElements {
@@ -75,7 +69,7 @@ class MainActivity : AppCompatActivity(), ViewElements {
         }
     }
 
-    override fun showMessage(message: String) {
+    override fun showMessage(message: Int) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -148,11 +142,11 @@ class MainActivity : AppCompatActivity(), ViewElements {
 
         registrationViewModel.registrationState.observe(this, { registrationResult ->
             if (registrationResult == RegistrationState.ACTIVATION_COMPLETED) {
-                Toast.makeText(this, USER_ACCOUNT_ACTIVATE_MESSAGE, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.user_account_activate, Toast.LENGTH_SHORT).show()
                 navController.navigate(R.id.fragment_login)
             }
             else if (registrationResult == RegistrationState.INVALID_ACTIVATION) {
-                Toast.makeText(this, USER_ACCOUNT_ERROR_MESSAGE, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.user_account_error, Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -198,9 +192,9 @@ class MainActivity : AppCompatActivity(), ViewElements {
 
         loginViewModel.logoutState.observe(this, { state ->
             if (LogoutState.LOGOUT_COMPLETE == state) {
-                showMessage(SUCCESSFUL_LOGOUT_MESSAGE)
+                showMessage(R.string.successful_logout)
             } else {
-                showMessage(ERROR_LOGOUT_MESSAGE)
+                showMessage(R.string.error_logout)
             }
         })
     }

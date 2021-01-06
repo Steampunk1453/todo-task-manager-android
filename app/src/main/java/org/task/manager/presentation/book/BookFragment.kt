@@ -27,8 +27,6 @@ import org.task.manager.presentation.view.SwipeCallback
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
-private const val BOOK_REMOVE_MESSAGE = "Book removed"
-
 class BookFragment : Fragment(), ViewElements {
     private lateinit var binding: FragmentBookBinding
     private lateinit var navController: NavController
@@ -64,7 +62,7 @@ class BookFragment : Fragment(), ViewElements {
         }
     }
 
-    override fun showMessage(message: String) {
+    override fun showMessage(message: Int) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -112,7 +110,7 @@ class BookFragment : Fragment(), ViewElements {
     private fun handleDeleteBook(position: Int) {
         bookViewModel.deleteState.observe(viewLifecycleOwner, { state ->
             if (state == DeleteState.DELETE_COMPLETED) {
-                showMessage(BOOK_REMOVE_MESSAGE)
+                showMessage(R.string.item_removed)
                 adapter.notifyItemRemoved(position)
                 navController.navigate(R.id.fragment_book)
             }

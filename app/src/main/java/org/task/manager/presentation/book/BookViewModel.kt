@@ -7,21 +7,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import org.task.manager.domain.model.Book
-import org.task.manager.domain.model.Bookshop
-import org.task.manager.domain.model.CalendarEvent
-import org.task.manager.domain.model.Editorial
-import org.task.manager.domain.model.Genre
+import org.task.manager.domain.model.*
 import org.task.manager.domain.model.state.DeleteState
-import org.task.manager.domain.usecase.book.CreateBook
-import org.task.manager.domain.usecase.book.DeleteBook
-import org.task.manager.domain.usecase.book.GetBooks
-import org.task.manager.domain.usecase.book.GetBookshops
-import org.task.manager.domain.usecase.book.GetEditorials
-import org.task.manager.domain.usecase.book.UpdateBook
+import org.task.manager.domain.usecase.book.*
 import org.task.manager.domain.usecase.calendar.CreateCalendarEvent
 import org.task.manager.domain.usecase.shared.GetGenres
-
 
 class BookViewModel(
     private val getBooks: GetBooks,

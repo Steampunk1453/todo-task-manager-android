@@ -20,10 +20,6 @@ import org.task.manager.presentation.shared.ValidatorService
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
-private const val CORRECT_CHANGE_PASSWORD_MESSAGE = "Your password has been reset. Please login."
-private const val INCORRECT_PASSWORD_ERROR_MESSAGE = "Error changing password"
-private const val UPDATING_PASSWORD_MESSAGE = "Updating password"
-
 class PasswordResetFinishFragment : Fragment(), ViewElements {
 
     private lateinit var binding: FragmentResetFinishPasswordBinding
@@ -63,18 +59,19 @@ class PasswordResetFinishFragment : Fragment(), ViewElements {
         viewModel.finishResetPasswordState.observe(viewLifecycleOwner, {
             when (it) {
                 AccountState.UPDATE_COMPLETED -> handleChangePassword()
-                AccountState.INVALID_UPDATE -> showMessage(INCORRECT_PASSWORD_ERROR_MESSAGE)
-                AccountState.UPDATING -> showMessage(UPDATING_PASSWORD_MESSAGE)
+                AccountState.INVALID_UPDATE -> showMessage(R.string.changed_password_error)
+                AccountState.UPDATING -> showMessage(R.string.updating_password)
+                else ->  AccountState.INVALID_UPDATE
             }
         })
     }
 
     private fun handleChangePassword() {
-        showMessage(CORRECT_CHANGE_PASSWORD_MESSAGE)
+        showMessage(R.string.changed_password)
         navController.navigate(R.id.fragment_login)
     }
 
-    override fun showMessage(message: String) {
+    override fun showMessage(message: Int) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 

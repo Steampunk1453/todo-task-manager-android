@@ -27,8 +27,6 @@ import org.task.manager.presentation.view.SwipeCallback
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
-private const val ITEM_REMOVE_MESSAGE = "Item removed"
-
 class AudiovisualFragment : Fragment(), ViewElements {
 
     private lateinit var binding: FragmentAudiovisualBinding
@@ -65,7 +63,7 @@ class AudiovisualFragment : Fragment(), ViewElements {
         }
     }
 
-    override fun showMessage(message: String) {
+    override fun showMessage(message: Int) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -113,7 +111,7 @@ class AudiovisualFragment : Fragment(), ViewElements {
     private fun handleDeleteAudiovisual(position: Int) {
         audiovisualViewModel.deleteState.observe(viewLifecycleOwner, { state ->
             if (state == DeleteState.DELETE_COMPLETED) {
-                showMessage(ITEM_REMOVE_MESSAGE)
+                showMessage(R.string.item_removed)
                 this@AudiovisualFragment.adapter.notifyItemRemoved(position)
                 navController.navigate(R.id.fragment_audiovisual)
             }
