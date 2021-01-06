@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MyToDoTaskManager</string>
-    <string name="prompt_email">Email</string>
+    <string name="prompt_email" translatable="false">Email</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_firstName">First Name</string>
     <string name="prompt_lastName">Last Name</string>
@@ -8,30 +8,13 @@
     <string name="prompt_current_password">Current password</string>
     <string name="prompt_new_password">New password</string>
     <string name="prompt_new_password_confirmation">New password confirmation</string>
-    <string name="prompt_bio">Bio</string>
     <string name="action_sign_in">Login</string>
     <string name="action_register">Register</string>
     <string name="prompt_remember">Remember Me</string>
-    <string name="action_view_profile">View Profile</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome"</string>
-    <string name="home">"This is your home"</string>
-    <string name="user">"You are logged as "</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_button_text">Login</string>
-    <string name="logout_button_text">Logout</string>
-    <string name="login_unsuccessful_msg">Login unsuccessful</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="login_prompt">Login to set customizations!</string>
-    <string name="login">Login</string>
     <string name="settings">Settings</string>
-    <string name="action_next">Next</string>
-    <string name="menu_audiovisual">Audiovisual</string>
-    <string name="menu_book">Book</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="login">Login</string>
     <string name="title_home">Home</string>
     <string name="title_audiovisual">Series &amp; Films</string>
     <string name="title_book">Books</string>
@@ -54,7 +37,31 @@
     <string name="create_audiovisual">Create Audiovisual</string>
     <string name="create_book">Create Book</string>
     <string name="reset_password">"Reset password</string>
-    <string name="reset_your_password">"Reset your password</string>
-    <string name="validate_password">"Validate new password</string>
-    <string name="forget_password">"Forget your password?</string>
+    <string name="reset_your_password">Reset your password</string>
+    <string name="validate_password">Validate new password</string>
+    <string name="forget_password">Forget your password?</string>
+    <!--  Toast messages  -->
+    <string name="user_account_activate">Your user account has been activated</string>
+    <string name="user_account_error">Your user could not be activated. Please use the registration form to sign up</string>
+    <string name="successful_logout">Successful logout</string>
+    <string name="error_logout">Invalid logout, try again</string>
+    <string name="successful_authentication">Successful authentication</string>
+    <string name="invalid_authentication">Invalid authentication</string>
+    <string name="username_empty_error">Your username is required</string>
+    <string name="username_pattern_error">Your username can only contain letters and digits</string>
+    <string name="email_error">The email is not correct</string>
+    <string name="password_length_error">The password is required to be at least 4 characters</string>
+    <string name="password_match_error">The password and its confirmation do not match!</string>
+    <string name="settings_saved">Settings saved</string>
+    <string name="updating_settings">Updating settings</string>
+    <string name="settings_saved_error">Error saving settings, try again</string>
+    <string name="password_changed">Password changed!</string>
+    <string name="incorrect_password">Incorrect password</string>
+    <string name="updating_password">Updating password</string>
+    <string name="changed_password">Your password has been reset. Please login</string>
+    <string name="changed_password_error">Error changing password</string>
+    <string name="changed_password_init">Check your emails for details on how to reset your password</string>
+    <string name="changed_password_init_error">Error resetting password</string>
+    <string name="item_removed">Item removed</string>
+    <string name="successful_registration">Registration saved! Please check your email for confirmation</string>
 </resources>

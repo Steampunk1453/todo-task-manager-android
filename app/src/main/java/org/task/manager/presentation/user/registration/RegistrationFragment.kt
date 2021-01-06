@@ -22,7 +22,7 @@ import org.task.manager.presentation.shared.ValidatorService
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
-private const val SUCCESSFUL_REGISTRATION_MESSAGE = "Registration saved! Please check your email for confirmation"
+private const val NO_ERROR_MESSAGE = 0
 
 class RegistrationFragment : Fragment(), ViewElements {
 
@@ -69,7 +69,7 @@ class RegistrationFragment : Fragment(), ViewElements {
         observeViewModel()
     }
 
-    override fun showMessage(message: String) {
+    override fun showMessage(message: Int) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -86,7 +86,7 @@ class RegistrationFragment : Fragment(), ViewElements {
         viewModel.registrationState.observe(
             viewLifecycleOwner, { state ->
                 if (state == RegistrationState.REGISTRATION_COMPLETED) {
-                    showMessage(SUCCESSFUL_REGISTRATION_MESSAGE)
+                    showMessage(R.string.successful_registration)
                     navController.navigate(R.id.fragment_main)
                 }
             }
@@ -96,7 +96,7 @@ class RegistrationFragment : Fragment(), ViewElements {
 
 
     private fun validate(username: String, email: String, password: String, passwordConfirmation: String)
-    : Pair<Boolean, String> {
+    : Pair<Boolean, Int> {
         val (isValidUsername, usernameErrorMessage) = validatorService.isValidUsername(username)
         if (!isValidUsername) return Pair(isValidUsername, usernameErrorMessage)
 
@@ -106,7 +106,7 @@ class RegistrationFragment : Fragment(), ViewElements {
         val (isValidPassword, passwordErrorMessage) = validatorService.isValidPassword(password, passwordConfirmation)
         if (!isValidPassword) return Pair(isValidPassword, passwordErrorMessage)
 
-        return Pair(true, "")
+        return Pair(true, NO_ERROR_MESSAGE)
     }
 
     private fun View.hideKeyboard() {

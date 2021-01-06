@@ -7,21 +7,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import org.task.manager.domain.model.Audiovisual
-import org.task.manager.domain.model.CalendarEvent
-import org.task.manager.domain.model.Genre
-import org.task.manager.domain.model.Platform
-import org.task.manager.domain.model.Title
+import org.task.manager.domain.model.*
 import org.task.manager.domain.model.state.DeleteState
-import org.task.manager.domain.usecase.audiovisual.CreateAudiovisual
-import org.task.manager.domain.usecase.audiovisual.DeleteAudiovisual
-import org.task.manager.domain.usecase.audiovisual.GetAudiovisuals
-import org.task.manager.domain.usecase.audiovisual.GetPlatforms
-import org.task.manager.domain.usecase.audiovisual.GetTitles
-import org.task.manager.domain.usecase.audiovisual.UpdateAudiovisual
+import org.task.manager.domain.usecase.audiovisual.*
 import org.task.manager.domain.usecase.calendar.CreateCalendarEvent
 import org.task.manager.domain.usecase.shared.GetGenres
-
 
 class AudiovisualViewModel(
     private val getAudiovisuals: GetAudiovisuals,

@@ -22,10 +22,6 @@ import org.task.manager.presentation.shared.ValidatorService
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
-private const val SAVING_SETTINGS_ERROR_MESSAGE = "Error saving settings, try again"
-private const val UPDATING_SETTINGS_MESSAGE = "Updating settings"
-private const val SAVING_SETTINGS__MESSAGE = "Settings saved"
-
 class SettingsFragment : Fragment(), ViewElements {
 
     private lateinit var binding: FragmentSettingsBinding
@@ -67,7 +63,7 @@ class SettingsFragment : Fragment(), ViewElements {
         }
     }
 
-    override fun showMessage(message: String) {
+    override fun showMessage(message: Int) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -91,15 +87,16 @@ class SettingsFragment : Fragment(), ViewElements {
         viewModel.updateAccountState.observe(viewLifecycleOwner, {
             when (it) {
                 AccountState.UPDATE_COMPLETED -> manageUpdateComplete()
-                AccountState.INVALID_UPDATE -> showMessage(SAVING_SETTINGS_ERROR_MESSAGE)
-                AccountState.UPDATING -> showMessage(UPDATING_SETTINGS_MESSAGE)
+                AccountState.INVALID_UPDATE -> showMessage(R.string.settings_saved_error)
+                AccountState.UPDATING -> showMessage(R.string.updating_settings)
+                else -> AccountState.UPDATING
             }
         })
         hideProgress()
     }
 
     private fun manageUpdateComplete() {
-        showMessage(SAVING_SETTINGS__MESSAGE)
+        showMessage(R.string.settings_saved)
         navController.navigate(R.id.fragment_home)
     }
 

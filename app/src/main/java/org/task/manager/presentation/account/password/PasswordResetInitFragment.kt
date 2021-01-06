@@ -20,9 +20,6 @@ import org.task.manager.presentation.shared.ValidatorService
 import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
-private const val CORRECT_CHANGE_PASSWORD_MESSAGE = "Check your emails for details on how to reset your password"
-private const val INCORRECT_PASSWORD_ERROR_MESSAGE = "Error resetting password"
-
 class PasswordResetInitFragment : Fragment(), ViewElements {
 
     private lateinit var binding: FragmentResetInitPasswordBinding
@@ -31,7 +28,7 @@ class PasswordResetInitFragment : Fragment(), ViewElements {
     private val validatorService: ValidatorService by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reset_init_password, container, false)
         navController = findNavController()
 
@@ -58,14 +55,14 @@ class PasswordResetInitFragment : Fragment(), ViewElements {
     private fun observeViewModel() {
         viewModel.startResetPasswordState.observe(viewLifecycleOwner, {
             when (it) {
-                AccountState.UPDATE_COMPLETED -> showMessage(CORRECT_CHANGE_PASSWORD_MESSAGE)
-                AccountState.INVALID_UPDATE -> showMessage(INCORRECT_PASSWORD_ERROR_MESSAGE)
-                else -> showMessage(INCORRECT_PASSWORD_ERROR_MESSAGE)
+                AccountState.UPDATE_COMPLETED -> showMessage(R.string.changed_password_init)
+                AccountState.INVALID_UPDATE -> showMessage(R.string.changed_password_init_error)
+                else -> AccountState.UPDATING
             }
         })
     }
 
-    override fun showMessage(message: String) {
+    override fun showMessage(message: Int) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
