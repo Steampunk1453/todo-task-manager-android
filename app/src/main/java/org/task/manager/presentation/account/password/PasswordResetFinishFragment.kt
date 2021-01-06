@@ -10,9 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_audiovisual.progressBar
-import kotlinx.android.synthetic.main.fragment_reset_finish_password.newPassword
-import kotlinx.android.synthetic.main.fragment_reset_finish_password.newPasswordConfirmation
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -35,7 +32,7 @@ class PasswordResetFinishFragment : Fragment(), ViewElements {
     private val validatorService: ValidatorService by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reset_finish_password, container, false)
         navController = findNavController()
 
@@ -46,10 +43,10 @@ class PasswordResetFinishFragment : Fragment(), ViewElements {
         val tokenKey = arguments?.getString("key")
 
         binding.resetButton.setOnClickListener {
-            val (isValid, error) = validatorService.isValidPassword(newPassword.text.toString(),
-                newPasswordConfirmation.text.toString())
+            val (isValid, error) = validatorService.isValidPassword(binding.newPassword.text.toString(),
+                    binding.newPasswordConfirmation.text.toString())
             if (isValid) {
-                viewModel.finishResetPassword(tokenKey.toString(), newPassword.text.toString())
+                viewModel.finishResetPassword(tokenKey.toString(), binding.newPassword.text.toString())
             } else {
                 showMessage(error)
             }
@@ -82,11 +79,11 @@ class PasswordResetFinishFragment : Fragment(), ViewElements {
     }
 
     override fun showProgress() {
-        progressBar.show()
+        binding.progressBar.show()
     }
 
     override fun hideProgress() {
-        progressBar.hide()
+        binding.progressBar.hide()
     }
 
 }

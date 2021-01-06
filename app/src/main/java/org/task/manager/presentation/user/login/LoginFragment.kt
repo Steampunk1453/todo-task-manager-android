@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
 import org.task.manager.databinding.FragmentLoginBinding
@@ -24,10 +23,11 @@ import org.task.manager.presentation.view.ViewElements
 import org.task.manager.show
 
 class LoginFragment : Fragment(), ViewElements {
-    private val loginViewModel: LoginViewModel by viewModel()
-    private lateinit var sharedViewModel: SharedViewModel
+
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var  navController: NavController
+    private lateinit var navController: NavController
+    private lateinit var sharedViewModel: SharedViewModel
+    private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -42,7 +42,7 @@ class LoginFragment : Fragment(), ViewElements {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginButton.setOnClickListener {
-            loginViewModel.authenticate(login_username.text.toString(), login_password.text.toString(), rememberMe.isActivated)
+            loginViewModel.authenticate(binding.loginUsername.text.toString(), binding.loginPassword.text.toString(), binding.rememberMe.isActivated)
         }
 
         binding.resetButton.setOnClickListener {
@@ -62,11 +62,11 @@ class LoginFragment : Fragment(), ViewElements {
     }
 
     override fun showProgress() {
-        progressBar.show()
+        binding.progressBar.show()
     }
 
     override fun hideProgress() {
-        progressBar.hide()
+        binding.progressBar.hide()
     }
 
     private fun observeViewModel() {
@@ -83,7 +83,7 @@ class LoginFragment : Fragment(), ViewElements {
 
     private fun authenticatedUser(message: String) {
         showMessage(message)
-        sharedViewModel.setUserName(login_username.text.toString())
+        sharedViewModel.setUserName(binding.loginUsername.text.toString())
         binding.root.hideKeyboard()
         navController.navigate(R.id.fragment_home)
     }

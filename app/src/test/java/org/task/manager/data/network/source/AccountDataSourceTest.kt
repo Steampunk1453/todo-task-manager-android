@@ -2,26 +2,18 @@ package org.task.manager.data.network.source
 
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldNotBe
-import io.mockk.Runs
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import io.mockk.just
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.task.manager.data.network.api.AccountApi
 import org.task.manager.data.network.model.request.toRequest
-import org.task.manager.stub.PasswordRequestStub
-import org.task.manager.stub.RegisterRequestStub
-import org.task.manager.stub.ResetPasswordRequestStub
-import org.task.manager.stub.UserResponseStub
-import org.task.manager.stub.UserStub
+import org.task.manager.stub.*
 import retrofit2.Response
 import retrofit2.Response.success
 import java.io.IOException
@@ -98,7 +90,7 @@ internal class AccountDataSourceTest {
         every { provider.getAccountDataSource() } returns accountApi
         coEvery { accountApi.get() } returns Response.error(
             400,
-            ResponseBody.create(null, ByteArray(0))
+            ByteArray(0).toResponseBody(null)
         )
         // When
         // When & Then

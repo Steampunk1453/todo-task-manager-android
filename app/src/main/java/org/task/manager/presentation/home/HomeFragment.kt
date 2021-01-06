@@ -23,8 +23,6 @@ import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import com.kizitonwose.calendarview.utils.next
 import com.kizitonwose.calendarview.utils.previous
-import kotlinx.android.synthetic.main.fragment_home.calendarView
-import kotlinx.android.synthetic.main.fragment_main.welcome
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -46,7 +44,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
-import java.util.Locale
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -110,21 +108,21 @@ class HomeFragment : Fragment() {
 
     private fun configCalendarView(daysOfWeek: Array<DayOfWeek>) {
         val currentMonth = YearMonth.now()
-        calendarView.setup(
+        binding.calendarView.setup(
             currentMonth.minusMonths(12),
             currentMonth.plusMonths(12),
             daysOfWeek.first()
         )
-        calendarView.scrollToMonth(currentMonth)
+        binding.calendarView.scrollToMonth(currentMonth)
     }
 
     private fun observeSharedViewModel() {
         sharedViewModel.userData.observe(viewLifecycleOwner, {
             if (it != null) {
-                val prefix = welcome.text
+                val prefix = binding.welcome.text
                 val username = it
                 val message = "$prefix $username"
-                welcome.text = message
+                binding.welcome.text = message
             }
         })
     }
@@ -155,7 +153,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        calendarView.dayBinder = object : DayBinder<DayViewContainer> {
+        binding.calendarView.dayBinder = object : DayBinder<DayViewContainer> {
             // Called only when a new container is needed
             override fun create(view: View) = DayViewContainer(view)
             // Called every time we need to reuse a container
@@ -212,7 +210,7 @@ class HomeFragment : Fragment() {
             val monthLayout = LayoutCalendarHeaderBinding.bind(view).calendarHeader.root
         }
 
-        calendarView.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthViewContainer> {
+        binding.calendarView.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthViewContainer> {
             override fun create(view: View) = MonthViewContainer(view)
             override fun bind(container: MonthViewContainer, month: CalendarMonth) {
                 // Setup each header day text if we have not done that already
@@ -231,31 +229,30 @@ class HomeFragment : Fragment() {
             }
         }
 
-        calendarView.monthScrollListener = { month ->
+        binding.calendarView.monthScrollListener = { month ->
             val title = "${dateService.getFormattedMonth(month.yearMonth)} ${month.yearMonth.year}"
             binding.monthYear.text = title
 
             selectedDate?.let {
                 // Clear selection if we scroll to a new month
                 selectedDate = null
-                calendarView.notifyDateChanged(it)
+                binding.calendarView.notifyDateChanged(it)
                 this.updateAdapterForDate(null)
             }
         }
 
         binding.nextMonthImage.setOnClickListener {
-            calendarView.findFirstVisibleMonth()?.let {
-                calendarView.smoothScrollToMonth(it.yearMonth.next)
+            binding.calendarView.findFirstVisibleMonth()?.let {
+                binding.calendarView.smoothScrollToMonth(it.yearMonth.next)
             }
         }
 
         binding.previousMonthImage.setOnClickListener {
-            calendarView.findFirstVisibleMonth()?.let {
-                calendarView.smoothScrollToMonth(it.yearMonth.previous)
+            binding.calendarView.findFirstVisibleMonth()?.let {
+                binding.calendarView.smoothScrollToMonth(it.yearMonth.previous)
             }
         }
     }
-
 
     private fun getCalendarItems(audiovisuals: List<Audiovisual>, books: List<Book>) : MutableList<CalendarItem> {
         val calendarItems = mutableListOf<CalendarItem>()

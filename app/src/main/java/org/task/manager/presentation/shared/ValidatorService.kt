@@ -11,7 +11,7 @@ class ValidatorService {
 
     fun isValidUsername(username: String): Pair<Boolean, String> {
         val regex = PATTER_ONLY_LETTERS_NUMBERS.toRegex()
-        if (!username.isNotBlank()) return Pair(false, USERNAME_EMPTY_ERROR_MESSAGE)
+        if (username.isBlank()) return Pair(false, USERNAME_EMPTY_ERROR_MESSAGE)
         else if (!regex.matches(username)) return Pair(false, USERNAME_PATTERN_ERROR_MESSAGE)
         return Pair(true, "")
     }

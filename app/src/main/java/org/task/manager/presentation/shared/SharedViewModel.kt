@@ -6,6 +6,7 @@ import org.task.manager.domain.model.Audiovisual
 import org.task.manager.domain.model.Book
 
 class SharedViewModel : ViewModel() {
+
     val userData = MutableLiveData<String>()
     val audiovisual = MutableLiveData<Audiovisual>()
     val book = MutableLiveData<Book>()

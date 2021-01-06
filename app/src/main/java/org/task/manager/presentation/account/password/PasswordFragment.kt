@@ -12,10 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_login.progressBar
-import kotlinx.android.synthetic.main.fragment_password.currentPassword
-import kotlinx.android.synthetic.main.fragment_password.newPassword
-import kotlinx.android.synthetic.main.fragment_password.newPasswordConfirmation
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -38,7 +34,7 @@ class PasswordFragment : Fragment(), ViewElements {
     private val validatorService: ValidatorService by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_password, container, false)
         navController = findNavController()
 
@@ -47,12 +43,12 @@ class PasswordFragment : Fragment(), ViewElements {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.saveButton.setOnClickListener {
-            val (isValid, error) = validatorService.isValidPassword(newPassword.text.toString(),
-                newPasswordConfirmation.text.toString())
+            val (isValid, error) = validatorService.isValidPassword(binding.newPassword.text.toString(),
+                    binding.newPasswordConfirmation.text.toString())
             if (isValid) {
                 viewModel.updatePassword(
-                    currentPassword.text.toString(),
-                    newPassword.text.toString()
+                        binding.currentPassword.text.toString(),
+                        binding.newPassword.text.toString()
                 )
             } else {
                 showMessage(error)
@@ -69,7 +65,7 @@ class PasswordFragment : Fragment(), ViewElements {
     private fun observeViewModel() {
         viewModel.updatePasswordState.observe(viewLifecycleOwner, {
             when (it) {
-                AccountState.UPDATE_COMPLETED -> manageUpdateComplete()
+                AccountState.UPDATE_COMPLETED -> handleUpdateComplete()
                 AccountState.INVALID_UPDATE -> showMessage(INCORRECT_PASSWORD_ERROR_MESSAGE)
                 AccountState.UPDATING -> showMessage(UPDATING_PASSWORD_MESSAGE)
             }
@@ -81,14 +77,14 @@ class PasswordFragment : Fragment(), ViewElements {
     }
 
     override fun showProgress() {
-        progressBar.show()
+        binding.progressBar.show()
     }
 
     override fun hideProgress() {
-        progressBar.hide()
+        binding.progressBar.hide()
     }
 
-    private fun manageUpdateComplete() {
+    private fun handleUpdateComplete() {
         showMessage(CHANGED_PASSWORD_MESSAGE)
         navController.navigate(R.id.fragment_home)
     }

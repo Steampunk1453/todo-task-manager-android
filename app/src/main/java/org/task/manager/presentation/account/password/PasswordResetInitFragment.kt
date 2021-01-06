@@ -10,8 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_login.progressBar
-import kotlinx.android.synthetic.main.fragment_reset_init_password.email
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -42,9 +40,9 @@ class PasswordResetInitFragment : Fragment(), ViewElements {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.resetButton.setOnClickListener {
-            val (isValid, error) = validatorService.isValidEmail(email.text.toString())
+            val (isValid, error) = validatorService.isValidEmail(binding.email.text.toString())
             if (isValid) {
-                viewModel.startResetPassword(email.text.toString())
+                viewModel.startResetPassword(binding.email.text.toString())
             } else {
                 showMessage(error)
             }
@@ -62,6 +60,7 @@ class PasswordResetInitFragment : Fragment(), ViewElements {
             when (it) {
                 AccountState.UPDATE_COMPLETED -> showMessage(CORRECT_CHANGE_PASSWORD_MESSAGE)
                 AccountState.INVALID_UPDATE -> showMessage(INCORRECT_PASSWORD_ERROR_MESSAGE)
+                else -> showMessage(INCORRECT_PASSWORD_ERROR_MESSAGE)
             }
         })
     }
@@ -71,11 +70,11 @@ class PasswordResetInitFragment : Fragment(), ViewElements {
     }
 
     override fun showProgress() {
-        progressBar.show()
+        binding.progressBar.show()
     }
 
     override fun hideProgress() {
-        progressBar.hide()
+        binding.progressBar.hide()
     }
 
 }

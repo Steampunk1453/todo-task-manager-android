@@ -24,5 +24,4 @@ class SessionManagerService(private val sharedPreferences: SharedPreferences) {
         editor.apply()
     }
 
-
 }
