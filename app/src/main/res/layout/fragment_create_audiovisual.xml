@@ -56,6 +56,8 @@
 
         <AutoCompleteTextView
             android:id="@+id/suggested_titles_dropdown"
+            android:focusable="false"
+            android:cursorVisible="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -72,6 +74,8 @@
 
         <AutoCompleteTextView
             android:id="@+id/genre_dropdown"
+            android:focusable="false"
+            android:cursorVisible="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -88,6 +92,8 @@
 
         <AutoCompleteTextView
             android:id="@+id/platform_dropdown"
+            android:focusable="false"
+            android:cursorVisible="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -106,8 +112,8 @@
             android:id="@+id/startDateText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
+            android:focusable="false"
+            android:cursorVisible="false"
             android:inputType="none"
             android:hint="@string/start_date" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -125,8 +131,8 @@
             android:id="@+id/deadlineText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
+            android:focusable="false"
+            android:cursorVisible="false"
             android:inputType="none"
             android:hint="@string/deadline" />
     </com.google.android.material.textfield.TextInputLayout>
