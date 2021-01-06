@@ -12,11 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_login.progressBar
-import kotlinx.android.synthetic.main.fragment_registration.email
-import kotlinx.android.synthetic.main.fragment_settings.firstName
-import kotlinx.android.synthetic.main.fragment_settings.lastName
-import kotlinx.android.synthetic.main.fragment_settings.username
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -52,14 +47,14 @@ class SettingsFragment : Fragment(), ViewElements {
         observeViewModel()
 
         binding.saveButton.setOnClickListener {
-            val (isValid, error) = validatorService.isValidEmail(email.text.toString())
+            val (isValid, error) = validatorService.isValidEmail(binding.email.text.toString())
             if (isValid) {
                 showProgress()
                 viewModel.updateAccount(
-                    username.text.toString(),
-                    email.text.toString(),
-                    firstName.text.toString(),
-                    lastName.text.toString(),
+                        binding.username.text.toString(),
+                        binding.email.text.toString(),
+                        binding.firstName.text.toString(),
+                        binding.lastName.text.toString(),
                 )
             } else {
                 showMessage(error)
@@ -77,11 +72,11 @@ class SettingsFragment : Fragment(), ViewElements {
     }
 
     override fun showProgress() {
-        progressBar.show()
+        binding.progressBar.show()
     }
 
     override fun hideProgress() {
-        progressBar.hide()
+        binding.progressBar.hide()
     }
 
     private fun observeViewModel() {

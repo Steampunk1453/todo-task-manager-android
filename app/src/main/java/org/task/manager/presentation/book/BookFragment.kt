@@ -13,7 +13,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_login.progressBar
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -39,7 +38,7 @@ class BookFragment : Fragment(), ViewElements {
     private val dateService: DateService by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_book, container, false)
         navController = findNavController()
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
@@ -70,11 +69,11 @@ class BookFragment : Fragment(), ViewElements {
     }
 
     override fun showProgress() {
-        progressBar.show()
+        binding.progressBar.show()
     }
 
     override fun hideProgress() {
-        progressBar.hide()
+        binding.progressBar.hide()
     }
 
     private fun observeBookViewModel() {
@@ -100,7 +99,7 @@ class BookFragment : Fragment(), ViewElements {
     private fun addRemoveItemEvent(books: List<Book>) {
         val swipeCallback = object : SwipeCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.bindingAdapterPosition
                 val id = books[position].id
                 id?.let { bookViewModel.deleteBook(it) }
                 handleDeleteBook(position)

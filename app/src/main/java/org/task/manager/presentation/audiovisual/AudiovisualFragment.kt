@@ -13,7 +13,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -71,11 +70,11 @@ class AudiovisualFragment : Fragment(), ViewElements {
     }
 
     override fun showProgress() {
-        progressBar.show()
+        binding.progressBar.show()
     }
 
     override fun hideProgress() {
-        progressBar.hide()
+        binding.progressBar.hide()
     }
 
     private fun observeAudiovisualViewModel() {
@@ -101,7 +100,7 @@ class AudiovisualFragment : Fragment(), ViewElements {
     private fun addRemoveItemEvent(audiovisuals: List<Audiovisual>) {
         val swipeCallback = object : SwipeCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.bindingAdapterPosition
                 val id = audiovisuals[position].id
                 id?.let { audiovisualViewModel.deleteAudiovisual(it) }
                 handleDeleteAudiovisual(position)

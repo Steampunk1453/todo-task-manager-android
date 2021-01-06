@@ -18,9 +18,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
-import kotlinx.android.synthetic.main.fragment_create_audiovisual.checkBox
-import kotlinx.android.synthetic.main.fragment_create_audiovisual.save
-import kotlinx.android.synthetic.main.fragment_create_audiovisual.titleText
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -85,7 +82,7 @@ class CreateAudiovisualFragment : DialogFragment() {
                 binding.deadlineText.setText(dateService.getFormattedDate(it.deadline))
                 deadlineMilliseconds =
                     dateService.convertDateToMilliseconds(binding.deadlineText.text.toString())
-                binding.checkBox.isChecked = it.check == 1
+                binding.checkBox.isChecked = it.check == TRUE
             })
         }
 
@@ -144,32 +141,32 @@ class CreateAudiovisualFragment : DialogFragment() {
             if (binding.audiovisualId.tag != null) {
                 audiovisualViewModel.updateAudiovisual(
                     AudiovisualDto(
-                        binding.audiovisualId.tag.toString().toLong(),
-                        titleText.text.toString(),
-                        genre,
-                        platform,
-                        platformUrl,
-                        dateService.convertToInstant(startDateMilliseconds),
-                        dateService.convertToInstant(deadlineMilliseconds),
-                        if (checkBox.isChecked) TRUE else FALSE,
-                        binding.userId.tag.toString().toLong()
+                            binding.audiovisualId.tag.toString().toLong(),
+                            binding.titleText.text.toString(),
+                            genre,
+                            platform,
+                            platformUrl,
+                            dateService.convertToInstant(startDateMilliseconds),
+                            dateService.convertToInstant(deadlineMilliseconds),
+                            if (binding.checkBox.isChecked) TRUE else FALSE,
+                            binding.userId.tag.toString().toLong()
                     )
                 )
             } else {
                 audiovisualViewModel.createAudiovisual(
                     AudiovisualDto(
-                        title = titleText.text.toString(),
-                        genre = genre,
-                        platform = platform,
-                        platformUrl = platformUrl,
-                        startDate = dateService.convertToInstant(startDateMilliseconds),
-                        deadline = dateService.convertToInstant(deadlineMilliseconds),
-                        check = if (checkBox.isChecked) TRUE else FALSE,
+                            title = binding.titleText.text.toString(),
+                            genre = genre,
+                            platform = platform,
+                            platformUrl = platformUrl,
+                            startDate = dateService.convertToInstant(startDateMilliseconds),
+                            deadline = dateService.convertToInstant(deadlineMilliseconds),
+                            check = if (binding.checkBox.isChecked) TRUE else FALSE,
                     )
                 )
                 audiovisualViewModel.createCalendarEvent(
                     startDateMilliseconds,
-                    EVENT_TITLE_PREFIX + titleText.text.toString(),
+                    EVENT_TITLE_PREFIX + binding.titleText.text.toString(),
                     AUDIOVISUAL_EVENT
                 )
             }
@@ -296,7 +293,7 @@ class CreateAudiovisualFragment : DialogFragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDatePickerBuilder(): MaterialDatePicker.Builder<Long> {
         val builder = MaterialDatePicker.Builder.datePicker()
-        builder.setSelection(Calendar.getInstance().timeInMillis);
+        builder.setSelection(Calendar.getInstance().timeInMillis)
         builder.setTitleText(DATE_PICKER_TITLE_TEXT)
         return builder
     }
@@ -305,7 +302,7 @@ class CreateAudiovisualFragment : DialogFragment() {
         isTitleFilled: Boolean, isStartDateFilled: Boolean,
         isDeadlineFilled: Boolean
     ) {
-        save.isEnabled = isTitleFilled && isStartDateFilled && isDeadlineFilled
+        binding.save.isEnabled = isTitleFilled && isStartDateFilled && isDeadlineFilled
     }
 
     private fun View.hideKeyboard() {

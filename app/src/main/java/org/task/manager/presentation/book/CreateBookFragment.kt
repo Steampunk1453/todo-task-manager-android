@@ -14,15 +14,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
-import kotlinx.android.synthetic.main.fragment_create_book.authorText
-import kotlinx.android.synthetic.main.fragment_create_book.checkBox
-import kotlinx.android.synthetic.main.fragment_create_book.save
-import kotlinx.android.synthetic.main.fragment_create_book.titleText
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -97,7 +92,7 @@ class CreateBookFragment : DialogFragment() {
                 binding.deadlineText.setText(dateService.getFormattedDate(it.deadline))
                 deadlineMilliseconds =
                     dateService.convertDateToMilliseconds(binding.deadlineText.text.toString())
-                binding.checkBox.isChecked = it.check == 1
+                binding.checkBox.isChecked = it.check == TRUE
             })
         }
 
@@ -158,39 +153,39 @@ class CreateBookFragment : DialogFragment() {
             if (binding.bookId.tag != null) {
                 bookViewModel.updateBook(
                     BookDto(
-                        binding.bookId.tag.toString().toLong(),
-                        titleText.text.toString(),
-                        authorText.text.toString(),
-                        genre,
-                        editorial,
-                        editorialUrl,
-                        bookshop,
-                        bookshopUrl,
-                        dateService.convertToInstant(startDateMilliseconds),
-                        dateService.convertToInstant(deadlineMilliseconds),
-                        if (checkBox.isChecked) TRUE else FALSE,
-                        binding.userId.tag.toString().toLong()
+                            binding.bookId.tag.toString().toLong(),
+                            binding.titleText.text.toString(),
+                            binding.authorText.text.toString(),
+                            genre,
+                            editorial,
+                            editorialUrl,
+                            bookshop,
+                            bookshopUrl,
+                            dateService.convertToInstant(startDateMilliseconds),
+                            dateService.convertToInstant(deadlineMilliseconds),
+                            if (binding.checkBox.isChecked) TRUE else FALSE,
+                            binding.userId.tag.toString().toLong()
                     )
                 )
             } else {
                 bookViewModel.createBook(
                     BookDto(
-                        title = titleText.text.toString(),
-                        author = authorText.text.toString(),
-                        genre = genre,
-                        editorial = editorial,
-                        editorialUrl = editorialUrl,
-                        bookshop = bookshop,
-                        bookshopUrl = bookshopUrl,
-                        startDate = dateService.convertToInstant(startDateMilliseconds),
-                        deadline = dateService.convertToInstant(deadlineMilliseconds),
-                        check = if (checkBox.isChecked) TRUE else FALSE,
+                            title = binding.titleText.text.toString(),
+                            author = binding.authorText.text.toString(),
+                            genre = genre,
+                            editorial = editorial,
+                            editorialUrl = editorialUrl,
+                            bookshop = bookshop,
+                            bookshopUrl = bookshopUrl,
+                            startDate = dateService.convertToInstant(startDateMilliseconds),
+                            deadline = dateService.convertToInstant(deadlineMilliseconds),
+                            check = if (binding.checkBox.isChecked) TRUE else FALSE,
                     )
                 )
                 bookViewModel.createCalendarEvent(
-                    startDateMilliseconds,
-                    EVENT_TITLE_PREFIX + titleText.text.toString(),
-                    BOOK_EVENT
+                        startDateMilliseconds,
+                    EVENT_TITLE_PREFIX + binding.titleText.text.toString(),
+                        BOOK_EVENT
                 )
             }
 
@@ -207,7 +202,7 @@ class CreateBookFragment : DialogFragment() {
             startActivity(intent)
         })
 
-        bookViewModel.book.observe(viewLifecycleOwner, Observer {
+        bookViewModel.book.observe(viewLifecycleOwner, {
             dismiss()
             navController.navigate(R.id.fragment_book)
         })
@@ -324,7 +319,7 @@ class CreateBookFragment : DialogFragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDatePickerBuilder(): MaterialDatePicker.Builder<Long> {
         val builder = MaterialDatePicker.Builder.datePicker()
-        builder.setSelection(Calendar.getInstance().timeInMillis);
+        builder.setSelection(Calendar.getInstance().timeInMillis)
         builder.setTitleText(DATE_PICKER_TITLE_TEXT)
         return builder
     }
@@ -333,7 +328,7 @@ class CreateBookFragment : DialogFragment() {
         isTitleFilled: Boolean, isStartDateFilled: Boolean,
         isDeadlineFilled: Boolean
     ) {
-        save.isEnabled = isTitleFilled && isStartDateFilled && isDeadlineFilled
+        binding.save.isEnabled = isTitleFilled && isStartDateFilled && isDeadlineFilled
     }
 
     private fun View.hideKeyboard() {

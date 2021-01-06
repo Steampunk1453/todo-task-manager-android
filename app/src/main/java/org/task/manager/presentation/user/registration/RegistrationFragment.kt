@@ -12,11 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_registration.email
-import kotlinx.android.synthetic.main.fragment_registration.newPassword
-import kotlinx.android.synthetic.main.fragment_registration.newPasswordConfirmation
-import kotlinx.android.synthetic.main.fragment_registration.progressBarReg
-import kotlinx.android.synthetic.main.fragment_registration.username
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.task.manager.R
@@ -40,8 +35,7 @@ class RegistrationFragment : Fragment(), ViewElements {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false)
         navController = findNavController()
 
         return binding.root
@@ -50,16 +44,16 @@ class RegistrationFragment : Fragment(), ViewElements {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.registerButton.setOnClickListener {
             val (isValid, error) = validate(
-                username.text.toString(),
-                email.text.toString(),
-                newPassword.text.toString(),
-                newPasswordConfirmation.text.toString()
+                    binding.username.text.toString(),
+                    binding.email.text.toString(),
+                    binding.newPassword.text.toString(),
+                    binding.newPasswordConfirmation.text.toString()
             )
             if (isValid) {
                 viewModel.createAccount(
-                    username.text.toString(),
-                    email.text.toString(),
-                    newPassword.text.toString()
+                        binding.username.text.toString(),
+                        binding.email.text.toString(),
+                        binding.newPassword.text.toString()
                 )
             } else {
                 showMessage(error)
@@ -80,11 +74,11 @@ class RegistrationFragment : Fragment(), ViewElements {
     }
 
     override fun showProgress() {
-        progressBarReg.show()
+        binding.progressBarReg.show()
     }
 
     override fun hideProgress() {
-        progressBarReg.hide()
+        binding.progressBarReg.hide()
     }
 
     private fun observeViewModel() {
@@ -101,7 +95,8 @@ class RegistrationFragment : Fragment(), ViewElements {
     }
 
 
-    private fun validate(username: String, email: String, password: String, passwordConfirmation: String): Pair<Boolean, String> {
+    private fun validate(username: String, email: String, password: String, passwordConfirmation: String)
+    : Pair<Boolean, String> {
         val (isValidUsername, usernameErrorMessage) = validatorService.isValidUsername(username)
         if (!isValidUsername) return Pair(isValidUsername, usernameErrorMessage)
 
