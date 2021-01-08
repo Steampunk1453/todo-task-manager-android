@@ -3,6 +3,7 @@ package org.task.manager.instrumented.integration.dao
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertThat
@@ -36,7 +37,7 @@ class GenreDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeGenreListAndReadInList() {
+    fun writeGenreListAndReadInList() = runBlocking {
         val genre = GenreStubIT.getGenre().toEntity()
         val genre1 = GenreStubIT.getGenre1().toEntity()
         val genres = listOf(genre, genre1)
@@ -52,7 +53,7 @@ class GenreDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndDeleteAllGenres() {
+    fun writeAndDeleteAllGenres() = runBlocking {
         val editorial = GenreStubIT.getGenre().toEntity()
         val editorial1 = GenreStubIT.getGenre1().toEntity()
         val editorials = listOf(editorial, editorial1)

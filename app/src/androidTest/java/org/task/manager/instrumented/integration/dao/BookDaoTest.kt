@@ -3,6 +3,7 @@ package org.task.manager.instrumented.integration.dao
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertThat
@@ -37,7 +38,7 @@ class BookDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeBookAndReadInList() {
+    fun writeBookAndReadInList() = runBlocking {
         val book = BookStubIT.getBook().toEntity()
 
         bookDao.insert(book)
@@ -60,7 +61,7 @@ class BookDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeBookListAndReadInList() {
+    fun writeBookListAndReadInList() = runBlocking {
         val book = BookStubIT.getBook().toEntity()
         val book1 = BookStubIT.getBook1().toEntity()
         val books = listOf(book, book1)
@@ -87,7 +88,7 @@ class BookDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndUpdateBookAndReadInList() {
+    fun writeAndUpdateBookAndReadInList() = runBlocking {
         val book = BookStubIT.getBook().toEntity()
         bookDao.insert(book)
 
@@ -113,7 +114,7 @@ class BookDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndDeleteAllBooks() {
+    fun writeAndDeleteAllBooks() = runBlocking {
         val book = BookStubIT.getBook().toEntity()
         bookDao.insert(book)
 
@@ -125,7 +126,7 @@ class BookDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndDeleteBookById() {
+    fun writeAndDeleteBookById() = runBlocking {
         val book = BookStubIT.getBook().toEntity()
         bookDao.insert(book)
 
