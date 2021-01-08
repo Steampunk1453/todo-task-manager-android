@@ -14,7 +14,7 @@ You can find the API project in: https://github.com/Steampunk1453/todo-task-mana
 
 - You can test the application running it in local, this is the default API server:
 
-            buildConfigField "String", "SERVER_URL", '"https://pers-task-manager.herokuapp.com/api/"'
+          buildConfigField "String", "SERVER_URL", '"https://pers-task-manager.herokuapp.com/api/"'
 
 - Also, you can run API project in local, following:
 
