@@ -3,6 +3,7 @@ package org.task.manager.instrumented.integration.dao
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertThat
@@ -36,7 +37,7 @@ class EditorialDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeEditorialListAndReadInList() {
+    fun writeEditorialListAndReadInList() = runBlocking {
         val editorial = EditorialStubIT.getEditorial().toEntity()
         val editorial1 = EditorialStubIT.getEditorial1().toEntity()
         val editorials = listOf(editorial, editorial1)
@@ -52,7 +53,7 @@ class EditorialDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndDeleteAllEditorials() {
+    fun writeAndDeleteAllEditorials() = runBlocking {
         val editorial = EditorialStubIT.getEditorial().toEntity()
         val editorial1 = EditorialStubIT.getEditorial1().toEntity()
         val editorials = listOf(editorial, editorial1)

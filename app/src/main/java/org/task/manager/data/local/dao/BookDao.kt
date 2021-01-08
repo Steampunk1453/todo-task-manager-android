@@ -14,18 +14,18 @@ interface BookDao {
     fun getAll(): List<BookEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(books: List<BookEntity>)
+    suspend fun insertAll(books: List<BookEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(book: BookEntity)
+    suspend fun insert(book: BookEntity)
 
     @Update
-    fun update(book: BookEntity)
+    suspend fun update(book: BookEntity)
 
     @Query("DELETE FROM Book")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("DELETE FROM Book WHERE id = :id")
-    fun deleteById(id: Long)
+    suspend fun deleteById(id: Long)
 
 }

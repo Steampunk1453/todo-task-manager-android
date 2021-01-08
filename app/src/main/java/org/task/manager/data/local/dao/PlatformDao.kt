@@ -13,9 +13,9 @@ interface PlatformDao {
     fun getAll(): List<PlatformEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(platforms: List<PlatformEntity>)
+    suspend fun insertAll(platforms: List<PlatformEntity>)
 
     @Query("DELETE FROM Platform")
-    fun deleteAll()
+    suspend fun deleteAll()
 
 }

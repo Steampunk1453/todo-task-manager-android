@@ -13,9 +13,9 @@ interface TitleDao {
     fun getAll(): List<TitleEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(titles: List<TitleEntity>)
+    suspend fun insertAll(titles: List<TitleEntity>)
 
     @Query("DELETE FROM Title")
-    fun deleteAll()
+    suspend fun deleteAll()
 
 }

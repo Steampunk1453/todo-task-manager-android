@@ -3,6 +3,7 @@ package org.task.manager.instrumented.integration.dao
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertThat
@@ -36,7 +37,7 @@ class TitleDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeTitleListAndReadInList() {
+    fun writeTitleListAndReadInList() = runBlocking {
         val title = TitleStubIT.getTitle().toEntity()
         val title1 = TitleStubIT.getTitle1().toEntity()
         val titles = listOf(title, title1)
@@ -51,7 +52,7 @@ class TitleDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndDeleteAllTitles() {
+    fun writeAndDeleteAllTitles() = runBlocking {
         val title = TitleStubIT.getTitle().toEntity()
         val title1 = TitleStubIT.getTitle1().toEntity()
         val titles = listOf(title, title1)

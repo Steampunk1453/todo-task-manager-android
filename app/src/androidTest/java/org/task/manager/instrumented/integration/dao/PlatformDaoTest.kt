@@ -3,6 +3,7 @@ package org.task.manager.instrumented.integration.dao
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertThat
@@ -36,7 +37,7 @@ class PlatformDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writePlatformListAndReadInList() {
+    fun writePlatformListAndReadInList() = runBlocking {
         val platform = PlatformStubIT.getPlatform().toEntity()
         val platform1 = PlatformStubIT.getPlatform1().toEntity()
         val platforms = listOf(platform, platform1)
@@ -52,7 +53,7 @@ class PlatformDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndDeleteAllPlatforms() {
+    fun writeAndDeleteAllPlatforms() = runBlocking {
         val platform = PlatformStubIT.getPlatform().toEntity()
         val platform1 = PlatformStubIT.getPlatform1().toEntity()
         val platforms = listOf(platform, platform1)

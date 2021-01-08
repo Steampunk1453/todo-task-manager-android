@@ -15,21 +15,21 @@ class BookLocalDataSource(
 
     fun findAll(): List<BookEntity> = dao.getAll()
 
-    fun saveAll(books: List<BookEntity>) = dao.insertAll(books)
+    suspend fun saveAll(books: List<BookEntity>) = dao.insertAll(books)
 
-    fun save(book: BookEntity) = dao.insert(book)
+    suspend fun save(book: BookEntity) = dao.insert(book)
 
-    fun update(book: BookEntity) = dao.update(book)
+    suspend fun update(book: BookEntity) = dao.update(book)
 
-    fun delete(id: Long) = dao.deleteById(id)
+    suspend fun delete(id: Long) = dao.deleteById(id)
 
     fun findAllEditorials(): List<EditorialEntity> = editorialDao.getAll()
 
-    fun saveAllEditorials(editorials: List<EditorialEntity>) =
+    suspend fun saveAllEditorials(editorials: List<EditorialEntity>) =
         editorialDao.insertAll(editorials)
 
     fun findAllBookshops(): List<BookshopEntity> = bookshopDao.getAll()
 
-    fun saveAllBookshops(bookshops: List<BookshopEntity>) = bookshopDao.insertAll(bookshops)
+    suspend fun saveAllBookshops(bookshops: List<BookshopEntity>) = bookshopDao.insertAll(bookshops)
 
 }

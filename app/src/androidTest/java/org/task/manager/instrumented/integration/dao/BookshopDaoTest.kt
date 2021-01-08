@@ -3,6 +3,7 @@ package org.task.manager.instrumented.integration.dao
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertThat
@@ -36,7 +37,7 @@ class BookshopDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeBookshopListAndReadInList() {
+   fun writeBookshopListAndReadInList() = runBlocking {
         val bookshop = BookshopStubIT.getBookshop().toEntity()
         val bookshop1 = BookshopStubIT.getBookshop1().toEntity()
         val bookshops = listOf(bookshop, bookshop1)
@@ -52,7 +53,7 @@ class BookshopDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndDeleteAllBookshops() {
+    fun writeAndDeleteAllBookshops() = runBlocking {
         val bookshop = BookshopStubIT.getBookshop().toEntity()
         val bookshop1 = BookshopStubIT.getBookshop1().toEntity()
         val bookshops = listOf(bookshop, bookshop1)

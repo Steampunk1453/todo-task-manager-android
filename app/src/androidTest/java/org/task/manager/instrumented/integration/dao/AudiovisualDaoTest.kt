@@ -3,6 +3,7 @@ package org.task.manager.instrumented.integration.dao
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertThat
@@ -37,7 +38,7 @@ class AudiovisualDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAudiovisualAndReadInList() {
+    fun writeAudiovisualAndReadInList() = runBlocking {
         val audiovisual = AudiovisualStubIT.getAudiovisual().toEntity()
 
         audiovisualDao.insert(audiovisual)
@@ -57,7 +58,7 @@ class AudiovisualDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAudiovisualListAndReadInList() {
+    fun writeAudiovisualListAndReadInList() = runBlocking {
         val audiovisual = AudiovisualStubIT.getAudiovisual().toEntity()
         val audiovisual1 = AudiovisualStubIT.getAudiovisual1().toEntity()
         val audiovisuals = listOf(audiovisual, audiovisual1)
@@ -81,7 +82,7 @@ class AudiovisualDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndUpdateAudiovisualAndReadInList() {
+    fun writeAndUpdateAudiovisualAndReadInList() = runBlocking {
         val audiovisual = AudiovisualStubIT.getAudiovisual().toEntity()
         audiovisualDao.insert(audiovisual)
 
@@ -104,7 +105,7 @@ class AudiovisualDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndDeleteAllAudiovisuals() {
+    fun writeAndDeleteAllAudiovisuals() = runBlocking {
         val audiovisual = AudiovisualStubIT.getAudiovisual().toEntity()
         audiovisualDao.insert(audiovisual)
 
@@ -116,7 +117,7 @@ class AudiovisualDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndDeleteAudiovisualById() {
+    fun writeAndDeleteAudiovisualById() = runBlocking {
         val audiovisual = AudiovisualStubIT.getAudiovisual().toEntity()
         audiovisualDao.insert(audiovisual)
 
