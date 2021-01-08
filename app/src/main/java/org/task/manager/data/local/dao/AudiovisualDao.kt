@@ -14,18 +14,18 @@ interface AudiovisualDao {
     fun getAll(): List<AudiovisualEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(audiovisuals: List<AudiovisualEntity>)
+    suspend fun insertAll(audiovisuals: List<AudiovisualEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(audiovisual: AudiovisualEntity)
+    suspend fun insert(audiovisual: AudiovisualEntity)
 
     @Update
-    fun update(audiovisual: AudiovisualEntity)
+    suspend fun update(audiovisual: AudiovisualEntity)
 
     @Query("DELETE FROM Audiovisual")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("DELETE FROM Audiovisual WHERE id = :id")
-    fun deleteById(id: Long)
+    suspend fun deleteById(id: Long)
 
 }

@@ -13,9 +13,9 @@ interface GenreDao {
     fun getAll(): List<GenreEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(genres: List<GenreEntity>)
+    suspend fun insertAll(genres: List<GenreEntity>)
 
     @Query("DELETE FROM Genre")
-    fun deleteAll()
+    suspend fun deleteAll()
 
 }

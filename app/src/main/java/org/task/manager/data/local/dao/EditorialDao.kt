@@ -13,9 +13,9 @@ interface EditorialDao {
     fun getAll(): List<EditorialEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(editorials: List<EditorialEntity>)
+    suspend fun insertAll(editorials: List<EditorialEntity>)
 
     @Query("DELETE FROM Editorial")
-    fun deleteAll()
+    suspend fun deleteAll()
 
 }
