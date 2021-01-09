@@ -29,7 +29,7 @@ import org.task.manager.show
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-private const val ACTIVATE_ACCOUNT_PATH = "account"
+private const val ACTIVATE_ACCOUNT_PATH = "activate"
 private const val RESET_ACCOUNT_PATH = "reset"
 private const val PARAMETER_NAME = "key"
 
