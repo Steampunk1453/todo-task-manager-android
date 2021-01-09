@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:background="@color/blue_800"
         android:gravity="center"
-        android:lineSpacingExtra="1.5dp"
+        android:lineSpacingExtra="1.0dp"
         android:textAllCaps="true"
         android:textColor="@color/text_grey"
         android:textSize="12sp"
@@ -47,7 +47,7 @@
         android:layout_height="0dp"
         android:background="@color/teal_700"
         android:gravity="center"
-        android:lineSpacingExtra="1.5dp"
+        android:lineSpacingExtra="1.0dp"
         android:textAllCaps="true"
         android:textColor="@color/text_grey"
         android:textSize="12sp"
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/text_grey"
-            android:textSize="14sp"
+            android:textSize="13sp"
             tools:text="Mr Robot" />
     </LinearLayout>
 
