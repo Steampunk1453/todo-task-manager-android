@@ -18,7 +18,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/welcome"
+        android:text="@string/welcome_home"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,7 @@
             app:layout_constraintStart_toEndOf="@id/previousMonthImage"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            tools:text="April 2018" />
+            tools:text="April 2020" />
 
         <ImageView
             android:id="@+id/nextMonthImage"
@@ -80,12 +80,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/calendarLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical">-->
 
         <com.kizitonwose.calendarview.CalendarView
             android:id="@+id/calendarView"
