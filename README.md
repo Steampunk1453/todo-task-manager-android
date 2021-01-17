@@ -1,17 +1,58 @@
-# MyTodoTaskManager
+<h1 align="center">MyTodoTaskManager</h1>
 
-Application to remind a user different kinds of tasks like watch series, movies and read books.
+<p align="center">
+  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
+  <a href="https://github.com/Steampunk1453/todo-task-manager-android/actions"><img alt="Build Status" src="![MyToDoTaskManager Pull Request & Master CI](https://github.com/Steampunk1453/todo-task-manager-android/workflows/MyToDoTaskManager%20Pull%20Request%20&%20Master%20CI/badge.svg?branch=master)"/></a> 
+</p>
 
-Android Application developed with Kotlin, Clean architecture, MVVM pattern, Koin, Coroutines, Retrofit, Room, JWT and MockK for testing
+<p align="center">
 
-The app uses coroutines and Room database as local cache to avoid API calls
+MyTodoTaskManager is a application to remind a user different kinds of tasks like watch series, movies and read books.
 
-The API (Back-end) URL is deployed in Heroku: https://pers-task-manager.herokuapp.com
+Android Application developed with Kotlin, Clean architecture, MVVM pattern, Koin, Coroutines, Retrofit, Room, JWT and MockK for testing.
 
-You can find the API project in: https://github.com/Steampunk1453/todo-task-manager
+</p>
+
+## Download
+Go to [Google Play Store]( https://play.google.com/store/apps/details?id=org.task.manager) and install the app
+
+Go to [Releases](https://github.com/Steampunk1453/todo-task-manager-android/releases) to download the latest APK.
+
+## Screenshots
+![play](pictures/play.png)
+
+## Architecture and technical details
+MyTodoTaskManager is based on MVVM architecture and Repository pattern.
+
+The app uses coroutines and Room database as local cache to avoid API calls.
+
+The API (Back-end) URL is deployed on Heroku: [todo-task-manager-heroku](https://pers-task-manager.herokuapp.com)
+
+You can find the API project in: [todo-task-manager-github](https://github.com/Steampunk1453/todo-task-manager)
+
+## Tech stack
+- Minimum SDK level 21
+- [Kotlin](https://kotlinlang.org/) based + [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) for asynchronous.
+- JetPack
+  - LiveData - notify domain layer data to views.
+  - Lifecycle - dispose of observing data when lifecycle state changes.
+  - ViewModel - UI related data holder, lifecycle aware.
+  - Room Persistence - construct a database using the abstract layer.
+- Architecture
+  - MVVM Architecture (View - DataBinding - ViewModel - Model)
+  - Repository pattern
+  - [Koin](https://github.com/InsertKoinIO/koin) - dependency injection.
+- [Retrofit2 & Gson](https://github.com/square/retrofit) - construct the REST APIs.
+- [OkHttp3](https://github.com/square/okhttp) - implementing interceptor, logging and mocking web server.
+- [Timber](https://github.com/JakeWharton/timber) - logging.
+- [Material-Components](https://github.com/material-components/material-components-android) - Material design components like ripple animation, cardView.
+
+## Unit Testing Frameworks
+Unit Tests verify the interactions of use cases between repositories and dao & REST api requests.
+- [JUnit](https://github.com/junit-team/junit5) - a programmer oriented testing framework.
+- [MockK](https://github.com/mockk/mockkn) - a mocking library for Kotlin.
 
 ## Local environment
-
 - You can test the application running it in local, this is the default API server:
 
           buildConfigField "String", "SERVER_URL", '"https://pers-task-manager.herokuapp.com/api/"'
