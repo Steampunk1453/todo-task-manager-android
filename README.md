@@ -14,7 +14,9 @@ Android Application developed with Kotlin, Clean architecture, MVVM pattern, Koi
 </p>
 
 ## Download
-Go to [Google Play Store]( https://play.google.com/store/apps/details?id=org.task.manager) and install the app
+Currently available on the Play store.
+
+<a href='https://play.google.com/store/apps/details?id=org.task.manager'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height='80px'/></a>
 
 Go to [Releases](https://github.com/Steampunk1453/todo-task-manager-android/releases) to download the latest version.
 
