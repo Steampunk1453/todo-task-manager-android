@@ -16,13 +16,13 @@ Android Application developed with Kotlin, Clean architecture, MVVM pattern, Koi
 ## Download
 Go to [Google Play Store]( https://play.google.com/store/apps/details?id=org.task.manager) and install the app
 
-Go to [Releases](https://github.com/Steampunk1453/todo-task-manager-android/releases) to download the latest APK.
+Go to [Releases](https://github.com/Steampunk1453/todo-task-manager-android/releases) to download the latest version.
 
 ## Screenshots
 ![play](pictures/play.png)
 
-## Architecture and technical details
-MyTodoTaskManager is based on MVVM architecture and Repository pattern.
+## Technical details
+MyTodoTaskManager is based on MVVM and Repository patterns.
 
 The app uses coroutines and Room database as local cache to avoid API calls.
 
@@ -39,13 +39,13 @@ You can find the API project in: [todo-task-manager-github](https://github.com/S
   - ViewModel - UI related data holder, lifecycle aware.
   - Room Persistence - construct a database using the abstract layer.
 - Architecture
-  - MVVM Architecture (View - DataBinding - ViewModel - Model)
+  - MVVM (View - DataBinding - ViewModel - Model)
   - Repository pattern
   - [Koin](https://github.com/InsertKoinIO/koin) - dependency injection.
 - [Retrofit2 & Gson](https://github.com/square/retrofit) - construct the REST APIs.
 - [OkHttp3](https://github.com/square/okhttp) - implementing interceptor, logging and mocking web server.
 - [Timber](https://github.com/JakeWharton/timber) - logging.
-- [Material-Components](https://github.com/material-components/material-components-android) - Material design components like ripple animation, cardView.
+- [Material-Components](https://github.com/material-components/material-components-android) - Material design components for views.
 
 ## Unit Testing Frameworks
 Unit Tests verify the interactions of use cases between repositories and dao & REST api requests.
