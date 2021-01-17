@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
-  <a href="https://github.com/Steampunk1453/todo-task-manager-android/actions"><img alt="Build Status" src="![MyToDoTaskManager Pull Request & Master CI](https://github.com/Steampunk1453/todo-task-manager-android/workflows/MyToDoTaskManager%20Pull%20Request%20&%20Master%20CI/badge.svg?branch=master)"/></a> 
+  <a href="https://github.com/Steampunk1453/todo-task-manager-android/actions"><img alt="Build Status" src="https://github.com/Steampunk1453/todo-task-manager-android/workflows/MyToDoTaskManager%20Pull%20Request%20&%20Master%20CI/badge.svg"/></a> 
 </p>
 
 <p align="center">
