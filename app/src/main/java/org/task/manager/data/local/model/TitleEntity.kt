@@ -8,9 +8,13 @@ import org.task.manager.domain.model.Title
 data class TitleEntity(
     @PrimaryKey
     val id: Long,
-    val name: String
+    val title: String,
+    val type: String,
+    val genres: String,
+    val platform: String?,
+    val website: String?,
 )
 
-fun TitleEntity.toDomain(): Title = Title(id, name)
+fun TitleEntity.toDomain(): Title = Title(id, title, type, genres, platform, website)
 
-fun Title.toEntity(): TitleEntity = TitleEntity(id, name)
+fun Title.toEntity(): TitleEntity = TitleEntity(id, title, type, genres, platform, website)
