@@ -2,13 +2,13 @@ package org.task.manager.presentation.shared
 
 import org.task.manager.R
 
-private const val PATTER_ONLY_LETTERS_NUMBERS = "^[_.@A-Za-z0-9-]*$"
+private const val PATTERN_ONLY_LETTERS_NUMBERS = "^[_.@A-Za-z0-9-]*$"
 private const val NO_ERROR_MESSAGE = 0
 
 class ValidatorService {
 
     fun isValidUsername(username: String): Pair<Boolean, Int> {
-        val regex = PATTER_ONLY_LETTERS_NUMBERS.toRegex()
+        val regex = PATTERN_ONLY_LETTERS_NUMBERS.toRegex()
         if (username.isBlank()) return Pair(false, R.string.username_empty_error)
         else if (!regex.matches(username)) return Pair(false, R.string.username_pattern_error)
         return Pair(true, NO_ERROR_MESSAGE)
