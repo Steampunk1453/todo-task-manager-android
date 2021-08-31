@@ -11,10 +11,14 @@ open class TitleStub {
 
         fun random(
             id: Long = Random.nextLong(1, 5000),
-            name: String = faker.movie.title(),
+            title: String = faker.movie.title(),
         ) = Title(
             id,
-            name,
+            title,
+            title,
+            title,
+            title,
+            title
         )
     }
 

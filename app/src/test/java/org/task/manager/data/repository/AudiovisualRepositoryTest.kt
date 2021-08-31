@@ -201,7 +201,7 @@ internal class AudiovisualRepositoryTest {
         result shouldNotBe null
         result as Result.Success
         result.data[0].id shouldBe title.id
-        result.data[0].name shouldBe title.name
+        result.data[0].title shouldBe title.title
     }
 
     @Test
@@ -221,7 +221,7 @@ internal class AudiovisualRepositoryTest {
                 result shouldNotBe null
                 result as Result.Success
                 result.data[0].id shouldBe title.id
-                result.data[0].name shouldBe title.name
+                result.data[0].title shouldBe title.title
             }
     @Test
     fun `should return result with error exception when get all titles`() = runBlockingTest {

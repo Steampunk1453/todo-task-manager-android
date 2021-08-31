@@ -36,7 +36,7 @@ internal class GetTtitlesTest {
         // Then
         result shouldNotBe null
         result?.get(0)?.id shouldBe title.id
-        result?.get(0)?.name shouldBe title.name
+        result?.get(0)?.title shouldBe title.title
     }
 
     @Test

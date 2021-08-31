@@ -134,17 +134,17 @@ internal class AudiovisualRemoteDataSourceTest {
                 val titleResponse1 = TitleStub.random().toResponse()
                 val titles = listOf(titleResponse, titleResponse1)
                 coEvery { provider.getAudiovisualDataSource() } returns audiovisualApi
-                coEvery { audiovisualApi.getAllTitles() } returns success(titles)
+                coEvery { audiovisualApi.getAllTitles(any()) } returns success(titles)
                 // When
                 val response = audiovisualRemoteDataSource.getAllTitles()
                 // Then
                 response shouldNotBe null
                 response[0] shouldBe titleResponse
                 response[0].id shouldBe titleResponse.id
-                response[0].name shouldBe titleResponse.name
+                response[0].title shouldBe titleResponse.title
                 response[1] shouldBe titleResponse1
                 response[1].id shouldBe titleResponse1.id
-                response[1].name shouldBe titleResponse1.name
+                response[1].title shouldBe titleResponse1.title
 
             }
 
