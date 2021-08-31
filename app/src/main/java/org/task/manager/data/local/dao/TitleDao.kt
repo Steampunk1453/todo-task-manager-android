@@ -9,13 +9,13 @@ import org.task.manager.data.local.model.TitleEntity
 @Dao
 interface TitleDao {
 
-    @Query("SELECT * FROM Title")
+    @Query("SELECT * FROM TitleInfo")
     fun getAll(): List<TitleEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(titles: List<TitleEntity>)
 
-    @Query("DELETE FROM Title")
+    @Query("DELETE FROM TitleInfo")
     suspend fun deleteAll()
 
 }

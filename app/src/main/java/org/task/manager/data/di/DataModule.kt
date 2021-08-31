@@ -4,36 +4,17 @@ import androidx.room.Room
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import org.task.manager.data.local.AppDatabase
+import org.task.manager.data.local.AppDatabase.Companion.MIGRATION_1_2
 import org.task.manager.data.local.source.AudiovisualLocalDataSource
 import org.task.manager.data.local.source.BookLocalDataSource
 import org.task.manager.data.local.source.GenreLocalDataSource
 import org.task.manager.data.local.source.RemoveLocalDataSource
 import org.task.manager.data.network.NetworkServiceFactory
 import org.task.manager.data.network.ServiceFactory
-import org.task.manager.data.network.api.AccountApi
-import org.task.manager.data.network.api.AudiovisualApi
-import org.task.manager.data.network.api.BookApi
-import org.task.manager.data.network.api.GenreApi
-import org.task.manager.data.network.api.LoginApi
-import org.task.manager.data.network.source.AccountDataSource
-import org.task.manager.data.network.source.AudiovisualRemoteDataSource
-import org.task.manager.data.network.source.BookRemoteDataSource
-import org.task.manager.data.network.source.CalendarDataSource
-import org.task.manager.data.network.source.DataSourceProvider
-import org.task.manager.data.network.source.GenreRemoteDataSource
-import org.task.manager.data.network.source.LoginDataSource
-import org.task.manager.data.repository.DefaultAccountRepository
-import org.task.manager.data.repository.DefaultAudiovisualRepository
-import org.task.manager.data.repository.DefaultBookRepository
-import org.task.manager.data.repository.DefaultCalendarRepository
-import org.task.manager.data.repository.DefaultGenreRepository
-import org.task.manager.data.repository.DefaultLoginRepository
-import org.task.manager.domain.repository.AccountRepository
-import org.task.manager.domain.repository.AudiovisualRepository
-import org.task.manager.domain.repository.BookRepository
-import org.task.manager.domain.repository.CalendarRepository
-import org.task.manager.domain.repository.GenreRepository
-import org.task.manager.domain.repository.LoginRepository
+import org.task.manager.data.network.api.*
+import org.task.manager.data.network.source.*
+import org.task.manager.data.repository.*
+import org.task.manager.domain.repository.*
 import retrofit2.Retrofit
 
 val networkModule = module {
@@ -57,6 +38,7 @@ val networkModule = module {
 val databaseModule = module {
     single {
         Room.databaseBuilder(get(), AppDatabase::class.java, AppDatabase.DATABASE_NAME)
+            .addMigrations(MIGRATION_1_2)
             .build()
     }
     single { get<AppDatabase>().audiovisualDao() }

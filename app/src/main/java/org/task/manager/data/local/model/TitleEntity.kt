@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.task.manager.domain.model.Title
 
-@Entity(tableName = "Title")
+@Entity(tableName = "TitleInfo")
 data class TitleEntity(
     @PrimaryKey
     val id: Long,
