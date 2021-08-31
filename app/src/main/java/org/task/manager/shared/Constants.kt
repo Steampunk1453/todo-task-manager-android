@@ -13,7 +13,7 @@ object Constants {
     const val FINISH_URL = "/finish"
     const val AUDIOVISUAL_URL = "audiovisuals"
     const val ID = "/{id}"
-    const val TITLE_URL = "/titles/info"
+    const val TITLE_URL = "titles/info"
     const val FILTER = "/{filter}"
     const val PLATFORM_URL = "platforms"
     const val GENRE_URL = "genres"

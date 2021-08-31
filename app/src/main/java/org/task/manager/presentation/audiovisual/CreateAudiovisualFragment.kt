@@ -199,8 +199,7 @@ class CreateAudiovisualFragment : DialogFragment() {
 
     private fun handleTitles() {
         audiovisualViewModel.titles.observe(viewLifecycleOwner, { list ->
-            val titleNames = list
-                .map { it.name }
+            val titleNames = list.map { it.title }
 
             val suggestedTitlesDropdown = buildSuggestedTitlesDropdown(titleNames)
 
