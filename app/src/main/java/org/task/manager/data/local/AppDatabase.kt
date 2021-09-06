@@ -29,10 +29,10 @@ abstract class AppDatabase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("DROP TABLE TITLE")
                 database.execSQL("CREATE TABLE IF NOT EXISTS `TitleInfo` ("
-                        + "`id` INTEGER NOT NULL, "
-                        + "`title` TEXT NOT NULL,"
-                        + "`type` TEXT NOT NULL,"
-                        + "`genres` TEXT NOT NULL,"
+                        + "`id` TEXT NOT NULL, "
+                        + "`title` TEXT,"
+                        + "`type` TEXT,"
+                        + "`genres` TEXT,"
                         + "`platform` TEXT,"
                         + "`website` TEXT,"
                         + "PRIMARY KEY(`id`)"

@@ -5,13 +5,13 @@ import org.task.manager.domain.model.Title
 
 data class TitleResponse(
     @SerializedName("id")
-    val id: Long,
+    val id: String,
     @SerializedName("title")
-    val title: String,
+    val title: String?,
     @SerializedName("type")
     val type: String,
     @SerializedName("genres")
-    val genres: String,
+    val genres: String?,
     @SerializedName("platform")
     val platform: String?,
     @SerializedName("website")

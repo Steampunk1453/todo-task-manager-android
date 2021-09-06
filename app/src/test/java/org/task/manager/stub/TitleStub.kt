@@ -2,7 +2,6 @@ package org.task.manager.stub
 
 import io.github.serpro69.kfaker.Faker
 import org.task.manager.domain.model.Title
-import kotlin.random.Random
 
 open class TitleStub {
 
@@ -10,7 +9,7 @@ open class TitleStub {
         private val faker = Faker()
 
         fun random(
-            id: Long = Random.nextLong(1, 5000),
+            id: String = faker.movie.title(),
             title: String = faker.movie.title(),
         ) = Title(
             id,
