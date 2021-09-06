@@ -207,7 +207,7 @@ class CreateAudiovisualFragment : DialogFragment() {
         })
     }
 
-    private fun buildSuggestedTitlesDropdown(titleNames: List<String>): AutoCompleteTextView {
+    private fun buildSuggestedTitlesDropdown(titleNames: List<String?>): AutoCompleteTextView {
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, titleNames)
 
         val suggestedTitlesDropdown = binding.suggestedTitlesDropdown
