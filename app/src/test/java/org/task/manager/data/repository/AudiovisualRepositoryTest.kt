@@ -202,6 +202,11 @@ internal class AudiovisualRepositoryTest {
         result as Result.Success
         result.data[0].id shouldBe title.id
         result.data[0].title shouldBe title.title
+        result.data[0].rank shouldBe title.rank
+        result.data[0].type shouldBe title.type
+        result.data[0].genres shouldBe title.genres
+        result.data[0].platform shouldBe title.platform
+        result.data[0].website shouldBe title.website
     }
 
     @Test
@@ -222,6 +227,11 @@ internal class AudiovisualRepositoryTest {
                 result as Result.Success
                 result.data[0].id shouldBe title.id
                 result.data[0].title shouldBe title.title
+                result.data[0].rank shouldBe title.rank
+                result.data[0].type shouldBe title.type
+                result.data[0].genres shouldBe title.genres
+                result.data[0].platform shouldBe title.platform
+                result.data[0].website shouldBe title.website
             }
     @Test
     fun `should return result with error exception when get all titles`() = runBlockingTest {

@@ -31,6 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `TitleInfo` ("
                         + "`id` TEXT NOT NULL, "
                         + "`title` TEXT,"
+                        + "`rank` NUMBER,"
                         + "`type` TEXT,"
                         + "`genres` TEXT,"
                         + "`platform` TEXT,"

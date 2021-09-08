@@ -8,6 +8,8 @@ data class TitleResponse(
     val id: String,
     @SerializedName("title")
     val title: String?,
+    @SerializedName("rank")
+    val rank: Int?,
     @SerializedName("type")
     val type: String,
     @SerializedName("genres")
@@ -18,8 +20,8 @@ data class TitleResponse(
     val website: String?
 )
 
-fun TitleResponse.toDomain(): Title = Title(id, title, type, genres, platform, website)
+fun TitleResponse.toDomain(): Title = Title(id, title, rank, type, genres, platform, website)
 
-fun Title.toResponse(): TitleResponse = TitleResponse(id, title, type, genres, platform, website)
+fun Title.toResponse(): TitleResponse = TitleResponse(id, title, rank, type, genres, platform, website)
 
 

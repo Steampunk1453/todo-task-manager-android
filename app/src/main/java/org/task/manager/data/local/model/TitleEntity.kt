@@ -9,12 +9,13 @@ data class TitleEntity(
     @PrimaryKey
     val id: String,
     val title: String?,
+    val rank: Int?,
     val type: String,
     val genres: String?,
     val platform: String?,
     val website: String?,
 )
 
-fun TitleEntity.toDomain(): Title = Title(id, title, type, genres, platform, website)
+fun TitleEntity.toDomain(): Title = Title(id, title, rank, type, genres, platform, website)
 
-fun Title.toEntity(): TitleEntity = TitleEntity(id, title, type, genres, platform, website)
+fun Title.toEntity(): TitleEntity = TitleEntity(id, title, rank, type, genres, platform, website)

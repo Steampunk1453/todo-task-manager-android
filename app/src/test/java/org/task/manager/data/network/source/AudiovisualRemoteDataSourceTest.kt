@@ -142,10 +142,19 @@ internal class AudiovisualRemoteDataSourceTest {
                 response[0] shouldBe titleResponse
                 response[0].id shouldBe titleResponse.id
                 response[0].title shouldBe titleResponse.title
+                response[0].rank shouldBe titleResponse.rank
+                response[0].type shouldBe titleResponse.type
+                response[0].genres shouldBe titleResponse.genres
+                response[0].platform shouldBe titleResponse.platform
+                response[0].website shouldBe titleResponse.website
                 response[1] shouldBe titleResponse1
                 response[1].id shouldBe titleResponse1.id
                 response[1].title shouldBe titleResponse1.title
-
+                response[1].rank shouldBe titleResponse1.rank
+                response[1].type shouldBe titleResponse1.type
+                response[1].genres shouldBe titleResponse1.genres
+                response[1].platform shouldBe titleResponse1.platform
+                response[1].website shouldBe titleResponse1.website
             }
 
     @Test

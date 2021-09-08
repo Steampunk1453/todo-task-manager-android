@@ -37,6 +37,11 @@ internal class GetTtitlesTest {
         result shouldNotBe null
         result?.get(0)?.id shouldBe title.id
         result?.get(0)?.title shouldBe title.title
+        result?.get(0)?.rank shouldBe title.rank
+        result?.get(0)?.type shouldBe title.type
+        result?.get(0)?.genres shouldBe title.genres
+        result?.get(0)?.platform shouldBe title.platform
+        result?.get(0)?.website shouldBe title.website
     }
 
     @Test
