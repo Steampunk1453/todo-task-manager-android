@@ -73,7 +73,7 @@
         android:hint="@string/genre">
 
         <AutoCompleteTextView
-            android:id="@+id/genre_dropdown"
+            android:id="@+id/audiovisual_genre_dropdown"
             android:focusable="false"
             android:cursorVisible="false"
             android:layout_width="match_parent"
