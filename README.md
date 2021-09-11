@@ -71,6 +71,6 @@ Unit Tests verify the interactions of use cases between repositories and dao & R
 
     - If you use your phone
 
-            buildConfigField "String", "SERVER_URL", '"http://[your local IP address]:8080/api/"'
+            buildConfigField "String", "SERVER_URL", '"http://[your local server IP address]:8080/api/"'
  
 
