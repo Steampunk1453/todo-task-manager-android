@@ -30,27 +30,29 @@ internal class GetTtitlesTest {
         // Given
         val title = TitleStub.random()
         val titles = listOf(title)
+        val type = titles[0].type
         coEvery { repository.getAllTitles() } returns Result.Success(titles)
         // When
-        val result = useCase.execute()
+        val result = useCase.execute(type)
         // Then
         result shouldNotBe null
-        result?.get(0)?.id shouldBe title.id
-        result?.get(0)?.title shouldBe title.title
-        result?.get(0)?.rank shouldBe title.rank
-        result?.get(0)?.type shouldBe title.type
-        result?.get(0)?.genres shouldBe title.genres
-        result?.get(0)?.platform shouldBe title.platform
-        result?.get(0)?.website shouldBe title.website
+        result[0].id shouldBe title.id
+        result[0].title shouldBe title.title
+        result[0].rank shouldBe title.rank
+        result[0].type shouldBe title.type
+        result[0].genres shouldBe title.genres
+        result[0].platform shouldBe title.platform
+        result[0].website shouldBe title.website
     }
 
     @Test
     fun `should return empty titles list when execute`() = runBlockingTest  {
         // Given
+        val type = "TVSeries"
         val error = Throwable(Constants.ILLEGAL_STATE_EXCEPTION_CAUSE)
         coEvery { repository.getAllTitles() } returns Result.Error(error)
         // When
-        val result = useCase.execute()
+        val result = useCase.execute(type)
         // Then
         result shouldNotBe null
         result shouldBe emptyList()

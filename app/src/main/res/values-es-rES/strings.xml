@@ -26,9 +26,12 @@
     <string name="start_date">Día de inicio</string>
     <string name="deadline">Fecha límite</string>
     <string name="done">Hecho</string>
+    <string name="tv_show">Serie</string>
+    <string name="movie">Película</string>
     <string name="cancel">Cancelar</string>
     <string name="save">Guardar</string>
-    <string name="suggested_titles">Títulos sugeridos</string>
+    <string name="suggested_movies">Películas sugeridas</string>
+    <string name="suggested_tv_shows">Series sugeridas</string>
     <string name="author">Autor</string>
     <string name="editorial">Editorial</string>
     <string name="bookshop">Librería</string>

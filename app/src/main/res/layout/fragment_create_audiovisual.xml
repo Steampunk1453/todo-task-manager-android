@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        android:hint="@string/suggested_titles">
+        android:hint="@string/suggested_tv_shows">
 
         <AutoCompleteTextView
             android:id="@+id/suggested_titles_dropdown"
@@ -146,11 +146,33 @@
         android:inputType="date"
         tools:layout_editor_absoluteX="32dp">
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/done" />
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:checkedButton="@+id/radio_button_1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="@string/done" />
+
+            <RadioButton
+                android:id="@+id/radio_button_1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/tv_show" />
+
+            <RadioButton
+                android:id="@+id/radio_button_2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/movie" />
+
+        </RadioGroup>
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView

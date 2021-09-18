@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.RadioButton
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
@@ -39,6 +40,7 @@ class CreateAudiovisualFragment : DialogFragment() {
     private lateinit var binding: FragmentCreateAudiovisualBinding
     private lateinit var navController: NavController
     private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var radioButton: RadioButton
     private val audiovisualViewModel: AudiovisualViewModel by viewModel()
     private val dateService: DateService by inject()
     private lateinit var genre: String
@@ -90,8 +92,9 @@ class CreateAudiovisualFragment : DialogFragment() {
 
         observeViewModel()
 
-        audiovisualViewModel.getTitles()
-        handleTitles()
+        val radioButtonText = getRadioButtonSelectedText(view)
+        populateSuggestedTitles(radioButtonText)
+        handleSuggestedTitles()
 
         audiovisualViewModel.getGenres()
         handleGenres()
@@ -141,6 +144,11 @@ class CreateAudiovisualFragment : DialogFragment() {
             if (!deadlinePicker.isAdded) deadlinePicker.show(
                 parentFragmentManager, "deadline_picker_tag"
             )
+        }
+
+        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            radioButton = view.findViewById(checkedId)
+            populateSuggestedTitles(radioButton.text.toString())
         }
 
         binding.save.setOnClickListener {
@@ -204,17 +212,32 @@ class CreateAudiovisualFragment : DialogFragment() {
         )
     }
 
-    private fun handleTitles() {
+    private fun getRadioButtonSelectedText(view: View): String {
+        val selectedId = binding.radioGroup.checkedRadioButtonId
+        radioButton = view.findViewById(selectedId)
+        return radioButton.text.toString()
+    }
+
+    private fun populateSuggestedTitles(radioText: String) {
+        val type = Type.fromString(radioText).name
+        val textHintId =
+            if (type == Type.TV_SHOW.name) R.string.suggested_tv_shows else R.string.suggested_movies
+        binding.suggestedTitles.setHint(textHintId)
+
+        audiovisualViewModel.getTitles(type)
+    }
+
+    private fun handleSuggestedTitles() {
         audiovisualViewModel.titles.observe(viewLifecycleOwner, { list ->
             val titles = list
-                .sortedBy { it.rank }
-                .filter { it.platform != null }
-                .take(SIZE_LIMIT)
+                ?.sortedBy { it.rank }
+                ?.filter { it.platform != null }
+                ?.take(SIZE_LIMIT)
 
-            val titleNames = titles.map { it.title }
+            val titleNames = titles?.map { it.title }
 
-            val suggestedTitlesDropdown = buildSuggestedTitlesDropdown(titleNames)
-            addTitlesItemSelectEvent(suggestedTitlesDropdown, titles)
+            val suggestedTitlesDropdown = titleNames?.let { buildSuggestedTitlesDropdown(it) }
+            suggestedTitlesDropdown?.let { addTitlesItemSelectEvent(it, titles) }
         })
     }
 
@@ -249,6 +272,7 @@ class CreateAudiovisualFragment : DialogFragment() {
         audiovisualViewModel.genres.observe(viewLifecycleOwner, { list ->
             val genresNames = list
                 .filter { it.isLiterary != TRUE }
+                .take(SIZE_LIMIT)
                 .map { it.name }
 
             val genresDropdown = buildGenresDropdown(genresNames)
@@ -279,6 +303,7 @@ class CreateAudiovisualFragment : DialogFragment() {
     private fun handlePlatforms() {
         audiovisualViewModel.platforms.observe(viewLifecycleOwner, { list ->
             val platformNames = list
+                .take(SIZE_LIMIT)
                 .map { it.name }
 
             val platformsDropdown = buildPlatformsDropdown(platformNames)

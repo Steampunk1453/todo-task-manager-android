@@ -40,7 +40,7 @@ class AudiovisualRemoteDataSource(private val dataSourceProvider: DataSourceProv
 
     suspend fun getAllTitles(): List<TitleResponse>{
         val audiovisualApi = dataSourceProvider.getAudiovisualDataSource()
-        val response = audiovisualApi.getAllTitles("TVSeries")
+        val response = audiovisualApi.getAllTitles()
 
         if (!response.isSuccessful) throw IOException(response.message())
 

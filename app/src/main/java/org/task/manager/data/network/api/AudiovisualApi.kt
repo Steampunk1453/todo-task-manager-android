@@ -22,8 +22,11 @@ interface AudiovisualApi {
     @DELETE(Constants.AUDIOVISUAL_URL + Constants.ID)
     suspend fun deleteAudiovisual(@Path("id") id: Long): Response<Void>
 
+    @GET(Constants.TITLE_URL)
+    suspend fun getAllTitles(): Response<List<TitleResponse>>
+
     @GET(Constants.TITLE_URL + Constants.FILTER)
-    suspend fun getAllTitles(@Path("filter") filter: String): Response<List<TitleResponse>>
+    suspend fun getAllTitlesByFilter(@Path("filter") filter: String): Response<List<TitleResponse>>
 
     @GET(Constants.PLATFORM_URL)
     suspend fun getAllPlatforms(): Response<List<PlatformResponse>>
