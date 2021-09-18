@@ -7,10 +7,10 @@ import timber.log.Timber
 
 class GetAudiovisuals(private val repository: AudiovisualRepository) {
 
-    suspend fun execute(): List<Audiovisual>?  {
+    suspend fun execute(): List<Audiovisual> {
         return when (val result = repository.getAll()) {
             is Result.Success -> handleSuccessResult(result.data)
-            is Result.Error -> result.throwable.message?.let { handleFailedResult(it) }
+            is Result.Error -> result.throwable.message.let { handleFailedResult(it) }
         }
     }
 
@@ -19,7 +19,7 @@ class GetAudiovisuals(private val repository: AudiovisualRepository) {
         return result
     }
 
-    private fun handleFailedResult(error: String): List<Audiovisual> {
+    private fun handleFailedResult(error: String?): List<Audiovisual> {
         Timber.e("Invalid get all audiovisuals: %s", error)
         return listOf()
     }

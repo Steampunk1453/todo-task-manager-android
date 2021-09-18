@@ -7,10 +7,10 @@ import timber.log.Timber
 
 class GetBooks(private val repository: BookRepository) {
 
-    suspend fun execute(): List<Book>?  {
+    suspend fun execute(): List<Book>  {
         return when (val result = repository.getAll()) {
             is Result.Success -> handleSuccessResult(result.data)
-            is Result.Error -> result.throwable.message?.let { handleFailedResult(it) }
+            is Result.Error -> result.throwable.message.let { handleFailedResult(it) }
         }
     }
 
@@ -19,7 +19,7 @@ class GetBooks(private val repository: BookRepository) {
         return result
     }
 
-    private fun handleFailedResult(error: String): List<Book> {
+    private fun handleFailedResult(error: String?): List<Book> {
         Timber.e("Invalid get all books: %s", error)
         return listOf()
     }

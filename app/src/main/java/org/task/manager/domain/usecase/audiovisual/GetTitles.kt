@@ -7,19 +7,19 @@ import timber.log.Timber
 
 class GetTitles(private val repository: AudiovisualRepository) {
 
-    suspend fun execute(): List<Title>?  {
+    suspend fun execute(type: String): List<Title>  {
         return when (val result =  repository.getAllTitles()) {
-            is Result.Success -> handleSuccessResult(result.data)
-            is Result.Error -> result.throwable.message?.let { handleFailedResult(it) }
+            is Result.Success -> handleSuccessResult(result.data, type)
+            is Result.Error -> result.throwable.message.let { handleFailedResult(it) }
         }
     }
 
-    private fun handleSuccessResult(result: List<Title>): List<Title> {
+    private fun handleSuccessResult(result: List<Title>, type: String): List<Title> {
         Timber.d("Successful get titles: %s", result)
-        return result
+        return result.filter { it.type == type }
     }
 
-    private fun handleFailedResult(error: String): List<Title> {
+    private fun handleFailedResult(error: String?): List<Title> {
         Timber.e("Invalid get titles: %s", error)
         return listOf()
     }

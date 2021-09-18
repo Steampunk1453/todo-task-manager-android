@@ -7,10 +7,10 @@ import timber.log.Timber
 
 class GetGenres(private val repository: GenreRepository) {
 
-    suspend fun execute(): List<Genre>? {
+    suspend fun execute(): List<Genre> {
         return when (val result = repository.getAll()) {
             is Result.Success -> handleSuccessResult(result.data)
-            is Result.Error -> result.throwable.message?.let { handleFailedResult(it) }
+            is Result.Error -> result.throwable.message.let { handleFailedResult(it) }
         }
     }
 
@@ -19,7 +19,7 @@ class GetGenres(private val repository: GenreRepository) {
         return result
     }
 
-    private fun handleFailedResult(error: String): List<Genre> {
+    private fun handleFailedResult(error: String?): List<Genre> {
         Timber.e("Invalid get genres: %s", error)
         return listOf()
     }

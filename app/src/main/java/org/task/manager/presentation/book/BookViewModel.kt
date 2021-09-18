@@ -27,7 +27,7 @@ class BookViewModel(
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     val books = MutableLiveData<List<Book>>()
-    val book = MutableLiveData<Book>()
+    val book = MutableLiveData<Book?>()
     val genres = MutableLiveData<List<Genre>>()
     val bookshops = MutableLiveData<List<Bookshop>>()
     val editorials = MutableLiveData<List<Editorial>>()

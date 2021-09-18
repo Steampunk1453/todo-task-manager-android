@@ -7,10 +7,10 @@ import timber.log.Timber
 
 class GetEditorials(private val repository: BookRepository) {
 
-    suspend fun execute(): List<Editorial>?  {
+    suspend fun execute(): List<Editorial>  {
         return when (val result = repository.getAllEditorials()) {
             is Result.Success -> handleSuccessResult(result.data)
-            is Result.Error -> result.throwable.message?.let { handleFailedResult(it) }
+            is Result.Error -> result.throwable.message.let { handleFailedResult(it) }
         }
     }
 
@@ -19,7 +19,7 @@ class GetEditorials(private val repository: BookRepository) {
         return result
     }
 
-    private fun handleFailedResult(error: String): List<Editorial> {
+    private fun handleFailedResult(error: String?): List<Editorial> {
         Timber.e("Invalid get all editorials: %s", error)
         return listOf()
     }
