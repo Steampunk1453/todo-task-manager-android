@@ -34,6 +34,9 @@ import org.task.manager.shared.Constants.TRUE
 private const val EVENT_TITLE_PREFIX = "Watch "
 private const val AUDIOVISUAL_EVENT = "Video to watch"
 private const val SIZE_LIMIT = 9
+private const val RADIO_BUTTON_SELECTED_ID = "radio_button_tv_show"
+private const val RADIO_BUTTON_MOVIE_TEXT = "Movie"
+private const val RADIO_BUTTON_TV_SHOW_TEXT = "TV Show"
 
 class CreateAudiovisualFragment : DialogFragment() {
 
@@ -148,7 +151,9 @@ class CreateAudiovisualFragment : DialogFragment() {
 
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             radioButton = view.findViewById(checkedId)
-            populateSuggestedTitles(radioButton.text.toString())
+            val selectedRadioButtonId = resources.getResourceEntryName(radioButton.id)
+            val radioText = getRadioButtonText(selectedRadioButtonId)
+            populateSuggestedTitles(radioText)
         }
 
         binding.save.setOnClickListener {
@@ -215,7 +220,8 @@ class CreateAudiovisualFragment : DialogFragment() {
     private fun getRadioButtonSelectedText(view: View): String {
         val selectedId = binding.radioGroup.checkedRadioButtonId
         radioButton = view.findViewById(selectedId)
-        return radioButton.text.toString()
+        val selectedRadioButtonId = resources.getResourceEntryName(radioButton.id)
+        return getRadioButtonText(selectedRadioButtonId)
     }
 
     private fun populateSuggestedTitles(radioText: String) {
@@ -362,5 +368,8 @@ class CreateAudiovisualFragment : DialogFragment() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
+
+    private fun getRadioButtonText(selectedRadioButtonId: String?) =
+        if (selectedRadioButtonId == RADIO_BUTTON_SELECTED_ID) RADIO_BUTTON_TV_SHOW_TEXT else RADIO_BUTTON_MOVIE_TEXT
 
 }
