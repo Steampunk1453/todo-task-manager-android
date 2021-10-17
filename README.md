@@ -75,6 +75,6 @@ Unit Tests verify the interactions of use cases between repositories and dao & R
 
 ## Updates version 1.1.0
 -  Upgrade Kotlin, Java, Gradle and dependencies versions 
--  Add Room DB migration to add TitleInfo table  
--  Populate suggested titles for TV Shows and movies using the [API (Back-end)](https://github.com/Steampunk1453/todo-task-manager) to invoke [IMDb](https://www.imdb.com/?ref_=nv_home) API provider
+-  Add Room DB migration to create TitleInfo table  
+-  Populate suggested titles for TV shows and movies using the [API (Back-end)](https://github.com/Steampunk1453/todo-task-manager) to invoke [IMDb](https://www.imdb.com/?ref_=nv_home) API provider
 -  Add radio buttons to choose between TV Shows and Movies to filter suggested titles
