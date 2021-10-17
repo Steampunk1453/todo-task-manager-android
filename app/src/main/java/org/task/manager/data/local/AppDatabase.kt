@@ -2,24 +2,14 @@ package org.task.manager.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import org.task.manager.data.local.dao.AudiovisualDao
-import org.task.manager.data.local.dao.BookDao
-import org.task.manager.data.local.dao.BookshopDao
-import org.task.manager.data.local.dao.EditorialDao
-import org.task.manager.data.local.dao.GenreDao
-import org.task.manager.data.local.dao.PlatformDao
-import org.task.manager.data.local.dao.TitleDao
-import org.task.manager.data.local.model.AudiovisualEntity
-import org.task.manager.data.local.model.BookEntity
-import org.task.manager.data.local.model.BookshopEntity
-import org.task.manager.data.local.model.EditorialEntity
-import org.task.manager.data.local.model.GenreEntity
-import org.task.manager.data.local.model.PlatformEntity
-import org.task.manager.data.local.model.TitleEntity
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+import org.task.manager.data.local.dao.*
+import org.task.manager.data.local.model.*
 
 @Database(
     entities = [AudiovisualEntity::class, TitleEntity::class, PlatformEntity::class, BookEntity::class,
-        EditorialEntity::class, BookshopEntity::class, GenreEntity::class], version = 1
+        EditorialEntity::class, BookshopEntity::class, GenreEntity::class], version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -31,8 +21,26 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun bookshopDao(): BookshopDao
     abstract fun genreDao(): GenreDao
 
+
     companion object {
         const val DATABASE_NAME = "todo_task_manager.db"
+
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("DROP TABLE TITLE")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `TitleInfo` ("
+                        + "`id` TEXT NOT NULL, "
+                        + "`title` TEXT,"
+                        + "`rank` INTEGER,"
+                        + "`type` TEXT NOT NULL,"
+                        + "`genres` TEXT,"
+                        + "`platform` TEXT,"
+                        + "`website` TEXT,"
+                        + "PRIMARY KEY(`id`)"
+                        +")"
+                )
+            }
+        }
     }
 
 }

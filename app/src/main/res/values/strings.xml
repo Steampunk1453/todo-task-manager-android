@@ -26,9 +26,12 @@
     <string name="start_date">Start date</string>
     <string name="deadline">Deadline</string>
     <string name="done">Done</string>
+    <string name="tv_show">TV Show</string>
+    <string name="movie">Movie</string>
     <string name="cancel">Cancel</string>
-    <string name="save">Save</string>m
-    <string name="suggested_titles">Suggested Titles</string>
+    <string name="save">Save</string>
+    <string name="suggested_movies">Suggested Movies</string>
+    <string name="suggested_tv_shows">Suggested TV Shows</string>
     <string name="author">Author</string>
     <string name="editorial">Editorial</string>
     <string name="bookshop">Bookshop</string>

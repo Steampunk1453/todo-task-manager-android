@@ -10,12 +10,23 @@ open class TitleStub {
         private val faker = Faker()
 
         fun random(
-            id: Long = Random.nextLong(1, 5000),
-            name: String = faker.movie.title(),
+            id: String = faker.movie.quote(),
+            title: String = faker.movie.title(),
+            rank: Int = Random.nextInt(1, 200),
+            type: String = faker.movie.title(),
+            genres: String = faker.name.name(),
+            platform: String = faker.siliconValley.companies(),
+            website: String = faker.internet.domain(),
         ) = Title(
             id,
-            name,
+            title,
+            rank,
+            type,
+            genres,
+            platform,
+            website
         )
+
     }
 
 }

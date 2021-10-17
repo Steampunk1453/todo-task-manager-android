@@ -78,7 +78,7 @@ class CreateBookFragment : DialogFragment() {
                 binding.userId.tag = it.user?.id
                 binding.titleText.setText(it.title)
                 binding.authorText.setText(it.author)
-                binding.genreDropdown.setText(it.genre)
+                binding.bookGenreDropdown.setText(it.genre)
                 genre = it.genre
                 binding.editorialDropdown.setText(it.editorial)
                 editorial = it.editorial
@@ -235,7 +235,7 @@ class CreateBookFragment : DialogFragment() {
             genresNames
         )
 
-        val genresDropdown = binding.genreDropdown
+        val genresDropdown = binding.bookGenreDropdown
         genresDropdown.setAdapter(adapter)
 
         return genresDropdown
@@ -335,6 +335,5 @@ class CreateBookFragment : DialogFragment() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
-
 
 }

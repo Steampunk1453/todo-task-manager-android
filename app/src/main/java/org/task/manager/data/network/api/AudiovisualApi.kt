@@ -6,12 +6,7 @@ import org.task.manager.data.network.model.response.PlatformResponse
 import org.task.manager.data.network.model.response.TitleResponse
 import org.task.manager.shared.Constants
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface AudiovisualApi {
 
@@ -29,6 +24,9 @@ interface AudiovisualApi {
 
     @GET(Constants.TITLE_URL)
     suspend fun getAllTitles(): Response<List<TitleResponse>>
+
+    @GET(Constants.TITLE_URL + Constants.FILTER)
+    suspend fun getAllTitlesByFilter(@Path("filter") filter: String): Response<List<TitleResponse>>
 
     @GET(Constants.PLATFORM_URL)
     suspend fun getAllPlatforms(): Response<List<PlatformResponse>>

@@ -27,7 +27,7 @@ class AudiovisualViewModel(
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     val audiovisuals = MutableLiveData<List<Audiovisual>>()
-    val audiovisual = MutableLiveData<Audiovisual>()
+    val audiovisual = MutableLiveData<Audiovisual?>()
     val titles = MutableLiveData<List<Title>>()
     val genres = MutableLiveData<List<Genre>>()
     val platforms = MutableLiveData<List<Platform>>()
@@ -44,8 +44,8 @@ class AudiovisualViewModel(
     fun createAudiovisual(audiovisualDto: AudiovisualDto) {
         val newAudiovisual = audiovisualDto.toDomain()
         coroutineScope.launch {
-            val bookCreateResult = createAudiovisual.execute(newAudiovisual)
-            audiovisual.postValue(bookCreateResult)
+            val audiovisualCreateResult = createAudiovisual.execute(newAudiovisual)
+            audiovisual.postValue(audiovisualCreateResult)
         }
     }
 
@@ -65,9 +65,9 @@ class AudiovisualViewModel(
         }
     }
 
-    fun getTitles() {
+    fun getTitles(type: String) {
         coroutineScope.launch {
-            val titlesResult = getTitles.execute()
+            val titlesResult = getTitles.execute(type)
             titles.postValue(titlesResult)
         }
     }

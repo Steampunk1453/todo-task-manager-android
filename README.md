@@ -7,9 +7,9 @@
 
 <p align="center">
 
-MyTodoTaskManager is a application to remind a user different kinds of tasks like watch series, movies and read books.
+MyTodoTaskManager is an application to remind a user different kinds of tasks like watch TV shows, movies and read books.
 
-Android Application developed with Kotlin, Clean architecture, MVVM pattern, Koin, Coroutines, Retrofit, Room, JWT and MockK for testing.
+Android Application developed with Kotlin, Clean Architecture, MVVM pattern, Koin, Coroutines, Retrofit, Room, JWT and MockK for testing.
 
 </p>
 
@@ -71,6 +71,10 @@ Unit Tests verify the interactions of use cases between repositories and dao & R
 
     - If you use your phone
 
-            buildConfigField "String", "SERVER_URL", '"http://[your local IP address]:8080/api/"'
- 
+            buildConfigField "String", "SERVER_URL", '"http://[your local server IP address]:8080/api/"'
 
+## Updates version 1.1.0
+-  Upgrade Kotlin, Java, Gradle and dependencies versions 
+-  Add Room DB migration to add TitleInfo table  
+-  Populate suggested titles for TV Shows and movies using the [API (Back-end)](https://github.com/Steampunk1453/todo-task-manager) to invoke [IMDb](https://www.imdb.com/?ref_=nv_home) API provider
+-  Add radio buttons to choose between TV Shows and Movies to filter suggested titles

@@ -47,7 +47,11 @@ class TitleDaoTest {
 
         assertThat(result.size, equalTo(2))
         assertThat(result[0].id, equalTo(title.id))
-        assertThat(result[0].name, equalTo(title.name))
+        assertThat(result[0].title, equalTo(title.title))
+        assertThat(result[0].rank, equalTo(title.rank))
+        assertThat(result[0].genres, equalTo(title.genres))
+        assertThat(result[0].platform, equalTo(title.platform))
+        assertThat(result[0].website, equalTo(title.website))
     }
 
     @Test

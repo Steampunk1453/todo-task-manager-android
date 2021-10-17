@@ -70,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@+id/author">
 
             <AutoCompleteTextView
-                android:id="@+id/genre_dropdown"
+                android:id="@+id/book_genre_dropdown"
                 android:focusable="false"
                 android:cursorVisible="false"
                 android:layout_width="match_parent"
